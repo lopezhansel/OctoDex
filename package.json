@@ -1,0 +1,25 @@
+{
+  "name": "virtual-business-card",
+  "version": "1.0.0",
+  "description": "Easily create and share a virtual business card using your Github information",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lopezhansel/Virtual-Business-Card.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lopezhansel/Virtual-Business-Card/issues"
+  },
+  "homepage": "https://github.com/lopezhansel/Virtual-Business-Card#readme",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "mongoose": "^4.2.6"
+  }
+}
