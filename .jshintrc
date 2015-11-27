@@ -1,0 +1,15 @@
+{
+    "esnext"        : true,      
+    "strict"        : false,     
+    "indent"        : 2,        
+    "eqeqeq"        : true,     
+    "forin"         : false,    
+    "newcap"        : true,     
+    "node"          : true,     
+    "globals": {
+      "angular"     : true,
+      "require"     : false,
+      "exports"     : false,
+      "module"      : false
+    }
+}
