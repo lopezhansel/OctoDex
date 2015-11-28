@@ -7,21 +7,18 @@ const GitHubStrategy = require('passport-github2').Strategy;
 mongoose.connect('mongodb://localhost/virtualBusinessCard');
 const User = require('./models/userModel.js');
 
+const oauth = require("./config/oauth");
 
 const app = express();
+module.exports = app;
+require("./controllers/routeCtrl");
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-	extended: true
-}));
+app.use(bodyParser.urlencoded({extended: true }));
 
 app.use(express.static(__dirname + '/public'));
 
-app.get('/', function(req, res) {
-	res.sendFile('html/index.html', {
-		root: './public'
-	});
-});
+
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -32,18 +29,19 @@ passport.deserializeUser(function(obj, done) {
 });
 
 passport.use(new GitHubStrategy({
-		clientID: "",
-		clientSecret: "",
-		callbackURL: "http://127.0.0.1/auth/github/callback"
+		clientID: oauth.github.clientID,
+		clientSecret: oauth.github.clientSecret,
+		callbackURL: oauth.github.callbackURL
 	},
 	function(accessToken, refreshToken, profile, done) {
     console.log(profile);
-		User.findOrCreate({
-			githubId: profile.id
-		}, function(err, user) {
-			console.log(user);
-			return done(err, user);
-		});
+    
+		// User.findOrCreate({
+		// 	githubId: profile.id
+		// }, function(err, user) {
+		// 	console.log(user);
+		// 	return done(err, user);
+		// });
 	}
 ));
 
@@ -64,7 +62,7 @@ app.get('/logout', function(req, res){
 });
 
 
-function ensureAuthenticated(req, res, next) {
+function ensureAuthenticated (req, res, next) {
   if (req.isAuthenticated()) { return next(); }
   res.redirect('/login');
 }
