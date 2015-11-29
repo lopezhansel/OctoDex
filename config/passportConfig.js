@@ -21,9 +21,7 @@ module.exports = (passport) => {
 		},
 		(accessToken, refreshToken, profile, done) => {
 			process.nextTick(() => {
-				User.findOne({
-					'id': profile.id
-				}, (err, user) => {
+				User.findOne({'githubId': profile.id }, (err, user) => {
 					if (err)
 						return (err);
 					if (user)
