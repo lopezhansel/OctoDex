@@ -29,7 +29,7 @@ require('./config/passportConfig')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
-require('./controllers/routeCtrl.js')(app, passport);
+require('./controllers/routeCtrl.js')(app, passport,User);
 
 
 
