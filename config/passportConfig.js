@@ -5,11 +5,11 @@ var User = require("../models/userModel");
 module.exports = function(passport) {
 
 	passport.serializeUser(function(user, done) {
-		done(null, user);
+		done(null, user._id);
 	});
 
-	passport.deserializeUser(function(user, done) {
-		User.findById(user._id, function(err, user) {
+	passport.deserializeUser(function(id, done) {
+		User.findById(id, function(err, user) {
 			done(err, user);
 		});
 	});
@@ -30,13 +30,11 @@ module.exports = function(passport) {
 						return done(null, user);
 					else {
 						var newUser = new User();
-
 						newUser.id = profile.id;
 						newUser.token = accessToken;
 						newUser.name = profile._json.name;
 						newUser.email = profile._json.email;
 						newUser.username = profile.username;
-
 						newUser.save(function(err) {
 							if (err)
 								throw err;

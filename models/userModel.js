@@ -6,7 +6,7 @@ var userSchema = mongoose.Schema({
     token        : {type: String, required: true},
     name         : {type: String, required: true},
     email        : {type: String, required: true},
-    id           : {type: String, required: true},
+    githubId     : {type: String, required: true}
 
 });
 
