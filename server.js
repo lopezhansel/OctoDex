@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var session = require('express-session');
+var oauth = require("./config/oauth");
 
 mongoose.connect('mongodb://localhost/virtualBusinessCard');
 var User = require('./models/userModel.js');
@@ -17,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 
 app.sessionMiddleware = session({
-    secret: 'pR3t3nDc0mPl3xP4ssw0rD',
+    secret: oauth.sessionSecret,
     resave: false,
     saveUninitialized: true,
 });
