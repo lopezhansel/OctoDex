@@ -1,24 +1,33 @@
-const express = require('express');
-const port = 80;
-const app = express();
+"strict mode";
+var express = require('express');
+var port = 80;
+var app = express();
 
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const passport = require('passport');
-const session = require('express-session');
+var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var passport = require('passport');
+var session = require('express-session');
 
 mongoose.connect('mongodb://localhost/virtualBusinessCard');
-const User = require('./models/userModel.js');
-
+var User = require('./models/userModel.js');
 
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
+
+app.sessionMiddleware = session({
+    secret: 'pR3t3nDc0mPl3xP4ssw0rD',
+    resave: false,
+    saveUninitialized: true,
+});
+
+app.use(app.sessionMiddleware);
+
 
 require('./config/passportConfig')(passport);
 app.use(passport.initialize());
-app.use(passport.session()); 
+app.use(passport.session());
 
 require('./controllers/routeCtrl.js')(app, passport);
 
