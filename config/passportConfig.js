@@ -1,5 +1,5 @@
 var GitHubStrategy = require('passport-github2').Strategy;
-var oauth = require("./oauth");
+var secrets = require("./secrets");
 var User = require("../models/userModel");
 
 module.exports = (passport) => {
@@ -15,9 +15,9 @@ module.exports = (passport) => {
 	});
 
 	passport.use(new GitHubStrategy({
-			clientID: oauth.github.clientID,
-			clientSecret: oauth.github.clientSecret,
-			callbackURL: oauth.github.callbackURL
+			clientID: secrets.github.clientID,
+			clientSecret: secrets.github.clientSecret,
+			callbackURL: secrets.github.callbackURL
 		},
 		(accessToken, refreshToken, profile, done) => {
 			process.nextTick(() => {

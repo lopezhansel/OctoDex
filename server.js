@@ -7,30 +7,26 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var session = require('express-session');
-var oauth = require("./config/oauth");
+var sercrets = require("./config/secrets");  // my app secrets 
 
 mongoose.connect('mongodb://localhost/virtualBusinessCard');
-var User = require('./models/userModel.js');
-
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 
-app.sessionMiddleware = session({
-    secret: oauth.sessionSecret,
+app.use(session({
+    secret: sercrets.sessionSecret,
     resave: false,
     saveUninitialized: true,
-});
-
-app.use(app.sessionMiddleware);
+}));
 
 
 require('./config/passportConfig')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
-require('./controllers/routeCtrl.js')(app, passport,User);
+require('./controllers/routeCtrl.js')(app, passport);
 
 
 
