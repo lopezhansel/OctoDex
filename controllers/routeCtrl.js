@@ -5,29 +5,29 @@ module.exports = (app, passport, User) => {
 		res.sendFile('index.html', {root: './public/views'});
 	});
 
-	app.get('/home', ensureAuthenticated, function(req, res) {
+	app.get('/home', ensureAuthenticated, (req, res) => {
 		res.send('Welcome Home');
 	});
 
-	app.get('/auth/github', passport.authenticate('github', {scope: ['user:email'] }), function(req, res) {
+	app.get('/auth/github', passport.authenticate('github', {scope: ['user:email'] }), (req, res) => {
 
 	});
 
-	app.get('/api/me', ensureAuthenticated, function (req,res) {
-		User.findById(req.user._id, function(err, user) {
+	app.get('/api/me', ensureAuthenticated,  (req,res) => {
+		User.findById(req.user._id, (err, user) => {
 			if(err) { res.send("err");}
 			res.send(user);
 		});
 	});
 
-	app.get('/auth/github/callback', passport.authenticate('github', {failureRedirect: '/'}), function(req, res) {
-		req.logIn(req.user, function(err) {
+	app.get('/auth/github/callback', passport.authenticate('github', {failureRedirect: '/'}), (req, res) => {
+		req.logIn(req.user, err => {
 			if (err) {return next(err); }
 			return res.redirect('/home');
 		});
 	});
 
-	app.get('/logout', function(req, res) {
+	app.get('/logout', (req, res) => {
 		req.logout();
 		res.redirect('/');
 	});

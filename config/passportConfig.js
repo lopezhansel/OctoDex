@@ -2,14 +2,14 @@ var GitHubStrategy = require('passport-github2').Strategy;
 var oauth = require("./oauth");
 var User = require("../models/userModel");
 
-module.exports = function(passport) {
+module.exports = (passport) => {
 
-	passport.serializeUser(function(user, done) {
+	passport.serializeUser((user, done) => {
 		done(null, user._id);
 	});
 
-	passport.deserializeUser(function(id, done) {
-		User.findById(id, function(err, user) {
+	passport.deserializeUser((id, done) => {
+		User.findById(id, (err, user) => {
 			done(err, user);
 		});
 	});
@@ -19,23 +19,23 @@ module.exports = function(passport) {
 			clientSecret: oauth.github.clientSecret,
 			callbackURL: oauth.github.callbackURL
 		},
-		function(accessToken, refreshToken, profile, done) {
-			process.nextTick(function() {
+		(accessToken, refreshToken, profile, done) => {
+			process.nextTick(() => {
 				User.findOne({
 					'id': profile.id
-				}, function(err, user) {
+				}, (err, user) => {
 					if (err)
 						return (err);
 					if (user)
 						return done(null, user);
 					else {
-						var newUser = new User();
-						newUser.id = profile.id;
-						newUser.token = accessToken;
-						newUser.name = profile._json.name;
-						newUser.email = profile._json.email;
-						newUser.username = profile.username;
-						newUser.save(function(err) {
+						var newUser       = new User();
+						newUser.username  = profile.username;
+						newUser.name      = profile._json.name;
+						newUser.email     = profile._json.email;
+						newUser.gitToken  = accessToken;
+						newUser.githubId  = profile.id;
+						newUser.save(err => {
 							if (err)
 								throw err;
 							return done(null, newUser);
