@@ -1,21 +1,22 @@
 <!DOCTYPE html>
-<html ng-app="gitMe">
-<head>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-animate.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-aria.min.js"></script>
-	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-route.min.js"></script> -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.0-rc2/angular-material.min.js"></script>
+<html ng-app="gitAtMe">
+	<head>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular-animate.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular-aria.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular-route.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.0-rc2/angular-material.min.js"></script>
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.0-rc2/angular-material.min.css">
-	<link rel="stylesheet" type="text/css" href="./style/main.css">
-	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui" />
-	<title>Vitual-Bussiness-Card</title>
-</head>
-<body ng-controller="MainController as main">
-<h1>{{main.hello}}</h1>
-
-<script src="/js/main.js" type="text/javascript" charset="utf-8"></script>
-</body>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.0-rc2/angular-material.min.css">
+		<link rel="stylesheet" type="text/css" href="./style/main.css">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui" />
+		<title>Git At Me</title>
+	</head>
+	<body ng-controller="indexController as index" ng-cloak>
+		<h1>{{index.hello}}</h1>
+		<script src="/js/gamModule.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/gamService.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/indexController.js" type="text/javascript" charset="utf-8"></script>
+	</body>
 </html>
