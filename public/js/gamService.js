@@ -6,5 +6,6 @@ app.service('gamService', ['$routeParams', '$mdMedia', '$mdDialog', '$mdToast', 
 
 	$http.get('/api/me').then(function (response) {
 		gam.me = response.data;
+		console.log(response.data);
 	});
 }]);

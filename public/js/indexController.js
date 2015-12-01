@@ -6,8 +6,8 @@ app.controller('indexController', ['$routeParams', '$mdMedia', '$mdDialog', '$md
 	index.gamService = gamService;
 	index.hello = "Hello World";
 
-	// $interval(() => {
-	// 	index.gamService = gamService;
-	// 	console.log(index.gamService.me);
-	// }, 5000);
+	$interval(function () {
+		index.gamService = gamService;
+		console.log(index.gamService.me);
+	}, 5000);
 }]);
