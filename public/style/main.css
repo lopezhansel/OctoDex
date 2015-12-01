@@ -1,0 +1,19 @@
+html,body{
+	margin: 0;
+	padding: 0;
+	background: #CEDAE9;
+
+}
+.profile-wrapper{
+	padding: 50px;
+}
+
+md-content.card-wrapper{
+	background: whitesmoke;
+	padding-top: 75px;
+	padding-bottom: 75px	;
+}
+
+.my-card img {
+	max-width: 260px;
+}
