@@ -3,8 +3,9 @@ app.service('gamService', ['$routeParams', '$mdMedia', '$mdDialog', '$mdToast', 
 
 		var gam = this;
 		
-		$http.get('/api/me').then(function(response) {
+		$http.get('/api/me').then((response) => {
 			gam.me = response.data;
+			console.log(response.data);
 		});
 
 
