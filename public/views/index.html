@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html ng-app="gitAtMe">
 	<head>
+		<!-- <base href="/"> -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular-animate.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular-aria.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular-route.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.0-rc2/angular-material.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.0-rc5/angular-material.min.js"></script>
 
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.0-rc2/angular-material.min.css">
@@ -14,9 +15,15 @@
 		<title>Git At Me</title>
 	</head>
 	<body ng-controller="indexController as index" ng-cloak>
-		<h1>{{index.hello}}</h1>
+
+
+
+		<ng-view></ng-view>
+
+
 		<script src="/js/gamModule.js" type="text/javascript" charset="utf-8"></script>
 		<script src="/js/gamService.js" type="text/javascript" charset="utf-8"></script>
 		<script src="/js/indexController.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 </html>
+
