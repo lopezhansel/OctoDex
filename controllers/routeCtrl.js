@@ -3,14 +3,7 @@ var User = require("../models/userModel");
 module.exports = (app, passport) => {
 
 	app.get('/', (req, res) => {
-		if(!req.isAuthenticated()){
-			// if not logged in send a light weight version 
 			res.sendFile('index.html', {root: './public/views'});
-		}
-		if(req.isAuthenticated()){
-			// Send a full version of the app
-			res.send("Welcome Home");
-		}
 	});
 
 	app.get('/home', ensureAuthenticated, (req, res) => {
@@ -18,7 +11,7 @@ module.exports = (app, passport) => {
 		res.send('Welcome Home');
 	});
 
-	app.get('/api/me', ensureAuthenticated,  (req,res) => {
+	app.get('/api/me', ensureAuthenticatedAjax,  (req,res) => {
 		User.findById(req.user._id, (err, user) => {
 			if(err) { res.send("err");}
 			user.gitToken = null;
@@ -26,11 +19,19 @@ module.exports = (app, passport) => {
 		});
 	});
 
-	app.get('/api/users/:userParams', ensureAuthenticated, (req,res) => {
+	app.put('/api/me', ensureAuthenticatedAjax,  (req,res) => {
+		User.findById(req.user._id, (err, user) => {
+			if(err) { res.send("err");}
+			user.gitToken = null;
+			res.send(user);
+		});
+	});
+
+	app.get('/api/users/:userParams', ensureAuthenticatedAjax , (req,res) => {
 		// find latest 10 public profiles
 	});
 
-	app.get('/card/:githubId', ensureAuthenticated, (req,res) => {
+	app.get('/card/:githubId', ensureAuthenticatedAjax, (req,res) => {
 		User.findOne(req.params, (err,user) => {
 			// need better error handling for if user not found
 			if (err) { res.send(null);}
@@ -46,9 +47,11 @@ module.exports = (app, passport) => {
 	});
 
 	app.get('/auth/github/callback', passport.authenticate('github', {failureRedirect: '/'}), (req, res) => {
+		console.log("here");
 		req.logIn(req.user, err => {
 			if (err) {return next(err); }
-			return res.redirect('/home');
+			// ENABLE CORS LATER
+			return res.redirect('/');
 		});
 	});
 
@@ -63,6 +66,10 @@ module.exports = (app, passport) => {
 		console.log("bypassing isAuthenticated while developing");
 		return next();
 	}
-
+	
+	function ensureAuthenticatedAjax (req, res, next) {
+	    if (req.isAuthenticated()) { return next(); }
+	    res.send({ error: 'not logged in' });
+	}
 
 };
