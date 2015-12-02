@@ -1,25 +1,60 @@
 <div class="profile-wrapper">
-	<md-content class="md-padding card-wrapper" layout-wrap layout-align="center start">
+	<md-content class="md-padding card-wrapper" layout="column" layout-wrap layout-align="center center">
 
-		<md-card layout="column" class="my-card">
-			<md-content layout="row">
-				<img flex="25" ng-src="{{index.gamService.me.avatar}}" class="md-card-image" >
-				<md-card-title flex layout="row" layout-align="center start">
-					<md-card-title-text>
-						<span>{{index.gamService.me.displayName}}</span>
-					</md-card-title-text>
-				</md-card-title>
+		<md-card layout="column" class="my-card md-whiteframe-5dp" >
+			<md-card-title class="md-padding" flex layout="row" layout-align="start start">
+				<md-card-title-text>
+					<span class="md-display-2">{{gamService.me.displayName}}</span>
+				</md-card-title-text>
+				<span flex></span> 
+			<div class="contact-info" > 
+				<a ng-href="{{gamService.me.profileUrl}}"><span  class="fa fa-github-square"></span> </a>
+			</div>
+			</md-card-title>
+			
+			<md-content layout="row" >
+
+				<div class="pic-container" flex="50" layout="column" layout-align="center center" ng-init="editMode2=false">
+					<img ng-src="{{gamService.me.avatar}}" class="md-card-image" >
+				</div>
+
+				<md-card-content>
+					<div class="contact-info-wrap">
+						<div class="contact-info" ng-mouseLeave="editMode(1,'pop')"  ng-mouseEnter="editMode(1,'push')"> 
+							<span class="material-icons ">email</span> 
+							<span>lopezhanselmicheal@gmail.com</span>  
+							<span flex></span>
+							<span  ng-show="myArray[0]=== 1" class="material-icons another">edit</span>
+						</div>
+						<div class="contact-info" ng-mouseLeave="editMode(2,'pop')"  ng-mouseEnter="editMode(2,'push')"> 
+							<span class="material-icons ">phone</span>
+							<span> 956-255-0450</span>
+							<span  ng-show="myArray[0]=== 2" class="material-icons another">edit</span>
+						</div>
+						<div class="contact-info" ng-mouseLeave="editMode(3,'pop')"  ng-mouseEnter="editMode(3,'push')">
+							<span class="material-icons ">place</span> 
+							<span>{{gamService.me.location}}</span> 
+							<span  ng-show="myArray[0]=== 3" class="material-icons another">edit</span>
+						</div>
+						<div class="contact-info" ng-mouseLeave="editMode(4,'pop')"  ng-mouseEnter="editMode(4,'push')"> 
+							<span class="material-icons ">public</span> 
+							<span>{{gamService.me.blog}}</span>  
+							<span  ng-show="myArray[0]=== 4" class="material-icons another">edit</span>
+						</div>
+						<div class="contact-info" ng-mouseLeave="editMode(5,'pop')"  ng-mouseEnter="editMode(5,'push')"> 
+							<span class="material-icons ">beenhere</span>   
+							<span> Hireable: {{gamService.me.hireable}}</span> 
+							<span  ng-show="myArray[0]=== 5" class="material-icons another">edit</span>
+						</div>
+						<div class="contact-info" ng-mouseLeave="editMode(6,'pop')"  ng-mouseEnter="editMode(6,'push')"> 
+							<span class="material-icons ">business</span> 
+							<span>{{gamService.me.company}}</span>  
+							<span  ng-show="myArray[0]=== 6" class="material-icons another">edit</span>
+						</div>
+					</div>
+				</md-card-content>
 			</md-content>
 
-			<md-card-content>
-				<p>Email: {{index.gamService.me.email}}</p>
-				<p>Username: {{index.gamService.me.username}}</p>
-				<p>Location: {{index.gamService.me.location}}</p>
-				<p>Blog: {{index.gamService.me.blog}}</p>
-				<p>Hireable: {{index.gamService.me.hireable}}</p>
-				<p>Company: {{index.gamService.me.company}}</p>
-				<p>Github Link: {{index.gamService.me.profileUrl}}</p>
-			</md-card-content>
 
 			<md-card-actions layout="row" layout-align="end center">
 				<md-button>Action 1</md-button>
