@@ -31,7 +31,7 @@ gulp.task('nodemon', (cb) => {
 	var started = false;
 	return nodemon({
 		script: 'server.js',
-        ignore: ['/public/**',  '/gulpfile.js']
+        ignore: ["public/**/*.*", '/gulpfile.js', "src/**/*.*"]
 	}).on('start',  () =>{
 		// to avoid nodemon being started multiple times
 		if (!started) {
