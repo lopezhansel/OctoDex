@@ -7,8 +7,8 @@ const nodemon = require('gulp-nodemon');
 // const uglify = require('gulp-uglify');
 
 const paths = {
-  jsSrc: 'src/js/**/*.js',
-  jsBuild: 'public//js'
+  jsSrc: './src/js/**/*.js',
+  jsBuild: './public//js'
 };
 
 
@@ -16,11 +16,12 @@ gulp.task('default',['browser-sync','javascript','watch']);
 
 gulp.task('browser-sync', ['nodemon'], () => {
 	browserSync.init(null, {
+        injectChanges: true,
 		proxy: {
             target: "localhost:80",
             ws: true
         },
-        files: ["public/**/*.*"],
+        files: ["./public/**/*.*"],
         browser: "google chrome",
         port: 1000,
         reloadDelay: 500
@@ -42,6 +43,8 @@ gulp.task('nodemon', (cb) => {
 });	
 
 gulp.task('javascript',()=>{
+    console.log("javascript")
+    browserSync.reload()
     return gulp.src(paths.jsSrc)
         .pipe(babel({
             presets: ['es2015']
