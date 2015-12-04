@@ -5,8 +5,17 @@ app.service('gamService', ['$routeParams', '$mdMedia', '$mdDialog', '$mdToast', 
 		
 		$http.get('/api/me').then((response) => {
 			gam.me = response.data;
-			console.log(response.data);
 		});
+
+		gam.sendData = function (data){
+			$http.psot('/api/me', data).then( (response) =>{
+				console.log(response);
+			});
+
+		};
+
+		
+
 
 
 
