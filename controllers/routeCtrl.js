@@ -22,8 +22,19 @@ module.exports = (app, passport) => {
 	app.put('/api/me', ensureAuthenticatedAjax,  (req,res) => {
 		User.findById(req.user._id, (err, user) => {
 			if(err) { res.send("err");}
-			user.gitToken = null;
-			res.send(user);
+			user.displayName = req.body.displayName;
+			user.bio = req.body.bio;
+			user.hireable = req.body.hireable;
+			user.location = req.body.location;
+			user.blog = req.body.blog;
+			user.company = req.body.company;
+			user.email = req.body.email;
+			user.name = req.body.name;
+			user.save(function (err) {
+				if(err) { res.send("err");}
+				user.gitToken = null;
+				res.send(user);
+			});
 		});
 	});
 
