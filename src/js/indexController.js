@@ -1,6 +1,5 @@
 app.controller('indexController', [  "$scope", '$routeParams', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout", "gamService",function ($scope, $routeParams, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout, gamService) {
 	
-	// var index = this;
 	$scope.gamService = gamService;
 	$scope.hello = "Hello World";
 
@@ -12,9 +11,22 @@ app.controller('indexController', [  "$scope", '$routeParams', '$mdMedia', '$mdD
 	}, 100);
 
 	$scope.editMode =  (num , pushOrPop) => {
-		$scope.myArray = [];
-		$scope.myArray[pushOrPop](num);
-		return $scope.myArray;
+		if ($scope.editMode[num] === 0 || $scope.editMode[num] )  { 
+			$scope.editMode[num] = null;
+		}
+		else{$scope.editMode[num] = true;}
+	};
+
+	$scope.iconChooser = function (key) {
+		var myIcons= {
+			phone : "phone",
+			blog  : "link",
+			company : "business",
+			email : "email",
+			hireable : "beenhere" ,
+			location : "place"
+		};
+		return myIcons[key];
 	};
 
 	

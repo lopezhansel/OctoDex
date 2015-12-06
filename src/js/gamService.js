@@ -5,6 +5,13 @@ app.service('gamService', ['$routeParams', '$mdMedia', '$mdDialog', '$mdToast', 
 		
 		$http.get('/api/me').then((response) => {
 			gam.me = response.data;
+			gam.me.mainList = {
+				blog:  gam.me.blog, 
+				company : gam.me.company, 
+				email : gam.me.email, 
+				hireable : gam.me.hireable, 
+				location : gam.me.location
+			};
 		});
 
 		gam.sendData = function (){
@@ -12,10 +19,6 @@ app.service('gamService', ['$routeParams', '$mdMedia', '$mdDialog', '$mdToast', 
 				console.log(response.data);
 			});
 		};
-
-		
-
-
-
-
 }]);
+
+
