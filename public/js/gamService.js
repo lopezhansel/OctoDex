@@ -6,13 +6,13 @@ app.service('gamService', ['$routeParams', '$mdMedia', '$mdDialog', '$mdToast', 
 
 	$http.get('/api/me').then(function (response) {
 		gam.me = response.data;
-		gam.me.mainList = {
-			blog: gam.me.blog,
-			company: gam.me.company,
-			email: gam.me.email,
-			hireable: gam.me.hireable,
-			location: gam.me.location
-		};
+		gam.me.mainList = ["blog", "company", "email", "hireable", "location"];
+		$http.get('https://api.github.com/users/' + gam.me.username + '/followers').then(function (response) {
+			gam.me.followers = response.data;
+		});
+		$http.get('https://api.github.com/users/' + gam.me.username + '/repos').then(function (response) {
+			gam.me.repos = response.data;
+		});
 	});
 
 	gam.sendData = function () {

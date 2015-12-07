@@ -18,10 +18,10 @@
 
 				<div>
 					<div class="contact-info-wrap">
-						<div class="contact-info" ng-mouseLeave="editMode($index)"  ng-mouseEnter="editMode($index)" ng-repeat="(key, value) in gamService.me.mainList"> 
+						<div class="contact-info" ng-mouseLeave="editMode($index)"  ng-mouseEnter="editMode($index)" ng-repeat="key in gamService.me.mainList"> 
 							<span class="material-icons info-icons ">{{::iconChooser(key)}}</span>
-							<span ng-show="!editMode[$index]" >{{value}}</span>
-							<input ng-show="editMode[$index]"type="text" ng-model="value">
+							<span ng-show="!editMode[$index]" >{{gamService.me[key]}}</span>
+							<input ng-show="editMode[$index]"type="text" ng-model="gamService.me[key]">
 							<span flex></span>
 							<span  ng-show="editMode[$index]" class="material-icons info-edit">edit</span>
 						</div>

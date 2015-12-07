@@ -14,7 +14,7 @@ app.controller('indexController', [  "$scope", '$routeParams', '$mdMedia', '$mdD
 		if ($scope.editMode[num] === 0 || $scope.editMode[num] )  { 
 			$scope.editMode[num] = null;
 		}
-		else{$scope.editMode[num] = true;}
+		else{ $scope.editMode[num] = true;}
 	};
 
 	$scope.iconChooser = function (key) {
