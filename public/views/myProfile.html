@@ -52,7 +52,7 @@
 
 		<md-content class="followers">
 			<div ng-repeat="follow in gamService.me.followers">
-			<p>{{follow.login}}</p>
+			<p><a ng-href="#profile/{{follow.login}}">{{follow.login}}</a></p>
 			<img ng-src="{{follow.avatar_url}}" alt="profile pic" style="width: 100px;">
 			<hr>
 			</div>

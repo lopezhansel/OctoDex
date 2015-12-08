@@ -3,11 +3,9 @@
 app.controller('myProfileController', ["$scope", '$routeParams', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout", "gamService", function ($scope, $routeParams, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout, gamService) {
 
 	$scope.gamService = gamService;
-	$scope.hello = "Hello World";
 
 	$timeout(function () {
 		$scope.gamService = gamService;
-		console.log($scope.gamService.me);
 		if (!$scope.gamService.me) {}
 	}, 100);
 

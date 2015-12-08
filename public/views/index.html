@@ -16,15 +16,15 @@
 		<link rel="stylesheet" type="text/css" href="./style/main.css">
 		<title>Git At Me</title>
 	</head>
-	<body ng-cloak>
+	<body ng-cloak ng-controller="indexController">
 
 		<div layout="column" class="main-wrap" layout-fill>
 		  <md-toolbar md-scroll-shrink>
 		    <div class="md-toolbar-tools">
 		      <span>Git at Me</span>
 		      <span flex></span>
-		      <md-button>
-		        Login with GitHub
+		      <md-button ng-click="logger()">
+		        {{signInBtn}}
 		      </md-button>
 		    </div>
 		  </md-toolbar>
