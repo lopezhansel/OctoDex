@@ -39,5 +39,26 @@
 			</md-card-actions>
 		</md-card>
 
+		<md-content class="repos">
+			<div ng-repeat="repo in gamService.me.repos">
+			<p>{{repo.name}}</p>
+			<p>{{repo.description}}</p>
+			<p>{{repo.url}}</p>
+			<p>{{repo.updated_at | date}}</p>
+			<p>{{repo.language}}</p>
+			<hr>
+			</div>
+		</md-content>
+
+		<md-content class="followers">
+			<div ng-repeat="follow in gamService.me.followers">
+			<p>{{follow.login}}</p>
+			<img ng-src="{{follow.avatar_url}}" alt="profile pic" style="width: 100px;">
+			<hr>
+			</div>
+		</md-content>
+
+
+
 	</md-content >
 </div>
