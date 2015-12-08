@@ -4,10 +4,9 @@ app.config(function($routeProvider,$locationProvider){
 	$routeProvider.when('/',{
 		controller : "myProfileController",
 		templateUrl : "views/myProfile.html"
-	}).when('/profile/:id',{
+	}).when('/profile/:user',{
 		controller : "otherProfileController",
 		templateUrl : "views/otherProfile.html"
 	}).otherwise({ redirectTo: '/' });
 	// $locationProvider.html5Mode(true);
-
 });

@@ -2,18 +2,29 @@ app.service('gamService', ['$routeParams', '$mdMedia', '$mdDialog', '$mdToast', 
 	function($routeParams, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout) {
 
 		var gam = this;
-		
+		gam.signInBtn = "Sign In";
+
 		$http.get('/api/me').then((response) => {
 			gam.me = response.data;
 			if (gam.me.error) { return ;}
 			gam.me.mainList = ["blog", "company", "email", "hireable", "location"];
 			gam.getFollowers(gam.me);
 			gam.getRepos(gam.me);
+			gam.signInBtn = "Sign out";
 		});
 
 		gam.getFollowers = (user) => {
 			$http.get('https://api.github.com/users/'+user.username+'/followers').then((response) => { 
 				user.followers = response.data;
+			});
+		};
+
+		gam.getOtherUser = (user) => {
+			$http.get('https://api.github.com/users/'+user).then((response) => { 
+				gam.otherUser = response.data;
+				gam.otherUser.mainList = ["blog", "company", "email", "hireable", "location"];
+				gam.getFollowers(gam.otherUser);
+				gam.getRepos(gam.otherUser);
 			});
 		};
 
