@@ -4,7 +4,7 @@ html,body{
 	background: #CEDAE9;
 }
 .profile-wrapper{
-	padding: 50px;
+	/*padding: 50px;*/
 }
 
 md-content.card-wrapper{
@@ -61,4 +61,7 @@ md-content.card-wrapper{
 .title-div{
 	border-left: solid;
 	background: red;
+}
+.main-wrap {
+    overflow: hidden;
 }

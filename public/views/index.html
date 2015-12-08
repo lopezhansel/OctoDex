@@ -18,14 +18,27 @@
 	</head>
 	<body ng-cloak>
 
-
-
-		<ng-view></ng-view>
+		<div layout="column" class="main-wrap" layout-fill>
+		  <md-toolbar md-scroll-shrink>
+		    <div class="md-toolbar-tools">
+		      <span>Git at Me</span>
+		      <span flex></span>
+		      <md-button>
+		        Login with GitHub
+		      </md-button>
+		    </div>
+		  </md-toolbar>
+		  <md-content >
+		    <ng-view></ng-view>
+		  </md-content>
+		</div>
 
 
 		<script src="/js/gamModule.js" type="text/javascript" charset="utf-8"></script>
 		<script src="/js/gamService.js" type="text/javascript" charset="utf-8"></script>
 		<script src="/js/indexController.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/myProfileController.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/otherProfileController.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 </html>
 
