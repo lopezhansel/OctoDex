@@ -16,10 +16,10 @@ md-content.card-wrapper{
 	padding: 25px;
 	max-width: 960px;
 }
-/*.my-card img {
+.my-card img {
 	max-height: 350px;
 	max-width: 350px;
-}*/
+}
 .contact-info-wrap{
 	width: 600px;
 	/*background: red;*/

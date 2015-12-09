@@ -1,6 +1,44 @@
+<md-content layout-padding>
+    <md-card class="my-card">
+    	<img  ng-src="{{user.avatar_url}}" alt="profile picture">
+        <div ng-if="user.name">
+            <h2>{{user.name}} | {{user.login}}</h2>
+        </div>
+        <div ng-if="user.email">
+            <span class="material-icons">email</span>   
+            {{user.email}}
+        </div>
+        <div ng-if="user.bio">
+            <span class="material-icons">subject</span>
+            {{user.bio}}
+        </div>
+        <div ng-if="user.company">
+            <span class="material-icons">business</span>
+            <span>{{user.company}}</span>
+        </div>
+        <div ng-if="user.blog">
+            <span class="material-icons">link</span>
+            <a ng-href="{{user.blog}}">{{user.blog}}</a>
+        </div>
+        <div ng-if="user.location">
+            <span class="material-icons">place</span>
+            {{user.location}}
+        </div>
+        
+        <p> {{user.public_repos }} Repos | {{ user.followers.length }} Followers | {{ user.following }} Following</p>
+    </md-card>
+</md-content>
 
-<div class="homeWrapper">
-	<h1>Welcome Home</h1>
-	<h1>Welcome Home</h1>
-</div>
-
+<md-content>
+    <md-list>
+        <md-content ng-repeat="follow in user.followers">
+            <md-list-item class="md-3-line" >
+                <img ng-src="{{follow.avatar_url}}" class="md-avatar" alt="{{::follow.login}}" />
+                <div class="md-list-item-text" layout="column">
+                    <h3><a ng-href="#profile/{{follow.login}}">{{ follow.login }}</a></h3>
+                </div>
+            </md-list-item>
+            <md-divider ></md-divider>
+        </md-content>
+    </md-list>
+</md-content>
