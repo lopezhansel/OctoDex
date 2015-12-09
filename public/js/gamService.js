@@ -25,9 +25,12 @@ app.service('gamService', ['$routeParams', '$mdMedia', '$mdDialog', '$mdToast', 
 	gam.getOtherUser = function (user) {
 		$http.get('https://api.github.com/users/' + user).then(function (response) {
 			gam.otherUser = response.data;
+			gam.otherUser.username = gam.otherUser.login;
 			gam.otherUser.mainList = ["blog", "company", "email", "hireable", "location"];
 			gam.getFollowers(gam.otherUser);
 			gam.getRepos(gam.otherUser);
+		}, function (response) {
+			gam.otherUser = response.data;
 		});
 	};
 
