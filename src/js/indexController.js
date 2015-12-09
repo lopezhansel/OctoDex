@@ -6,6 +6,7 @@ app.controller('indexController', [  "$scope", "$window", '$routeParams', '$mdMe
 		$scope.gamService = gamService;
 	}, 100);
 
+
 	$scope.logger = () =>{
 		if (gamService.me.error) {
 			$window.open("/auth/github","_self");
@@ -14,5 +15,11 @@ app.controller('indexController', [  "$scope", "$window", '$routeParams', '$mdMe
 			$window.open("/logout","_self");
 		}
 	};
-	
+
+	$scope.isAtHome = function () {
+		return $location.$$path !== '/';
+	};
+	$scope.redirect = function (str) {
+		$location.path(str);
+	};
 }]);

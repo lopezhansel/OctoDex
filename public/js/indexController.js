@@ -15,4 +15,11 @@ app.controller('indexController', ["$scope", "$window", '$routeParams', '$mdMedi
 			$window.open("/logout", "_self");
 		}
 	};
+
+	$scope.isAtHome = function () {
+		return $location.$$path !== '/';
+	};
+	$scope.redirect = function (str) {
+		$location.path(str);
+	};
 }]);
