@@ -29,16 +29,18 @@
     </md-card>
 </md-content>
 
-<md-content>
-    <md-list>
-        <md-content ng-repeat="follow in user.followers">
-            <md-list-item class="md-3-line" >
-                <img ng-src="{{follow.avatar_url}}" class="md-avatar" alt="{{::follow.login}}" />
-                <div class="md-list-item-text" layout="column">
-                    <h3><a ng-href="#profile/{{follow.login}}">{{ follow.login }}</a></h3>
-                </div>
-            </md-list-item>
-            <md-divider ></md-divider>
-        </md-content>
-    </md-list>
+
+<md-content class="md-padding">
+    <md-grid-list
+           md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6"
+           md-row-height-gt-md="1:1" md-row-height="2:2"
+           md-gutter="12px" md-gutter-gt-sm="8px" >
+       <md-grid-tile  ng-repeat="follow in user.followers" 
+           md-rowspan="1" md-colspan="1" md-colspan-sm="1">
+           <img class="tile" ng-src="{{follow.avatar_url}}" />
+         <md-grid-tile-footer layout-align="center center">
+           <h2><a ng-href="#profile/{{follow.login}}">{{ follow.login }}</a></h2>
+         </md-grid-tile-footer>
+       </md-grid-tile>
+    </md-grid-list>
 </md-content>
