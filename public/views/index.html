@@ -30,7 +30,16 @@
 		    </div>
 		  </md-toolbar>
 		  <md-content >
-		    <ng-view></ng-view>
+		    <ng-view ng-if="!gamService.me.error"></ng-view>
+		    <md-content 
+		    	class="md-padding" layout="column" 
+		    	ng-if="gamService.me.error"
+		    	layout-align="center center">
+		    	<h1>Sign In Using GitHub</h1> 
+		    	<md-button class="md-raised md-primary" ng-click="logger()">
+		    	  {{signInBtn}}
+		    	</md-button>
+		    </md-content>
 		  </md-content>
 		</div>
 
