@@ -29,12 +29,14 @@
 		      </md-button>
 		    </div>
 		  </md-toolbar>
-		  <md-content >
+
+		  <md-content layout-fill layout="column">
 		    <ng-view ng-if="!gamService.me.error"></ng-view>
 		    <md-content 
+		    	layout-fill	
 		    	class="md-padding" layout="column" 
 		    	ng-if="gamService.me.error"
-		    	layout-align="center center">
+		    	layout-align="start center">
 		    	<h1>Sign In Using GitHub</h1> 
 		    	<md-button class="md-raised md-primary" ng-click="logger()">
 		    	  {{signInBtn}}
