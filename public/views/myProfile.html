@@ -1,73 +1,70 @@
+<div class="md-padding card-background" layout="column"  layout-align="center center">
+	<md-card layout-sm="row" layout-md="column" layout-lg="column" class="my-container md-whiteframe-5dp" >
 
-<div>
-	<md-content class="md-padding card-wrapper" layout="column" layout-wrap layout-align="center center">
-
-
-
-
-	
-		<md-card layout-sm="row" layout-md="column" layout-lg="column" class="my-card md-whiteframe-5dp" >
-
-			
-			<md-content layout="row" >
-				<div class="pic-container" flex="50" layout="column" layout-align="center center">
-					<img ng-src="{{gamService.me.avatar}}" class="md-card-image" />
+			<div layout="row" class="card-header">
+				<div flex="33" >
+					<img ng-src="{{gamService.me.avatar}}"/>
 				</div>
+				<div layout="column" flex class="md-padding" >
+					<span class="md-display-2 display-name"> Hansel Lopez  </span>
+					<span class="md-display-1 display-name">Software Developer {{gamService.me.title}}</span>
+				</div>
+			</div>
 
-				<div>
-			<md-card-title class="md-padding" flex layout="row" layout-align="start start">
-				<md-card-title-text layout="column">
-					<span class="md-display-2 display-name">Hansel Lopez Daniel </span>
-					<span class="md-display-1 display-name">Software Developer{{gamService.me.title}}</span>
-				</md-card-title-text>
-			</md-card-title>
-					<div class="contact-info-wrap">
-						<div class="contact-info" ng-mouseLeave="editMode($index)"  ng-mouseEnter="editMode($index)" ng-repeat="key in gamService.me.mainList"> 
-							<span class="material-icons info-icons ">{{::iconChooser(key)}}</span>
-							<span ng-show="!editMode[$index]" >{{gamService.me[key]}}</span>
-							<input ng-show="editMode[$index]"type="text" ng-model="gamService.me[key]">
-							<span flex></span>
-							<span  ng-show="editMode[$index]" class="material-icons info-edit">edit</span>
-						</div>
+
+			<div class="md-padding" layout="row" >
+				<div layout="column" flex="95" class="contact-info-wrap">
+					<div class="contact-info" ng-mouseLeave="editMode($index)"  ng-mouseEnter="editMode($index)" ng-repeat="key in gamService.me.mainList"> 
+						<span class="material-icons info-icons ">{{::iconChooser(key)}}</span>
+						<span ng-show="!editMode[$index]" >{{gamService.me[key]}}</span>
+						<input ng-show="editMode[$index]"type="text" ng-model="gamService.me[key]">
+						<span flex></span>
+						<span  ng-show="editMode[$index]" class="material-icons info-edit">edit</span>
 					</div>
 				</div>
-			</md-content>
-
-			<!-- <md-card-actions layout="row" layout-align="end center">
-				<div class="contact-info" > 
+				<div class="vertical-line"></div>
+				<div class="contact-info" flex="10" layout="column">
+					<a ng-href="{{gamService.me.profileUrl}}"><span  class="fa fa-github-square"></span> </a>
+					<a ng-href="{{gamService.me.profileUrl}}"><span  class="fa fa-github-square"></span> </a>
 					<a ng-href="{{gamService.me.profileUrl}}"><span  class="fa fa-github-square"></span> </a>
 				</div>
-				<span flex></span>
-				<md-button>More Info</md-button>
-			</md-card-actions> -->
-		</md-card>
 
-	</md-content >
-</div>
-<!-- 
-
-		<md-content class="repos">
-			<div ng-repeat="repo in gamService.me.repos">
-				<p>{{repo.name}}</p>
-				<p>{{repo.description}}</p>
-				<p>{{repo.url}}</p>
-				<p>{{repo.updated_at | date}}</p>
-				<p>{{repo.language}}</p>
-				<hr>
 			</div>
-		</md-content> -->
 
-<!-- <md-content class="md-padding">
-    <md-grid-list
-           md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6"
-           md-row-height-gt-md="1:1" md-row-height="1:1"
-           md-gutter="12px" md-gutter-gt-sm="8px" >
-       <md-grid-tile  ng-repeat="follow in gamService.me.followers" 
-           md-rowspan="1" md-colspan="1" md-colspan-sm="1">
-           <img class="tile" ng-src="{{follow.avatar_url}}" />
-         <md-grid-tile-footer layout-align="center center">
-           <h2><a ng-href="#profile/{{follow.login}}">{{ follow.login }}</a></h2>
-         </md-grid-tile-footer>
-       </md-grid-tile>
-    </md-grid-list>
-</md-content> -->
+
+			<md-card-actions layout="row" layout-align="end center">
+				<span flex></span>
+				<md-button>Full Profile <span class="material-icons">expand_more</span></md-button>
+			</md-card-actions>
+	</md-card>
+
+	<md-content flex class="my-container" layout="column">
+		<div ng-repeat="repo in gamService.me.repos" flex  layout="column">
+			<p>{{repo.name}}</p>
+			<p>{{repo.description}}</p>
+			<p>{{repo.url}}</p>
+			<p>{{repo.updated_at | date}}</p>
+			<p>{{repo.language}}</p>
+			<hr>
+		</div>
+	</md-content>
+
+</div >
+
+<div class="card-background">
+	<div class="md-padding my-container">
+	    <md-grid-list
+	           md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6"
+	           md-row-height-gt-md="1:1" md-row-height="1:1"
+	           md-gutter="12px" md-gutter-gt-sm="8px" >
+	       <md-grid-tile  ng-repeat="follow in gamService.me.followers" 
+	           md-rowspan="1" md-colspan="1" md-colspan-sm="1">
+	           <img class="tile" ng-src="{{follow.avatar_url}}" />
+	         <md-grid-tile-footer layout-align="center center">
+	           <h2><a ng-href="#profile/{{follow.login}}">{{ follow.login }}</a></h2>
+	         </md-grid-tile-footer>
+	       </md-grid-tile>
+	    </md-grid-list>
+	</div>
+</div>
+

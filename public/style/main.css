@@ -3,28 +3,26 @@ html,body{
 	padding: 0;
 	background: #CEDAE9;
 }
-.profile-wrapper{
-	/*padding: 50px;*/
-}
 
-md-content.card-wrapper{
+.card-background{
 	background: #79E1FF;
-	padding: 75px 50px;
+	padding: 75px 10px;
 }
 
-.my-card{
-	padding: 25px;
+.my-container{
+	width: 100%;
 	max-width: 960px;
+	margin: auto;
 }
-.my-card img {
-	max-height: 350px;
-	max-width: 350px;
-}
+
 .contact-info-wrap{
 	width: 600px;
-	/*background: red;*/
 }
 
+.vertical-line{
+	border-right: solid 1px #333333 ;
+	margin: 0px 20px;
+}
 .contact-info-wrap .material-icons.info-icons,.contact-info-wrap .fa{
     position: relative;
     padding: 15px;
@@ -33,14 +31,10 @@ md-content.card-wrapper{
     border-right: solid 1px;
 }
 .contact-info {
-	/*height: 60px;*/
     color: #333333;
-    /*background: wheat;*/
     font-size: 25px;
-    /*border-bottom: solid 1px;*/
     padding: 5px;
 }
-
 
 .fa{
 	font-size: 40px;
@@ -58,10 +52,16 @@ md-content.card-wrapper{
     color: #333333;
 }
 
-.title-div{
-	border-left: solid;
-	background: red;
-}
+
 .main-wrap {
     overflow: hidden;
+}
+
+img.tile{
+	width: 100%;
+	height: 100%;
+}
+
+md-grid-list {
+	margin: auto;
 }
