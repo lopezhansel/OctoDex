@@ -7,7 +7,7 @@ app.controller('myProfileController', ["$scope", '$routeParams', '$mdMedia', '$m
 	$timeout(function () {
 		$scope.gamService = gamService;
 		if (!$scope.gamService.me) {}
-	}, 100);
+	}, 1000);
 
 	$scope.editMode = function (num, pushOrPop) {
 		if ($scope.editMode[num] === 0 || $scope.editMode[num]) {
