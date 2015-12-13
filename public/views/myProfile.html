@@ -1,32 +1,36 @@
-<div class="md-padding card-background" layout="column"  layout-align="center center">
-	<md-card layout-sm="row" layout-md="column" layout-lg="column" class="my-container md-whiteframe-5dp" >
+<md-content class="md-padding card-background main-md-content" layout="column"  layout-align="center center">
+	<md-card layout="column" class="my-container md-whiteframe-5dp" >
 
-			<div layout="row" class="card-header">
-				<div flex="33" >
-					<img ng-src="{{gamService.me.avatar}}"/>
+			<div layout-sm="column" layout="row"  class="card-header">
+				<div flex="33" flex-sm="100" >
+					<img ng-src="{{::gamService.me.avatar}}"/>
 				</div>
-				<div layout="column" flex class="md-padding" >
+				<div layout="column"  class="md-padding" layout-align-sm="center center"  >
 					<span class="md-display-2 display-name"> Hansel Lopez  </span>
-					<span class="md-display-1 display-name">Software Developer {{gamService.me.title}}</span>
+					<span class	="md-display-1 display-name">Software Developer </span>
 				</div>
 			</div>
 
 
-			<div class="md-padding" layout="row" >
+			<div class="md-padding " layout="row" layout-sm="column"  layout-align-sm="center center" >
 				<div layout="column" flex="95" class="contact-info-wrap">
-					<div class="contact-info" ng-mouseLeave="editMode($index)"  ng-mouseEnter="editMode($index)" ng-repeat="key in gamService.me.mainList"> 
-						<span class="material-icons info-icons ">{{::iconChooser(key)}}</span>
-						<span ng-show="!editMode[$index]" >{{gamService.me[key]}}</span>
-						<input ng-show="editMode[$index]"type="text" ng-model="gamService.me[key]">
-						<span flex></span>
-						<span  ng-show="editMode[$index]" class="material-icons info-edit">edit</span>
-					</div>
+					<form action="" name="myForm" novalidate> 
+						<div class="contact-info" ng-mouseLeave="editMode($index)"  ng-mouseEnter="editMode($index)" ng-repeat="key in ::gamService.me.mainList"> 
+							<span class="material-icons info-icons ">{{::iconChooser(key)}}</span>
+							<span class="my-input" ng-show="!editMode[$index]" >{{gamService.me[key]}}</span>
+							<input name="user{{$index}}" ng-show="editMode[$index]"type="text" ng-model="gamService.me[key]">
+							<span flex>{{myForm["user"+$index].$dirty}}</span>
+							<span  ng-show="editMode[$index]" class="material-icons info-edit">edit</span>
+						</div>
+					</form>
 				</div>
+
 				<div class="vertical-line"></div>
-				<div class="contact-info" flex="10" layout="column">
-					<a ng-href="{{gamService.me.profileUrl}}"><span  class="fa fa-github-square"></span> </a>
-					<a ng-href="{{gamService.me.profileUrl}}"><span  class="fa fa-github-square"></span> </a>
-					<a ng-href="{{gamService.me.profileUrl}}"><span  class="fa fa-github-square"></span> </a>
+
+				<div class="contact-info" flex="10" layout="column"	 layout-sm="row" >
+					<a ng-href="{{::gamService.me.profileUrl}}"><span class="fa fa-github-square"></span> </a>
+					<a ng-href="{{::gamService.me.profileUrl}}"><span class="fa fa-github-square"></span> </a>
+					<a ng-href="{{::gamService.me.profileUrl}}"><span class="fa fa-github-square"></span> </a>
 				</div>
 
 			</div>
@@ -34,37 +38,57 @@
 
 			<md-card-actions layout="row" layout-align="end center">
 				<span flex></span>
-				<md-button>Full Profile <span class="material-icons">expand_more</span></md-button>
+				<md-button ng-show="true">Full Profile {{dirty}} <span class="material-icons">expand_more</span></md-button>
 			</md-card-actions>
 	</md-card>
 
-	<md-content flex class="my-container" layout="column">
-		<div ng-repeat="repo in gamService.me.repos" flex  layout="column">
-			<p>{{repo.name}}</p>
-			<p>{{repo.description}}</p>
-			<p>{{repo.url}}</p>
-			<p>{{repo.updated_at | date}}</p>
-			<p>{{repo.language}}</p>
-			<hr>
-		</div>
-	</md-content>
 
-</div >
+
+</md-content >
 
 <div class="card-background">
-	<div class="md-padding my-container">
+	<md-content flex class="my-container md-padding md-whiteframe-5dp" layout="column">
+		<div class="md-display-1"	>{{::gamService.me.username | uppercase}}'s Repositories </div>
+		<br>
+		<div ng-repeat="repo in ::gamService.me.repos" flex  layout="column">
+			<md-divider ></md-divider>
+			<p class="md-headline">
+				<a ng-href="{{::repo.svn_url}}">{{::repo.name}}</a>
+			</p>
+			<p ng-if="repo.homepage">
+				<i class="material-icons">visibility</i>
+				<a ng-href="{{::repo.homepage}}">{{::repo.homepage}}</a>
+			</p>
+			<p class="md-subhead">{{::repo.description}}</p>
+			<p>Last updated {{::repo.updated_at | date}}</p>
+			<p>Primary project language : {{::repo.language}}</p>
+		</div>
+	</md-content>
+</div>
+
+<div class="card-background" ng-cloak>
+	<md-content class="md-padding my-container md-whiteframe-5dp ">
+		<div class="md-display-1">{{::gamService.me.username | uppercase}}'s Followers </div>
+		<md-divider ></md-divider>
+		<br>
 	    <md-grid-list
-	           md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6"
+	    	   md-cols="1"
+	    	   md-cols-xm="1"
+	           md-cols-sm="2" md-cols-md="4" md-cols-gt-md="5"
 	           md-row-height-gt-md="1:1" md-row-height="1:1"
 	           md-gutter="12px" md-gutter-gt-sm="8px" >
-	       <md-grid-tile  ng-repeat="follow in gamService.me.followers" 
+	       <md-grid-tile  ng-repeat="follow in ::gamService.me.followers" 
 	           md-rowspan="1" md-colspan="1" md-colspan-sm="1">
-	           <img class="tile" ng-src="{{follow.avatar_url}}" />
-	         <md-grid-tile-footer layout-align="center center">
-	           <h2><a ng-href="#profile/{{follow.login}}">{{ follow.login }}</a></h2>
-	         </md-grid-tile-footer>
+	           <a class="tile-name" ng-href="#profile/{{::follow.login}}">
+		           <img class="tile" ng-src="{{::follow.avatar_url}}" />
+	           </a>
+	         <a class="tile-name" ng-href="#profile/{{::follow.login}}">
+		         <md-grid-tile-footer layout-align="center center">
+		           <h2>{{:: follow.login }}</h2>
+		         </md-grid-tile-footer>
+		     </a>
 	       </md-grid-tile>
 	    </md-grid-list>
-	</div>
+	</md-content>
 </div>
 
