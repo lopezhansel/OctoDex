@@ -8,12 +8,10 @@ app.controller('myProfileController', [  "$scope", '$routeParams', '$mdMedia', '
 		}
 	}, 1000);	
 
-	$scope.saveBtn = function (bool) {
-		if(bool){
-			$scope.showSaveBtn = true;
-		}
+	$scope.update = function () {
+		// here it will update server
+		console.log(gamService.me);
 	};
-
 
 }]);
 
@@ -38,6 +36,15 @@ app.directive('inline', ["gamService",function (gamService) {
 			}
 			else{ scope.editMode[num] = true;}
 		};
+		scope.updateGam = function (key) {
+			gamService.me[key] = scope.value;
+		};
+		scope.saveBtn = function (bool) {
+			if(bool){
+				gamService.showSaveBtn = true;
+			}
+		};
+
 
 		function iconChooser (key) {
 			var myIcons= {
