@@ -9,23 +9,46 @@ app.controller('myProfileController', ["$scope", '$routeParams', '$mdMedia', '$m
 		if (!$scope.gamService.me) {}
 	}, 1000);
 
-	$scope.editMode = function (num, pushOrPop) {
-		if ($scope.editMode[num] === 0 || $scope.editMode[num]) {
-			$scope.editMode[num] = null;
-		} else {
-			$scope.editMode[num] = true;
+	$scope.saveBtn = function (bool) {
+		if (bool) {
+			$scope.showSaveBtn = true;
 		}
 	};
+}]);
 
-	$scope.iconChooser = function (key) {
-		var myIcons = {
-			phone: "phone",
-			blog: "link",
-			company: "business",
-			email: "email",
-			hireable: "beenhere",
-			location: "place"
-		};
-		return myIcons[key];
+app.directive('inline', ["gamService", function (gamService) {
+	return {
+		restrict: 'EA',
+		replace: true,
+		scope: {
+			key: "@"
+		},
+		templateUrl: "views/inline.html",
+		link: link
 	};
+	function link(scope, element, attrs, controller) {
+
+		scope.value = gamService.me[attrs.key];
+		scope.icon = iconChooser(attrs.key);
+
+		scope.editMode = function (num) {
+			if (scope.editMode[num] === 0 || scope.editMode[num]) {
+				scope.editMode[num] = null;
+			} else {
+				scope.editMode[num] = true;
+			}
+		};
+
+		function iconChooser(key) {
+			var myIcons = {
+				phone: "phone",
+				blog: "link",
+				company: "business",
+				email: "email",
+				hireable: "beenhere",
+				location: "place"
+			};
+			return myIcons[key];
+		}
+	}
 }]);

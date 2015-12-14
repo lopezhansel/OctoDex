@@ -4,28 +4,51 @@ app.controller('myProfileController', [  "$scope", '$routeParams', '$mdMedia', '
 
 	$timeout(() => {
 		$scope.gamService = gamService;
-		if (!$scope.gamService.me){
+		if (!$scope.gamService.me){	
 		}
-	}, 1000);
+	}, 1000);	
 
-	$scope.editMode =  (num , pushOrPop) => {
-		if ($scope.editMode[num] === 0 || $scope.editMode[num] )  { 
-			$scope.editMode[num] = null;
+	$scope.saveBtn = function (bool) {
+		if(bool){
+			$scope.showSaveBtn = true;
 		}
-		else{ $scope.editMode[num] = true;}
 	};
 
-	$scope.iconChooser = function (key) {
-		var myIcons= {
-			phone : "phone",
-			blog  : "link",
-			company : "business",
-			email : "email",
-			hireable : "beenhere" ,
-			location : "place"
+
+}]);
+
+app.directive('inline', ["gamService",function (gamService) {
+	return {
+		restrict: 'EA',
+		replace: true,
+		scope: {
+		  key: "@",
+		},
+		templateUrl : "views/inline.html",
+		link : link
+	};
+	function link(scope, element, attrs, controller){
+
+		scope.value= gamService.me[attrs.key];
+		scope.icon = iconChooser(attrs.key);
+
+		scope.editMode =  (num ) => {
+			if (scope.editMode[num] === 0 || scope.editMode[num] )  { 
+				scope.editMode[num] = null;
+			}
+			else{ scope.editMode[num] = true;}
 		};
-		return myIcons[key];
-	};
 
-	
+		function iconChooser (key) {
+			var myIcons= {
+				phone : "phone",
+				blog  : "link",
+				company : "business",
+				email : "email",
+				hireable : "beenhere" ,
+				location : "place"
+			};
+			return myIcons[key];	
+		}
+	}
 }]);
