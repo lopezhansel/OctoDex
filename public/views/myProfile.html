@@ -14,14 +14,12 @@
 
 			<div class="md-padding " layout="row" layout-sm="column"  layout-align-sm="center center" >
 				<div layout="column" flex="95" class="contact-info-wrap">
-					<form action="" name="myForm" novalidate> 
 						<inline key="phone"></inline>
 						<inline key="blog"></inline>
 						<inline key="company"></inline>
 						<inline key="email"></inline>
 						<inline key="hireable"></inline>
 						<inline key="location"></inline>
-					</form>
 				</div>
 
 				<div class="vertical-line"></div>
@@ -37,8 +35,13 @@
 
 			<md-card-actions layout="row" layout-align="end center">
 				<span flex></span>
-				<md-button ng-show="showSaveBtn" class="md-primary md-raised" aria-label="save button" full>Update Profile</md-button>
-				<md-button ng-show="true">Full Profile {{dirty}} <span class="material-icons">expand_more</span></md-button>
+				<md-button ng-show="gamService.showSaveBtn" 
+					class="md-primary md-raised" 
+					ng-click="update()"
+					aria-label="save button" full>
+					Update Profile
+				</md-button>
+				<md-button ng-show="true">Full Profile <i class="material-icons">expand_more</i></md-button>
 			</md-card-actions>
 	</md-card>
 
