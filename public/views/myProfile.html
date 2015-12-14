@@ -6,7 +6,7 @@
 					<img ng-src="{{::gamService.me.avatar}}"/>
 				</div>
 				<div layout="column"  class="md-padding" layout-align-sm="center center"  >
-					<span class="md-display-2 display-name"> Hansel Lopez  </span>
+					<h2 inline key="displayName" class="md-display-2 display-name"> </h2>
 					<span class	="md-display-1 display-name">Software Developer </span>
 				</div>
 			</div>
@@ -15,13 +15,12 @@
 			<div class="md-padding " layout="row" layout-sm="column"  layout-align-sm="center center" >
 				<div layout="column" flex="95" class="contact-info-wrap">
 					<form action="" name="myForm" novalidate> 
-						<div class="contact-info" ng-mouseLeave="editMode($index)"  ng-mouseEnter="editMode($index)" ng-repeat="key in ::gamService.me.mainList"> 
-							<span class="material-icons info-icons ">{{::iconChooser(key)}}</span>
-							<span class="my-input" ng-show="!editMode[$index]" >{{gamService.me[key]}}</span>
-							<input name="user{{$index}}" ng-show="editMode[$index]"type="text" ng-model="gamService.me[key]">
-							<span flex>{{myForm["user"+$index].$dirty}}</span>
-							<span  ng-show="editMode[$index]" class="material-icons info-edit">edit</span>
-						</div>
+						<inline key="phone"></inline>
+						<inline key="blog"></inline>
+						<inline key="company"></inline>
+						<inline key="email"></inline>
+						<inline key="hireable"></inline>
+						<inline key="location"></inline>
 					</form>
 				</div>
 
@@ -38,6 +37,7 @@
 
 			<md-card-actions layout="row" layout-align="end center">
 				<span flex></span>
+				<md-button ng-show="showSaveBtn" class="md-primary md-raised" aria-label="save button" full>Update Profile</md-button>
 				<md-button ng-show="true">Full Profile {{dirty}} <span class="material-icons">expand_more</span></md-button>
 			</md-card-actions>
 	</md-card>
