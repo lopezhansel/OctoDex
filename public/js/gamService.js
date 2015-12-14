@@ -19,6 +19,7 @@ app.service('gamService', ['$routeParams', '$mdMedia', '$mdDialog', '$mdToast', 
 	gam.getFollowers = function (user) {
 		$http.get('https://api.github.com/users/' + user.username + '/followers').then(function (response) {
 			user.followers = response.data;
+			console.log(user.followers);
 		});
 	};
 
@@ -37,6 +38,7 @@ app.service('gamService', ['$routeParams', '$mdMedia', '$mdDialog', '$mdToast', 
 	gam.getRepos = function (user) {
 		$http.get('https://api.github.com/users/' + user.username + '/repos').then(function (response) {
 			user.repos = response.data;
+			console.log(user.repos);
 		});
 	};
 
@@ -46,4 +48,3 @@ app.service('gamService', ['$routeParams', '$mdMedia', '$mdDialog', '$mdToast', 
 		});
 	};
 }]);
-//
