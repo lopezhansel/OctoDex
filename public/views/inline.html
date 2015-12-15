@@ -1,13 +1,15 @@
-<form action="" name="myForm" novalidate class="contact-info" ng-mouseLeave="editMode($index)" ng-mouseEnter="editMode($index)" ng-show="value">
-	<i ng-show="!editMode[$index] && icon" class="material-icons info-icons ">{{::icon}}</i>
-	<i  ng-show="editMode[$index] && icon" class="material-icons info-edit">edit</i>
+<span ng-if="value === '' || value" ng-mouseLeave="editMode(key)" ng-mouseEnter="editMode(key)">
 
-	<span class="my-input" ng-show="!editMode[$index]" >{{value}}</span>
-	<div class="input-wrap" ng-mouseleave="updateGam(key)">
-		<input name="user{{$index}}" ng-show="editMode[$index]"
-			type="text" ng-model="value"
-			 ng-mouseleave="saveBtn(myForm['user'+$index].$dirty)">
-	</div>
+	<i ng-show="!editMode[key] && icon" class="material-icons info-icons ">{{::icon}}</i>
+	<i ng-show="editMode[key] && icon" class="material-icons info-edit">edit</i>
 
-	<span flex></span>
-</form>
+	<span class="my-input" ng-show="!editMode[key]" >{{value}}</span>
+
+	<form ng-show="editMode[key]" name="myForm" novalidate class="contact-info inline">
+		<div class="inline" ng-mouseleave="updateGam(key)">
+			<input  name="user{{key}}" 
+				type="text" ng-model="value"
+				ng-mouseleave="saveBtn(myForm['user'+key].$dirty)">
+		</div>
+	</form>
+</span>
