@@ -7,7 +7,7 @@ var userSchema = mongoose.Schema({
     email         : {type: String, required: true},
     gitToken      : {type: String, required: true},
     githubId      : {type: String, required: true}, // should be a number but might cuase error if not string
-    avatar        : {type: String},
+    avatar_url    : {type: String},
     apiUrl        : {type: String},
     company       : {type: String},
     blog          : {type: String},
