@@ -1,11 +1,11 @@
-<span ng-if="value === '' || value" ng-mouseLeave="editMode(key)" ng-mouseEnter="editMode(key)">
+<span ng-if="value === '' || value" ng-mouseLeave="editMode(1)" ng-mouseEnter="editMode(1)">
 
-	<i ng-show="!editMode[key] && icon" class="material-icons info-icons ">{{::icon}}</i>
-	<i ng-show="editMode[key] && icon" class="material-icons info-edit">edit</i>
+	<i ng-show="!editMode[1] && icon" class="material-icons info-icons ">{{::icon}}</i>
+	<i ng-show="editMode[1] && icon" class="material-icons info-edit">edit</i>
 
-	<span class="my-input" ng-show="!editMode[key]" >{{value}}</span>
+	<span class="my-input" ng-show="!editMode[1]" >{{value}}</span>
 
-	<form ng-show="editMode[key]" name="myForm" novalidate class="contact-info inline">
+	<form ng-show="editMode[1]" name="myForm" novalidate class="contact-info inline">
 		<div class="inline" ng-mouseleave="updateGam(key)">
 			<input  name="user{{key}}" 
 				type="text" ng-model="value"
