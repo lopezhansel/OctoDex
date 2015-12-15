@@ -18,27 +18,32 @@ app.controller('myProfileController', [  "$scope", '$routeParams', '$mdMedia', '
 app.directive('inline', ["gamService",function (gamService) {
 	return {
 		restrict: 'EA',
-		replace: true,
+
 		scope: {
 		  key: "@",
 		},
 		templateUrl : "views/inline.html",
 		link : link
 	};
+
+
+
 	function link(scope, element, attrs, controller){
 
 		scope.value= gamService.me[attrs.key];
 		scope.icon = iconChooser(attrs.key);
 
-		scope.editMode =  (num ) => {
-			if (scope.editMode[num] === 0 || scope.editMode[num] )  { 
-				scope.editMode[num] = null;
+		scope.editMode =  (value ) => {
+			if (scope.editMode[value] === 0 || scope.editMode[value] )  { 
+				scope.editMode[value] = null;
 			}
-			else{ scope.editMode[num] = true;}
+			else{ scope.editMode[value] = true;}
 		};
+
 		scope.updateGam = function (key) {
 			gamService.me[key] = scope.value;
 		};
+
 		scope.saveBtn = function (bool) {
 			if(bool){
 				gamService.showSaveBtn = true;
