@@ -6,7 +6,7 @@
 					<img ng-src="{{::gamService.me.avatar}}"/>
 				</div>
 				<div layout="column"  class="md-padding" layout-align-sm="center center"  >
-					<h2 inline key="displayName" class="md-display-2 display-name"> </h2>
+					<div inline key="displayName" class="md-display-2 display-name"></div>
 					<span class	="md-display-1 display-name">Software Developer </span>
 				</div>
 			</div>
@@ -14,17 +14,19 @@
 
 			<div class="md-padding " layout="row" layout-sm="column"  layout-align-sm="center center" >
 				<div layout="column" flex="95" class="contact-info-wrap">
-						<inline key="phone"></inline>
-						<inline key="blog"></inline>
-						<inline key="company"></inline>
-						<inline key="email"></inline>
-						<inline key="hireable"></inline>
-						<inline key="location"></inline>
+						<div class="contact-info">
+							<div inline key="phone"></div>
+							<div inline key="blog"></div>
+							<div inline key="company"></div>
+							<div inline key="email"></div>
+							<div inline key="hireable"></div>
+							<div inline key="location"></div>
+						</div>
 				</div>
 
 				<div class="vertical-line"></div>
 
-				<div class="contact-info" flex="10" layout="column"	 layout-sm="row" >
+				<div class="contact-info" flex-gt-sm="10" layout="column"	 layout-sm="row" >
 					<a ng-href="{{::gamService.me.profileUrl}}"><span class="fa fa-github-square"></span> </a>
 					<a ng-href="{{::gamService.me.profileUrl}}"><span class="fa fa-github-square"></span> </a>
 					<a ng-href="{{::gamService.me.profileUrl}}"><span class="fa fa-github-square"></span> </a>
@@ -36,9 +38,9 @@
 			<md-card-actions layout="row" layout-align="end center">
 				<span flex></span>
 				<md-button ng-show="gamService.showSaveBtn" 
-					class="md-primary md-raised" 
+					class="md-warn md-raised" 
 					ng-click="update()"
-					aria-label="save button" full>
+					aria-label="save button">
 					Update Profile
 				</md-button>
 				<md-button ng-show="true">Full Profile <i class="material-icons">expand_more</i></md-button>
@@ -49,7 +51,7 @@
 
 </md-content >
 
-<div class="card-background">
+<div class="card-background md-padding">
 	<md-content flex class="my-container md-padding md-whiteframe-5dp" layout="column">
 		<div class="md-display-1"	>{{::gamService.me.username | uppercase}}'s Repositories </div>
 		<br>
@@ -69,7 +71,7 @@
 	</md-content>
 </div>
 
-<div class="card-background" ng-cloak>
+<div class="card-background md-padding" ng-cloak>
 	<md-content class="md-padding my-container md-whiteframe-5dp ">
 		<div class="md-display-1">{{::gamService.me.username | uppercase}}'s Followers </div>
 		<md-divider ></md-divider>
