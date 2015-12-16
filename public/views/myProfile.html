@@ -7,9 +7,10 @@
         </div>
         <div layout="column"  class="md-padding" layout-align-sm="center center">
           <div>
-            <span inline key="name" class="md-display-2 display-name inline"></span>
+            <span inline user="user" key="name" class="md-display-2 display-name inline"></span>
+			<!--  Error Here when width is too long of both username -->
             <span class="md-display-2 display-name inline"> | </span>
-            <span inline key="username" class="md-display-2 display-name inline"></span>
+            <span inline user="user" key="username" class="md-display-2 display-name inline"></span>
           </div>
           <span class="md-display-1 display-name">Software Developer </span>
           <div class="md-display-1 display-name"> 
@@ -22,12 +23,12 @@
       <div class="md-padding " layout="row" layout-sm="column"  layout-align-sm="center center" >
         <div layout="column" flex="95" class="contact-info-wrap">
             <div class="contact-info">
-              <div inline key="phone"></div>
-              <div inline key="blog"></div>
-              <div inline key="company"></div>
-              <div inline key="email"></div>
-              <div inline key="hireable"></div>
-              <div inline key="location"></div>
+              <div inline user="user" key="phone"></div>
+              <div inline user="user" key="blog"></div>
+              <div inline user="user" key="company"></div>
+              <div inline user="user" key="email"></div>
+              <div inline user="user" key="hireable"></div>
+              <div inline user="user" key="location"></div>
             </div>
         </div>
 
@@ -63,10 +64,11 @@
 		<div ng-repeat="repo in ::user.repos" flex  layout="column">
 			<md-divider ></md-divider>
 			<p class="md-headline">
-				<a ng-href="{{::repo.svn_url}}">{{::repo.name}}</a>
+				<a ng-href="{{::repo.svn_url}}" target="_blank">{{::repo.name}}</a>
 			</p>
 			<p ng-if="repo.homepage">
 				<i class="material-icons">visibility</i>
+				<!-- Error Here when repo.hompage doesn't have http -->
 				<a ng-href="{{::repo.homepage}}">{{::repo.homepage}}</a>
 			</p>
 			<p class="md-subhead">{{::repo.description}}</p>
