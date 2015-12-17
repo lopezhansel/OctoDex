@@ -3,6 +3,7 @@
 var app = angular.module('gitAtMe', ["ngMaterial", "ngAnimate", "ngAria", "ngRoute"]);
 
 app.config(function ($routeProvider, $locationProvider) {
+	console.log("routeProvider booting");
 	$routeProvider.when('/', {
 		controller: "myProfileController",
 		templateUrl: "views/myProfile.html"

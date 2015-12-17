@@ -4,7 +4,7 @@ app.controller('indexController', [  "$scope", "$window", '$routeParams', '$mdMe
 	$timeout(() => {
 		$scope.signInBtn = gamService.signInBtn;
 		$scope.gamService = gamService;
-		console.log($scope.gamService.me);
+		// console.log($scope.gamService.me);
 	}, 100);
 
 	$scope.logger = () =>{
