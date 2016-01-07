@@ -1,6 +1,6 @@
 # OctoDex
 Github's Octocat + Rolodex = OctoDex
-Easily create and share a virtual business card using your Github information
+* Easily create and share a virtual business card using your Github information
 
 ## Front-End
 * Angular - For MVC 

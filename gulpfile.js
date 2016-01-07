@@ -23,7 +23,7 @@ gulp.task('browser-sync', ['nodemon'], () => {
         },
         files: ["./public/**/*.*"],
         browser: "google chrome",
-        port: 1000,
+        port: 2001,
         reloadDelay: 500
 	});
 });
