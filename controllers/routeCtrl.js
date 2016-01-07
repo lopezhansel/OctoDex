@@ -14,7 +14,7 @@ module.exports = (app, passport) => {
 	app.get('/api/me', ensureAuthenticatedAjax,  (req,res) => {
 		User.findById(req.user._id, (err, user) => {
 			if(err) { res.send("err");}
-			// user.gitToken = null;
+			user.gitToken = null;
 			res.send(user);
 		});
 	});
@@ -58,7 +58,6 @@ module.exports = (app, passport) => {
 	});
 
 	app.get('/auth/github/callback', passport.authenticate('github', {failureRedirect: '/'}), (req, res) => {
-		console.log("here");
 		req.logIn(req.user, err => {
 			if (err) {return next(err); }
 			// ENABLE CORS LATER
@@ -72,10 +71,8 @@ module.exports = (app, passport) => {
 	});
 
 	function ensureAuthenticated (req, res, next) {
-		// if (req.isAuthenticated()) {return next(); }
-		// res.redirect('/');
-		console.log("bypassing isAuthenticated while developing");
-		return next();
+		if (req.isAuthenticated()) {return next(); }
+		res.redirect('/');
 	}
 	
 	function ensureAuthenticatedAjax (req, res, next) {

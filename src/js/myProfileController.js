@@ -1,22 +1,22 @@
-app.controller('myProfileController', [  "$scope", '$routeParams', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout", "gamService",function ($scope, $routeParams, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout, gamService) {
+app.controller('myProfileController', [  "$scope", '$routeParams', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout", "octo",function ($scope, $routeParams, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout, octo) {
 
-	$scope.gamService = gamService;
-	$scope.user = gamService.me;
+	$scope.octo = octo;
+	$scope.user = octo.me;
 
 	$timeout(() => {
-		$scope.gamService = gamService;
-		if (!$scope.gamService.me){	
+		$scope.octo = octo;
+		if (!$scope.octo.me){	
 		}
 	}, 1000);	
 
 	$scope.update = function () {
 		// here it will update server
-		console.log(gamService.me);
+		console.log(octo.me);
 	};
 
 }]);
 
-app.directive('inline', ["gamService","$routeParams",function (gamService,$routeParams) {
+app.directive('inline', ["octo","$routeParams",function (octo,$routeParams) {
 	console.log("inline directive boot");
 
 	return {
@@ -43,7 +43,7 @@ app.directive('inline', ["gamService","$routeParams",function (gamService,$route
 
 				console.log(scope.user.name);
 				console.log("inside loop");
-				scope.value= scope.user[attrs.key];
+				scope.TextValue= scope.user[attrs.key];
 				scope.icon = iconChooser(attrs.key);
 				
 				scope.editMode =  (value ) => {
@@ -53,13 +53,13 @@ app.directive('inline', ["gamService","$routeParams",function (gamService,$route
 					else{ scope.editMode[value] = true;}
 				};
 				
-				scope.updateGam = function (key) {
-					scope.user[key] = scope.value;
+				scope.updateOcto = function (key) {
+					scope.user[key] = scope.TextValue;
 				};
 				
 				scope.saveBtn = function (bool) {
 					if(bool){
-						gamService.showSaveBtn = true;
+						octo.showSaveBtn = true;
 					}
 				};
 				

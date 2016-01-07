@@ -1,16 +1,16 @@
 "use strict";
 
-app.controller('indexController', ["$scope", "$window", '$routeParams', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout", "gamService", function ($scope, $window, $routeParams, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout, gamService) {
-	$scope.signInBtn = gamService.signInBtn;
+app.controller('indexController', ["$scope", "$window", '$routeParams', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout", "octo", function ($scope, $window, $routeParams, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout, octo) {
+	$scope.signInBtn = octo.signInBtn;
 
 	$timeout(function () {
-		$scope.signInBtn = gamService.signInBtn;
-		$scope.gamService = gamService;
-		// console.log($scope.gamService.me);
+		$scope.signInBtn = octo.signInBtn;
+		$scope.octo = octo;
+		// console.log($scope.octo.me);
 	}, 100);
 
 	$scope.logger = function () {
-		if (gamService.me.error) {
+		if (octo.me.error) {
 			$window.open("/auth/github", "_self");
 		} else {
 			$window.open("/logout", "_self");

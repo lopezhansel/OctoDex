@@ -1,7 +1,8 @@
-var app = angular.module('gitAtMe',["ngMaterial","ngAnimate","ngAria","ngRoute"]); 
+// initiate angular app and load in other dependencies.
+var app = angular.module('octodex',["ngMaterial","ngAnimate","ngAria","ngRoute"]); 
+
 
 app.config(function($routeProvider,$locationProvider){
-	console.log("routeProvider booting");
 	$routeProvider.when('/',{
 		controller : "myProfileController",
 		templateUrl : "views/myProfile.html"
@@ -11,3 +12,12 @@ app.config(function($routeProvider,$locationProvider){
 	}).otherwise({ redirectTo: '/' });
 	// $locationProvider.html5Mode(true);
 });
+
+
+// enable "view full profile " button
+// fix edit mode in directive
+
+// change port to 2000
+// save user data into database
+
+// rename gam files

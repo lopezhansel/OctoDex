@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html ng-app="gitAtMe">
+<html ng-app="octodex">
 	<head>
-		<!-- <base href="/"> -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular-animate.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular-aria.min.js"></script>
@@ -14,16 +13,18 @@
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui" />
 		<link rel="stylesheet" type="text/css" href="./style/main.css">
-		<title>Git At Me</title>
+		<title>OctoDex - Github Cards</title>
 	</head>
 	<body ng-cloak ng-controller="indexController">
-
+		<!-- main-wrap is persistent throughout the whole app -->
 		<div layout="column" class="main-wrap" layout-fill>
 		  <md-toolbar layout="row" md-scroll-shrink>
+		  	<!-- this back button wont show if at home  -->
 		  	<md-button ng-if="isAtHome()" ng-click="redirect('/')">Back</md-button>
 		    <div class="md-toolbar-tools">
-		      <span>Git at Me</span>
+		      <span>OctoDex</span>
 		      <span flex></span>
+		      <!-- Logger function Logs in  -->
 		      <md-button ng-click="logger()">
 		        {{signInBtn}}
 		      </md-button>
@@ -31,11 +32,13 @@
 		  </md-toolbar>
 
 		  <md-content layout-fill layout="column">
-		    <ng-view ng-if="!gamService.me.error"></ng-view>
+		  	<!-- Rendered View will go inside of ng-view -->
+		    <ng-view ng-if="!octo.me.error"></ng-view>
+		    <!-- If not signed in "octo.me.error" show the following  -->
 		    <md-content 
 		    	layout-fill	
 		    	class="md-padding" layout="column" 
-		    	ng-if="gamService.me.error"
+		    	ng-if="octo.me.error"
 		    	layout-align="start center">
 		    	<h1>Sign In Using GitHub</h1> 
 		    	<md-button class="md-raised md-primary" ng-click="logger()">

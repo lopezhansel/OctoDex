@@ -35,9 +35,9 @@
         <div class="vertical-line"></div>
 
         <div class="contact-info" flex-gt-sm="10" layout="column"  layout-sm="row" >
-          <a ng-href="{{::gamService.me.profileUrl}}"><span class="fa fa-github-square"></span> </a>
-          <a ng-href="{{::gamService.me.profileUrl}}"><span class="fa fa-github-square"></span> </a>
-          <a ng-href="{{::gamService.me.profileUrl}}"><span class="fa fa-github-square"></span> </a>
+          <a ng-href="{{::octo.me.profileUrl}}"><span class="fa fa-github-square"></span> </a>
+          <a ng-href="{{::octo.me.profileUrl}}"><span class="fa fa-github-square"></span> </a>
+          <a ng-href="{{::octo.me.profileUrl}}"><span class="fa fa-github-square"></span> </a>
         </div>
 
       </div>
@@ -45,7 +45,7 @@
 
       <md-card-actions layout="row" layout-align="end center">
         <span flex></span>
-        <md-button ng-show="gamService.showSaveBtn" 
+        <md-button ng-show="octo.showSaveBtn" 
           class="md-warn md-raised" 
           ng-click="update()"
           aria-label="save button">

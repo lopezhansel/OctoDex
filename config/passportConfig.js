@@ -22,10 +22,12 @@ module.exports = (passport) => {
 		(accessToken, refreshToken, profile, done) => {
 			process.nextTick(() => {
 				User.findOne({'githubId': profile.id }, (err, user) => {
-					if (err)
+					if (err) {
 						return (err);
-					if (user)
-						return done(null, user);
+					}
+					if (user) {
+						return done(null, user);                        
+                    }
 					else {
 						var newUser          = new User();
 						newUser.username     = profile.username;

@@ -1,51 +1,61 @@
-app.service('gamService', ['$routeParams', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout",
+app.service('octo', ['$routeParams', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout",
 	function($routeParams, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout) {
+		//  give this the alias of octo
+		var octo = this;
+		// text of the sign in button 
+		octo.signInBtn = "Sign In";
+		var secret = ' ';
 
-		console.log("gamService");
-		var gam = this;
-		gam.signInBtn = "Sign In";
-		var secret = '?client_id=8b92ef6de8d9f80357f2&client_secret=5032c27da0701378876cf2ecf58e5e381b50ba93';
-
+		// First action to do is check if user is logged in. 
 		$http.get('/api/me').then((response) => {
-			console.log('/api/me',response.data);
-			gam.me = response.data;
-			if (gam.me.error) { return ;}
-			gam.getFollowers(gam.me);
-			gam.getRepos(gam.me);
-			gam.signInBtn = "Sign out";
+			// console.log('/api/me', response.data);
+			// octo.me object will contain have new properties if logged in 
+			octo.me = response.data;
+			// if client is not logged in octo.me will have a error property 
+			if (octo.me.error) {
+				return;
+			}
+			// if logged in, will trigger the following two functions to retrieve more data about the github user
+			octo.getFollowers(octo.me);
+			octo.getRepos(octo.me);
+			// if logged in the string signInBtn will change
+			octo.signInBtn = "Sign out";
 		});
 
-		gam.getFollowers = (user) => {
-			$http.get('https://api.github.com/users/'+user.username+'/followers'+secret).then((response) => { 
+		octo.getFollowers = (user) => {
+			// the 'user' parameter contains information about the client that the server sent to us
+			$http.get('https://api.github.com/users/' + user.username + '/followers' + secret).then((response) => {
 				user.followers = response.data;
 				// console.log(user.followers);
 			});
 		};
 
-		gam.getOtherUser = (user) => {
-			$http.get('https://api.github.com/users/'+user+secret).then((response) => { 
-				console.log("otherUser",response.data);
-
-				gam[$routeParams.user] = response.data;
-				gam[$routeParams.user].username = gam[$routeParams.user].login;
-				gam.getFollowers(gam[$routeParams.user]);
-				gam.getRepos(gam[$routeParams.user]);
-			},(response)=>{
-				gam[$routeParams.user] = response.data;
-			});
-		};
-
-		gam.getRepos = (user) => {
-			$http.get('https://api.github.com/users/'+user.username+'/repos'+secret).then((response) => { 
+		octo.getRepos = (user) => {
+			// the 'user' parameter contains information about the client that the server sent to us
+			$http.get('https://api.github.com/users/' + user.username + '/repos' + secret).then((response) => {
 				user.repos = response.data;
 				// console.log(user.repos);
 			});
 		};
+		octo.otherUsers = {};
 
-		gam.sendData = () => {
-			$http.put('/api/me', gam.me).then( (response) =>{
+		// getAnotherUser is for retrieving another user that is not the client profile 
+		octo.getAnotherUser = (user) => {
+			$http.get('https://api.github.com/users/' + user + secret).then((response) => {
+				octo.otherUsers[$routeParams.user] = response.data;
+				octo.otherUsers[$routeParams.user].username = octo.otherUsers[$routeParams.user].login;
+				octo.getFollowers(octo.otherUsers[$routeParams.user]);
+				octo.getRepos(octo.otherUsers[$routeParams.user]);
+			}, (response) => {
+				octo.otherUsers[$routeParams.user] = response.data;
+			});
+		};
+
+
+		octo.sendData = () => {
+			$http.put('/api/me', octo.me).then((response) => {
 				// console.log(response.data);
 			});
 		};
-}]);
-
+	}
+]);
