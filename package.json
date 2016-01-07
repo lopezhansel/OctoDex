@@ -17,8 +17,6 @@
     "url": "https://github.com/lopezhansel/Virtual-Business-Card/issues"
   },
   "homepage": "https://github.com/lopezhansel/Virtual-Business-Card#readme",
-
-
   "dependencies": {
     "bcryptjs": "^2.3.0",
     "body-parser": "^1.14.1",
@@ -26,9 +24,10 @@
     "express-session": "^1.11.3",
     "mongoose": "^4.1.11",
     "passport": "^0.3.0",
+    "passport-github2": "^0.1.9",
     "passport-local": "^1.0.0"
   },
-    "devDependencies": {
+  "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.0",
     "babel-preset-es2015": "^6.1.18",
@@ -38,4 +37,3 @@
     "browser-sync": "^2.10.0"
   }
 }
-
