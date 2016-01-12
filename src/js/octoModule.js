@@ -16,8 +16,6 @@ app.config(function($routeProvider,$locationProvider){
 
 // enable "view full profile " button
 // fix edit mode in directive
-
-// change port to 2000
 // save user data into database
-
-// rename gam files
+// say if octodex user or not
+// shareable link

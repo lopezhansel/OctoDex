@@ -18,7 +18,7 @@ gulp.task('browser-sync', ['nodemon'], () => {
 	browserSync.init(null, {
         injectChanges: true,
 		proxy: {
-            target: "localhost:80",
+            target: "localhost:2000",
             ws: true
         },
         files: ["./public/**/*.*"],
