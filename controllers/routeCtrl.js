@@ -57,7 +57,7 @@ module.exports = (app, passport) => {
 
 	});
 
-	app.get('/auth/github/callback', passport.authenticate('github', {failureRedirect: '/'}), (req, res) => {
+	app.get('/auth/github/callback', passport.authenticate('github', {scope: ['user:email'] ,failureRedirect: '/'}), (req, res) => {
 		req.logIn(req.user, err => {
 			if (err) {return next(err); }
 			// ENABLE CORS LATER
