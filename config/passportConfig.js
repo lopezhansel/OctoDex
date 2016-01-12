@@ -20,7 +20,7 @@ module.exports = (passport) => {
 			callbackURL: secrets.github.callbackURL
 		},
 		(accessToken, refreshToken, profile, done) => {
-			// process.nextTick(() => {
+			process.nextTick(() => {
 				User.findOne({'githubId': profile.id }, (err, user) => {
 					if (err) {
 						return (err);
@@ -48,13 +48,12 @@ module.exports = (passport) => {
 						newUser.displayName  = profile.displayName;
 						console.log(newUser);
 						newUser.save(err => {
-							if (err)
-								throw err;
+							if (err){throw err; }
 							return done(null, newUser);
 						});
 					}
 				});
-			// });
+			});
 		}
 
 	));
