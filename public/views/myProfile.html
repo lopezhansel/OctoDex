@@ -51,13 +51,13 @@
           aria-label="save button">
           Update Profile
         </md-button>
-        <md-button ng-show="true">Full Profile <i class="material-icons">expand_more</i></md-button>
+        <md-button ng-click="viewFullProfile = !viewFullProfile" ng-show="true">Full Profile <i class="material-icons">expand_more</i></md-button>
       </md-card-actions>
   </md-card>
 
 </md-content >
 
-<div class="card-background md-padding">
+<div class="card-background md-padding" ng-if="viewFullProfile">
 	<md-content flex class="my-container md-padding md-whiteframe-5dp" layout="column">
 		<div class="md-display-1"	>{{::user.username | uppercase}}'s Repositories </div>
 		<br>
@@ -78,7 +78,7 @@
 	</md-content>
 </div>
 
-<div class="card-background md-padding" ng-cloak>
+<div class="card-background md-padding" ng-cloak ng-if="viewFullProfile">
 	<md-content class="md-padding my-container md-whiteframe-5dp ">
 		<div class="md-display-1">{{::user.username | uppercase}}'s Followers </div>
 		<md-divider ></md-divider>
