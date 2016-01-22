@@ -4,7 +4,6 @@ app.controller('myProfileController', ["$scope", '$routeParams', '$mdMedia', '$m
 
 	$scope.octo = octo;
 	$scope.user = octo.me;
-	$scope.viewFullProfile = false;
 
 	$timeout(function () {
 		$scope.octo = octo;

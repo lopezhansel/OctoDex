@@ -1,7 +1,6 @@
 "use strict";
 
 app.directive('inline', ["octo", "$routeParams", function (octo, $routeParams) {
-	console.log("inline directive boot");
 
 	return {
 		restrict: 'EA',
@@ -15,7 +14,6 @@ app.directive('inline', ["octo", "$routeParams", function (octo, $routeParams) {
 	};
 
 	function link(scope, element, attrs, controller) {
-		console.log("inline directive");
 		console.log("scope.user", scope.user);
 		//  Error Need to disable edit more when not in my profile
 		var checkIfUser = setInterval(function () {

@@ -13,9 +13,3 @@ app.config(function ($routeProvider, $locationProvider) {
 	}).otherwise({ redirectTo: '/' });
 	// $locationProvider.html5Mode(true);
 });
-
-// enable "view full profile " button
-// fix edit mode in directive
-// save user data into database
-// say if octodex user or not
-// shareable link

@@ -1,5 +1,4 @@
 app.directive('inline', ["octo","$routeParams",function (octo,$routeParams) {
-	console.log("inline directive boot");
 
 	return {
 		restrict: 'EA',

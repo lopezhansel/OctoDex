@@ -2,7 +2,7 @@ app.controller('myProfileController', [  "$scope", '$routeParams', '$mdMedia', '
 
 	$scope.octo = octo;
 	$scope.user = octo.me;
-
+	
 	$timeout(() => {
 		$scope.octo = octo;
 		if (!$scope.octo.me){	

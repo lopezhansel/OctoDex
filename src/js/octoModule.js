@@ -14,8 +14,9 @@ app.config(function($routeProvider,$locationProvider){
 });
 
 
-// enable "view full profile " button
+
 // fix edit mode in directive
 // save user data into database
 // say if octodex user or not
+// Fix Api to request more info from github
 // shareable link
