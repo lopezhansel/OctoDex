@@ -14,11 +14,12 @@ app.directive('inline', ["octo", "$routeParams", function (octo, $routeParams) {
 	};
 
 	function link(scope, element, attrs, controller) {
-		console.log("scope.user", scope.user);
+
 		//  Error Need to disable edit more when not in my profile
+
+		// checkIfUser interval is to make sure user data has been received form ajax call
 		var checkIfUser = setInterval(function () {
 
-			// console.log("scope",scope);
 			if (scope.user !== null && scope.user !== undefined) {
 				var iconChooser = function iconChooser(key) {
 					var myIcons = {
@@ -32,17 +33,17 @@ app.directive('inline', ["octo", "$routeParams", function (octo, $routeParams) {
 					return myIcons[key];
 				};
 
-				console.log(scope.user.name);
-				console.log("inside loop");
 				scope.TextValue = scope.user[attrs.key];
 				scope.icon = iconChooser(attrs.key);
 
-				scope.editMode = function (value) {
-					if (scope.editMode[value] === 0 || scope.editMode[value]) {
-						scope.editMode[value] = null;
-					} else {
-						scope.editMode[value] = true;
-					}
+				scope.showInput = false;
+				scope.editMode = function (val) {
+					scope.showInput = val;
+				};
+
+				scope.showIcon = false;
+				scope.iconToggle = function (val) {
+					scope.showIcon = scope.showIcon ? false : true;
 				};
 
 				scope.updateOcto = function (key) {
