@@ -1,21 +1,24 @@
 <!-- ngif - show if TextValue exist or if TextValue is blank -->
 <!-- ng-mouseLeave/ng-mouseEnter- enable/disable edit mode when entering  -->
 
-<span ng-if="TextValue === '' || TextValue" ng-click="editMode(true)"   ng-mouseLeave="iconToggle(1)" ng-mouseEnter="iconToggle(1)">
-	<!--if  showIcon is false/true hide/show icon -->
-	<i ng-show="!showIcon && icon" class="material-icons info-icons ">{{::icon}}</i>
-	<i ng-show="showIcon && icon" class="material-icons info-edit">edit</i>
-	<!-- <i ng-show="showIcon && icon" class="material-icons info-edit">done</i> -->
-	
+<span ng-if="TextValue === '' || TextValue" ng-click="toggleInput(true)"   ng-mouseLeave="toggleIcon(1)" ng-mouseEnter="toggleIcon(1)">
+
+	<!--if  iconVisability is false/true hide/show icon -->
+	<i ng-show="!iconVisability && icon" class="material-icons info-icons ">{{icon}}</i>
+	<i ng-show="iconVisability && icon && !myForm['user'+key].$dirty" class="material-icons info-edit">edit</i>
+	<!-- <i ng-show=" icon && inlineForm['user'+key].$dirty" class="material-icons info-edit">clear</i> -->
+
 	<!-- TextValue can be number, website, email -->
-	<span class="my-input" ng-show="!showInput" >{{TextValue}}</span>
+	<span class="my-input" ng-show="!inputVisability" >{{TextValue}}</span>
 
 	<!-- form and input to change value  -->
-	<form ng-show="showInput" name="myForm" ng-click="editMode(true)" novalidate class="contact-info inline">
+	<form ng-show="inputVisability"     name="inlineForm" 
+		  ng-mouseleave="toggleInput(false)"  novalidate class="contact-info inline">
 		<div class="inline" ng-mouseleave="updateOcto(key)">
-			<input  name="user{{key}}" 
-				type="text" ng-model="TextValue"
-				ng-mouseleave="saveBtn(myForm['user'+key].$dirty)">
+			<input name="user{{key}}" 
+				   type="text" ng-model="TextValue"
+				   ng-mouseleave="showSaveBtn(inlineForm['user'+key].$dirty)">
 		</div>
 	</form>
+
 </span>

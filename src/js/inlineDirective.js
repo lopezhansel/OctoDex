@@ -24,15 +24,15 @@ app.directive('inline', ["octo","$routeParams",function (octo,$routeParams) {
 
 				scope.TextValue= scope.user[attrs.key];
 				scope.icon = iconChooser(attrs.key);
-
-				scope.showInput = false;
-				scope.editMode =  (val ) => {
-					scope.showInput = val
+				scope.dirty = true;
+				scope.inputVisability = false;
+				scope.toggleInput =  (val ) => {
+					scope.inputVisability = val;
 				};
 
-				scope.showIcon = false;
-				scope.iconToggle =  (val ) => {
-					scope.showIcon = (scope.showIcon)? false : true;
+				scope.iconVisability = false;
+				scope.toggleIcon =  (val ) => {
+					scope.iconVisability = (scope.iconVisability)? false : true;
 				};
 
 				
@@ -40,9 +40,10 @@ app.directive('inline', ["octo","$routeParams",function (octo,$routeParams) {
 					scope.user[key] = scope.TextValue;
 				};
 				
-				scope.saveBtn = function (bool) {
+				scope.showSaveBtn = function (bool) {
 					if(bool){
 						octo.showSaveBtn = true;
+						element.css('color', "#FF5722"); 
 					}
 				};
 				

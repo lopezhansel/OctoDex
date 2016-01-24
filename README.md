@@ -19,8 +19,8 @@ Github's Octocat + Rolodex = OctoDex
 - [ ] shareable link
 - [ ] comment more code
 - [ ] First Login Doesn't work
-- [ ] Show 'Done' icon in inline directive
-- [ ] add a variable for $dirty 
+- [X] Show 'Done' icon in inline directive
+- [X] add a variable for $dirty 
 - [x] Revamp inline directive. Fix edit I'mode in directive. Edit mode toggle button.
 - [x] Enable "Full Profile" Button
 - [x] Fixed other github users not being able to log in
