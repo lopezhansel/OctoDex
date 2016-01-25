@@ -11,7 +11,7 @@ app.directive('inline', ["octo","$routeParams",function (octo,$routeParams) {
 		link : link
 	};
 
-
+	
 
 	function link(scope, element, attrs, controller){
 
@@ -22,9 +22,10 @@ app.directive('inline', ["octo","$routeParams",function (octo,$routeParams) {
 
 			if(scope.user  !== null && scope.user  !== undefined ){
 
-				scope.TextValue= scope.user[attrs.key];
+				scope.textValue = scope.user[attrs.key];
+
 				scope.icon = iconChooser(attrs.key);
-				scope.dirty = true;
+
 				scope.inputVisability = false;
 				scope.toggleInput =  (val ) => {
 					scope.inputVisability = val;
@@ -35,15 +36,12 @@ app.directive('inline', ["octo","$routeParams",function (octo,$routeParams) {
 					scope.iconVisability = (scope.iconVisability)? false : true;
 				};
 
-				
-				scope.updateOcto = function (key) {
-					scope.user[key] = scope.TextValue;
-				};
-				
+						
 				scope.showSaveBtn = function (bool) {
 					if(bool){
 						octo.showSaveBtn = true;
 						element.css('color', "#FF5722"); 
+						console.log(scope.user.email);
 					}
 				};
 				
