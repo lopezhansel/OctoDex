@@ -13,12 +13,13 @@ Github's Octocat + Rolodex = OctoDex
 * Github's Oauth2
 
 ## TODO List
-- [ ] save user data into database
+- [ ] Implement a better way of updating user data
 - [ ] Let user know if profile is an octodex user or not
 - [ ] Fix Api to request more info from github
 - [ ] shareable link
 - [ ] comment more code
 - [ ] First Login Doesn't work
+- [X] save user data into database
 - [X] Show 'Done' icon in inline directive
 - [X] add a variable for $dirty 
 - [x] Revamp inline directive. Fix edit I'mode in directive. Edit mode toggle button.

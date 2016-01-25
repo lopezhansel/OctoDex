@@ -32,7 +32,7 @@ module.exports = (app, passport) => {
 			user.name = req.body.name;
 			user.save(function (err) {
 				if(err) { res.send("err");}
-				// user.gitToken = null;
+				user.gitToken = null;
 				res.send(user);
 			});
 		});
