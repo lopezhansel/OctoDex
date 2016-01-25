@@ -10,8 +10,5 @@ app.controller('myProfileController', ["$scope", '$routeParams', '$mdMedia', '$m
 		if (!$scope.octo.me) {}
 	}, 1000);
 
-	$scope.update = function () {
-		// here it will update server
-		console.log(octo.me);
-	};
+	$scope.updateUser = octo.updateUser;
 }]);

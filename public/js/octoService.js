@@ -6,6 +6,7 @@ app.service('octo', ['$routeParams', '$mdMedia', '$mdDialog', '$mdToast', "$http
 	// text of the sign in button
 	octo.signInBtn = "Sign In";
 	var secret = ' ';
+	octo.showSaveBtn = false;
 
 	// First action to do is check if user is logged in.
 	$http.get('/api/me').then(function (response) {
@@ -52,9 +53,16 @@ app.service('octo', ['$routeParams', '$mdMedia', '$mdDialog', '$mdToast', "$http
 		});
 	};
 
-	octo.sendData = function () {
+	octo.updateUser = function () {
+		console.log("uploading user.me");
+		var tempfollowers = octo.me.followers;
+		var tempRepos = octo.me.repos;
+		octo.me.followers = null;
+		octo.me.repos = null;
 		$http.put('/api/me', octo.me).then(function (response) {
-			// console.log(response.data);
+			octo.showSaveBtn = false;
+			octo.me.followers = tempfollowers;
+			octo.me.repos = tempRepos;
 		});
 	};
 }]);
