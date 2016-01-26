@@ -41,7 +41,7 @@ module.exports = (passport) => {
 						newUser.company      = profile._json.company;
 						newUser.blog         = profile._json.blog ;
 						newUser.location     = profile._json.location;
-						newUser.hireable     = profile._json.hireable;
+						newUser.hireable     = (profile._json.hireable)? "Available for hire" : "Not available for hire";
 						newUser.bio          = profile._json.bio;
 						newUser.createdGit   = profile._json.created_at;
 						newUser.updatedGit   = profile._json.updated_at;
