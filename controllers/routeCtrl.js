@@ -6,9 +6,16 @@ module.exports = (app, passport) => {
 			res.sendFile('index.html', {root: './public/views'});
 	});
 
-	app.get('/home', ensureAuthenticated, (req, res) => {
-		// for testing purposes only 
-		res.send('Welcome Home');
+
+	app.get('/user/:username',function (req,res) {
+		User.findOne(req.params, (err,user) => {
+			// need better error handling for if user not found
+			if (err) { res.send(null);}
+			else{
+				if(user &&  user.gitToken) { user.gitToken = null;} 
+				res.send(user);
+			}
+		});
 	});
 
 	app.get('/api/me', ensureAuthenticatedAjax,  (req,res) => {
