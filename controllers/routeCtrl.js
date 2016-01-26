@@ -53,11 +53,11 @@ module.exports = (app, passport) => {
 		});
 	});
 
-	app.get('/auth/github', passport.authenticate('github', {scope: ['user:email'] }), (req, res) => {
+	app.get('/auth/github', passport.authenticate('github', {scope: ['user']}), (req, res) => {
 
 	});
 
-	app.get('/auth/github/callback', passport.authenticate('github', {scope: ['user:email'] ,failureRedirect: '/'}), (req, res) => {
+	app.get('/auth/github/callback', passport.authenticate('github', {failureRedirect: '/'}), (req, res) => {
 		req.logIn(req.user, err => {
 			if (err) {return next(err); }
 			// ENABLE CORS LATER
