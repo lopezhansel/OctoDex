@@ -9,7 +9,7 @@ var passport = require('passport');
 var session = require('express-session');
 var sercrets = require("./config/secrets");  // my app secrets 
 
-mongoose.connect('mongodb://localhost/virtualBusinessCard');
+mongoose.connect('mongodb://localhost/octoDex');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
