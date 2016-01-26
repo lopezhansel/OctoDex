@@ -23,19 +23,19 @@ app.directive('inline', ["octo","$routeParams",function (octo,$routeParams) {
 			if(scope.user  !== null && scope.user  !== undefined ){
 
 				scope.textValue = scope.user[attrs.key];
-
 				scope.icon = iconChooser(attrs.key);
 
-				scope.inputVisability = false;
-				scope.toggleInput =  (val ) => {
-					scope.inputVisability = val;
-				};
-
-				scope.iconVisability = false;
-				scope.toggleIcon =  (val ) => {
-					scope.iconVisability = (scope.iconVisability)? false : true;
-				};
-
+				// condition can be a lot better
+				if (!$routeParams.user){
+					scope.inputVisability = false;
+					scope.toggleInput =  (val ) => {
+						scope.inputVisability = val;
+					};
+					scope.iconVisability = false;
+					scope.toggleIcon =  (val ) => {
+						scope.iconVisability = (scope.iconVisability)? false : true;
+					};
+				}
 						
 				scope.showSaveBtn = function (bool) {
 					if(bool){

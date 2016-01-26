@@ -13,12 +13,12 @@ Github's Octocat + Rolodex = OctoDex
 * Github's Oauth2
 
 ## TODO List
-- [ ] Inline directive not edit more when not in client profile
 - [ ] Implement a better way of updating user data
 - [ ] Let user know if profile is an octodex user or not
 - [ ] shareable link
 - [ ] comment more code
 - [ ] First Login Doesn't work
+- [x] Inline directive not edit more when not in client profile
 - [X] Fix Api to request more info from github
 - [X] save user data into database
 - [X] Show 'Done' icon in inline directive
