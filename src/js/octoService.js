@@ -54,15 +54,19 @@ app.service('octo', ['$routeParams', '$mdMedia', '$mdDialog', '$mdToast', "$http
 
 
 		octo.updateUser = () => {
-			console.log("uploading user.me");
 			var tempfollowers = octo.me.followers;
 			var tempRepos = octo.me.repos;
 			octo.me.followers = null;
 			octo.me.repos = null;
 			$http.put('/api/me', octo.me).then((response) => {
-				octo.showSaveBtn = false;
 				octo.me.followers = tempfollowers;	
 				octo.me.repos = tempRepos;	
+				if (response.data === "err"){
+					alert("Sorry Something went wrong. Please Try again in a few minutes.");
+				}
+				else{
+					octo.showSaveBtn = false;
+				}
 			});
 		};
 	}

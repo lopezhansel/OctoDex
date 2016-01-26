@@ -15,10 +15,10 @@ Github's Octocat + Rolodex = OctoDex
 ## TODO List
 - [ ] Implement a better way of updating user data
 - [ ] Let user know if profile is an octodex user or not
-- [ ] Fix Api to request more info from github
 - [ ] shareable link
 - [ ] comment more code
 - [ ] First Login Doesn't work
+- [X] Fix Api to request more info from github
 - [X] save user data into database
 - [X] Show 'Done' icon in inline directive
 - [X] add a variable for $dirty 

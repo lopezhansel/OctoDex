@@ -11,7 +11,7 @@ app.directive('inline', ["octo","$routeParams",function (octo,$routeParams) {
 		link : link
 	};
 
-	
+
 
 	function link(scope, element, attrs, controller){
 
@@ -41,7 +41,6 @@ app.directive('inline', ["octo","$routeParams",function (octo,$routeParams) {
 					if(bool){
 						octo.showSaveBtn = true;
 						element.css('color', "#FF5722"); 
-						console.log(scope.user.email);
 					}
 				};
 				
