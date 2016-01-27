@@ -19,11 +19,15 @@ module.exports = (app, passport) => {
 	});
 
 	app.get('/api/me', ensureAuthenticatedAjax,  (req,res) => {
-		User.findById(req.user._id, (err, user) => {
-			if(err) { res.send("err");}
-			user.gitToken = null;
-			res.send(user);
-		});
+			if (req.user){
+			User.findById(req.user._id, (err, user) => {
+				if(err) { res.send("err");}
+				user.gitToken = null;
+				res.send(user);
+			});
+		}else{
+			res.send(null);
+		}
 	});
 
 	app.put('/api/me', ensureAuthenticatedAjax,  (req,res) => {

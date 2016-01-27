@@ -13,4 +13,3 @@ app.controller('myProfileController', [  "$scope", '$routeParams', '$mdMedia', '
 
 
 }]);
-

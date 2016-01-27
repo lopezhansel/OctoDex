@@ -12,16 +12,21 @@ app.service('octo', ['$routeParams', '$mdMedia', '$mdDialog', '$mdToast', "$http
 	$http.get('/api/me').then(function (response) {
 		// console.log('/api/me', response.data);
 		// octo.me object will contain have new properties if logged in
-		octo.me = response.data;
-		// if client is not logged in octo.me will have a error property
-		if (octo.me.error) {
-			return;
+		octo.me = {};
+		octo.me.error = !response.data ? "hellloo" : null;
+		if (response.data) {
+
+			octo.me = response.data;
+			// if client is not logged in octo.me will have a error property
+			if (octo.me.error) {
+				return;
+			}
+			// if logged in, will trigger the following two functions to retrieve more data about the github user
+			octo.getFollowers(octo.me);
+			octo.getRepos(octo.me);
+			// if logged in the string signInBtn will change
+			octo.signInBtn = "Sign out";
 		}
-		// if logged in, will trigger the following two functions to retrieve more data about the github user
-		octo.getFollowers(octo.me);
-		octo.getRepos(octo.me);
-		// if logged in the string signInBtn will change
-		octo.signInBtn = "Sign out";
 	});
 
 	octo.getFollowers = function (user) {
