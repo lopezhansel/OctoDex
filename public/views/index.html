@@ -33,19 +33,7 @@
 
 		  <md-content layout-fill layout="column">
 		  	<!-- Rendered View will go inside of ng-view -->
-		    <ng-view flex ng-if="!octo.me.error"></ng-view>
-		    <!-- If not signed in "octo.me.error" show the following  -->
-		    <md-content 
-		    	layout-fill	
-		    	class="md-padding" layout="column" 
-		    	ng-if="octo.me.error"
-		    	layout-align="start center">
-		    	<h1>Welcome to OctoDex!</h1> 
-		    	<h1>An online vitual profile for Github Users</h1> 
-		    	<md-button class="md-raised md-primary" ng-click="logger()">
-		    	  {{signInBtn}}
-		    	</md-button>
-		    </md-content>
+		    <ng-view flex ></ng-view>
 		  </md-content>
 		</div>
 

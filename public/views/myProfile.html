@@ -1,4 +1,19 @@
-<md-content class="md-padding card-background main-md-content" layout="column"  layout-align="center center">
+
+<md-content 
+  layout-fill 
+  class="md-padding" layout="column" 
+  ng-if="!octo.me.isLoggedIn &&  atHome"
+  layout-align="start center">
+  <h1>Welcome to OctoDex!</h1> 
+  <h1>An online vitual profile for Github Users</h1> 
+  <md-button class="md-raised md-primary" ng-click="logger()">
+    {{signInBtn}}
+  </md-button>
+</md-content>
+
+<md-content 
+    ng-if="octo.me.isLoggedIn  ||  !atHome"
+    class="md-padding card-background main-md-content" layout="column"  layout-align="center center">
   <md-card layout="column" class="my-container md-whiteframe-5dp" >
 
       <div layout-sm="column" layout="row"  class="card-header">
