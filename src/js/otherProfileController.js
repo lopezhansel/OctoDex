@@ -2,6 +2,7 @@ app.controller('otherProfileController', [  "$scope", '$routeParams', '$mdMedia'
 	// octo[$routeParams.user] = null;
 	octo.getAnotherUser($routeParams.user);
 	// $scope.user = octo[$routeParams.user];
+	$scope.atHome = ($location.path() === "/")? true : false;
 
 	var updateUser = $interval( () => {
 		$scope.user = octo.otherUsers[$routeParams.user];
