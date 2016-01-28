@@ -10,30 +10,26 @@ app.service('octo', ['$routeParams', '$mdMedia', '$mdDialog', '$mdToast', "$http
 
 	// First action to do is check if user is logged in.
 	$http.get('/api/me').then(function (response) {
-		// console.log('/api/me', response.data);
-		// octo.me object will contain have new properties if logged in
-		octo.me = {};
-		octo.me.error = !response.data ? "hellloo" : null;
-		if (response.data) {
 
-			octo.me = response.data;
-			// if client is not logged in octo.me will have a error property
-			if (octo.me.error) {
-				return;
-			}
-			// if logged in, will trigger the following two functions to retrieve more data about the github user
-			octo.getFollowers(octo.me);
-			octo.getRepos(octo.me);
-			// if logged in the string signInBtn will change
-			octo.signInBtn = "Sign out";
+		octo.me = response.data; // octo.me.error = "not logged in" || octo.me.username
+		octo.me.isLoggedIn = octo.me.error ? false : true;
+		octo.signInBtn = octo.me.isLoggedIn ? "Sign out" : "Sign In";
+
+		// if client is not logged in octo.me will have a error property
+		if (!octo.me.isLoggedIn) {
+			return;
 		}
+		// if logged in, will trigger the following two functions to retrieve more data about the github user
+		octo.getFollowers(octo.me);
+		octo.getRepos(octo.me);
+		// if logged in the string signInBtn will change
 	});
 
 	octo.getFollowers = function (user) {
 		// the 'user' parameter contains information about the client that the server sent to us
 		$http.get('https://api.github.com/users/' + user.username + '/followers' + secret).then(function (response) {
 			user.followers = response.data;
-			// console.log(user.followers);
+			console.log(user.followers);
 		});
 	};
 
