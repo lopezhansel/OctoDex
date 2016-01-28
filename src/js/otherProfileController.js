@@ -3,6 +3,11 @@ app.controller('otherProfileController', [  "$scope", '$routeParams', '$mdMedia'
 	octo.getAnotherUser($routeParams.user);
 	// $scope.user = octo[$routeParams.user];
 	$scope.atHome = ($location.path() === "/")? true : false;
+	$scope.toggleFullProfileSwitch = function  () {
+		$scope.fullProfileSwitch = !$scope.fullProfileSwitch;
+	};
+	$scope.fullProfileSwitch = false;
+
 
 	var updateUser = $interval( () => {
 		$scope.user = octo.otherUsers[$routeParams.user];

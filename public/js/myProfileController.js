@@ -4,7 +4,10 @@ app.controller('myProfileController', ["$scope", '$routeParams', '$mdMedia', '$m
 	$scope.atHome = $location.path() === "/" ? true : false;
 	$scope.octo = octo;
 	$scope.user = octo.me;
-
+	$scope.toggleFullProfileSwitch = function () {
+		$scope.fullProfileSwitch = !$scope.fullProfileSwitch;
+	};
+	$scope.fullProfileSwitch = false;
 	$timeout(function () {
 		$scope.octo = octo;
 		if (!$scope.octo.me) {}
