@@ -16,6 +16,8 @@ Github's Octocat + Rolodex = OctoDex
 - [ ] Let user know if profile is an octodex user or not
 - [ ] comment more code
 - [ ] First Login Doesn't work
+- [x] Renaming Variables and Improve Organization
+- [x] improve service.getFollowersAndRepos.
 - [x] Improve api calls retrieving Repos and Followers;
 - [x] learn to implement $q or $resource service from angular
 - [X] shareable link
