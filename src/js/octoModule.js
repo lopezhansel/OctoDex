@@ -1,5 +1,5 @@
 // initiate angular app and load in other dependencies.
-var app = angular.module('octodex',["ngMaterial","ngAnimate","ngAria","ngRoute"]); 
+var app = angular.module('octodex',["ngMaterial","ngAnimate","ngAria","ngRoute","ngResource"]); 
 
 
 app.config(function($routeProvider,$locationProvider){

@@ -1,37 +1,32 @@
-app.service('octo', ['$routeParams', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout",
-	function($routeParams, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout) {
-		//  give this the alias of octo
-		var octo = this;
-		// text of the sign in button 
-		octo.signInBtn = "Sign In";
+app.service('octo', ['$routeParams','$resource', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout",
+	function($routeParams,$resource, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout) {
+		
+		var octo = this; // just an alias for this
+		octo.signInBtn = "Sign In";// text of the sign in button 
 		var secret = ' ';
 		octo.showSaveBtn = false;
+		var apiME = $resource('/api/me', {}, {});
 
-		
-		// First action to do is check if user is logged in. 
-		$http.get('/api/me').then((response) => {
-
-
-			octo.me = response.data; // octo.me.error = "not logged in" || octo.me.username
+		// // First action to do is check if user is logged in. 
+		octo.me = apiME.get(function () { // octo.me.error = "not logged in" || octo.me.username
 			octo.me.isLoggedIn = (octo.me.error)? false : true;
 			octo.signInBtn = (octo.me.isLoggedIn)? "Sign out": "Sign In";
-
 			// if client is not logged in octo.me will have a error property 
-			if (!octo.me.isLoggedIn) {
-				return;
+			if (octo.me.isLoggedIn) {
+				// if logged in, will trigger the following two functions to retrieve more data about the github user
+				if (!octo.me.repos.length || !octo.me.followers.length){
+					octo.getFollowers(octo.me);
+					octo.getRepos(octo.me);
+				}
 			}
-			// if logged in, will trigger the following two functions to retrieve more data about the github user
-			octo.getFollowers(octo.me);
-			octo.getRepos(octo.me);
-			// if logged in the string signInBtn will change
-
 		});
-
+		
 		octo.getFollowers = (user) => {
 			// the 'user' parameter contains information about the client that the server sent to us
 			$http.get('https://api.github.com/users/' + user.username + '/followers' + secret).then((response) => {
 				user.followers = response.data;
-				console.log(user.followers);
+				octo.updateUser();
+
 			});
 		};
 
@@ -39,7 +34,7 @@ app.service('octo', ['$routeParams', '$mdMedia', '$mdDialog', '$mdToast', "$http
 			// the 'user' parameter contains information about the client that the server sent to us
 			$http.get('https://api.github.com/users/' + user.username + '/repos' + secret).then((response) => {
 				user.repos = response.data;
-				// console.log(user.repos);
+				octo.updateUser();
 			});
 		};
 		octo.otherUsers = {};
@@ -57,15 +52,10 @@ app.service('octo', ['$routeParams', '$mdMedia', '$mdDialog', '$mdToast', "$http
 		};
 
 
-		octo.updateUser = () => {
-			var tempfollowers = octo.me.followers;
-			var tempRepos = octo.me.repos;
-			octo.me.followers = null;
-			octo.me.repos = null;
-			$http.put('/api/me', octo.me).then((response) => {
-				octo.me.followers = tempfollowers;	
-				octo.me.repos = tempRepos;	
-				if (response.data === "err"){
+		octo.updateUser = function () {
+			octo.me.$save(function (response) {
+				octo.me.isLoggedIn = (octo.me.error)? false : true;
+				if (response.error){
 					alert("Sorry Something went wrong. Please Try again in a few minutes.");
 				}
 				else{
@@ -73,5 +63,10 @@ app.service('octo', ['$routeParams', '$mdMedia', '$mdDialog', '$mdToast', "$http
 				}
 			});
 		};
+
+
+
+
+
 	}
 ]);
