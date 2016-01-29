@@ -6,7 +6,7 @@ var userSchema = mongoose.Schema({
     name          : {type: String},
     email         : {type: String, required: true},
     gitToken      : {type: String, required: true},
-    githubId      : {type: String, required: true}, // should be a number but might cause error if not string
+    githubId      : {type: String, required: true}, // Bug :  Number or String
     avatar_url    : {type: String},
     apiUrl        : {type: String},
     company       : {type: String},
@@ -18,7 +18,12 @@ var userSchema = mongoose.Schema({
     updatedGit    : {type: String},
     profileUrl    : {type: String},
     followers     : {type: Array},
-	repos         : {type: Array}
+    repos         : {type: Array},
+    followerNum   : {type: Number},
+    followingNum  : {type: Number},
+    publicGists   : {type: Number},
+	publicRepos   : {type: Number}
+
 });
 
 module.exports = mongoose.model('user', userSchema);
