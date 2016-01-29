@@ -1,13 +1,13 @@
-app.controller('indexController', [  "$scope", "$window", '$routeParams', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout", "octo",function ($scope,$window, $routeParams, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout, octo) {
-	$scope.signInBtn = octo.signInBtn;
+app.controller('indexController', [  "$scope", "$window", '$routeParams', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout", "octoService",function ($scope,$window, $routeParams, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout, octoService) {
+	$scope.signInBtn = octoService.signInBtn;
 	
 	$timeout(() => {
-		$scope.signInBtn = octo.signInBtn;
-		$scope.octo = octo;
+		$scope.signInBtn = octoService.signInBtn;
+		$scope.octoService = octoService;
 	}, 100);
 
 	$scope.logger = () =>{
-		if (octo.client.error) {
+		if (octoService.client.error) {
 			$window.open("/auth/github","_self");
 		}
 		else {

@@ -2,9 +2,9 @@
 <md-content 
   layout-fill 
   class="md-padding" layout="column" 
-  ng-if="!octo.client.isLoggedIn &&  atHome"
+  ng-if="!octoService.client.isLoggedIn &&  atHome"
   layout-align="start center">
-  <h1>Welcome to OctoDex!</h1> 
+  <h1>Welcome to octoDex!</h1> 
   <h1>An online vitual profile for Github Users</h1> 
   <md-button class="md-raised md-primary" ng-click="logger()">
     {{signInBtn}}
@@ -12,7 +12,7 @@
 </md-content>
 
 <md-content 
-    ng-if="octo.client.isLoggedIn  ||  !atHome"
+    ng-if="octoService.client.isLoggedIn  ||  !atHome"
     class="md-padding card-background main-md-content" layout="column"  layout-align="center center">
   <md-card layout="column" class="my-container md-whiteframe-5dp" >
 
@@ -29,7 +29,7 @@
           </div>
           <span class="md-display-1 display-name">Software Developer </span>
           <div class="md-display-1 display-name"> 
-            {{user.public_repos }} Repos | {{ user.followers.length }} Followers | {{ user.following }} Following
+            {{user.repos.length }} Repos | {{ user.followers.length }} Followers | {{ user.following.length }} Following
           </div>
         </div>
       </div>
@@ -50,9 +50,9 @@
         <div class="vertical-line"></div>
 
         <div class="contact-info" flex-gt-sm="10" layout="column"  layout-sm="row" >
-          <a ng-href="{{::octo.client.profileUrl}}"><span class="fa fa-github-square"></span> </a>
-          <a ng-href="{{::octo.client.profileUrl}}"><span class="fa fa-github-square"></span> </a>
-          <a ng-href="{{::octo.client.profileUrl}}"><span class="fa fa-github-square"></span> </a>
+          <a ng-href="{{::octoService.client.profileUrl}}"><span class="fa fa-github-square"></span> </a>
+          <a ng-href="{{::octoService.client.profileUrl}}"><span class="fa fa-github-square"></span> </a>
+          <a ng-href="{{::octoService.client.profileUrl}}"><span class="fa fa-github-square"></span> </a>
         </div>
 
       </div>
@@ -60,9 +60,9 @@
 
       <md-card-actions layout="row" layout-align="end center">
         <span flex></span>
-        <md-button ng-show="octo.showSaveBtn" 
+        <md-button ng-show="octoService.showSaveBtn" 
           class="md-warn md-raised" 
-          ng-click="updateUser()"
+          ng-click="updateClient()"
           aria-label="save button">
           Update Profile
         </md-button>

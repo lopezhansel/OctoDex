@@ -25,7 +25,7 @@
 		  	<md-button ng-if="isAtHome()" ng-click="redirect('/')">Back</md-button>
 		    <div class="md-toolbar-tools">
 		      <span>OctoDex</span>
-		      <span ng-if="octo.client.name"> - {{octo.client.name}}</span>
+		      <span ng-if="octoService.client.name"> - {{octoService.client.name}}</span>
 		      <span flex></span>
 		      <!-- Logger function Logs in  -->
 		      <md-button ng-click="logger()">

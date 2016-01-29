@@ -1,6 +1,6 @@
 "use strict";
 
-app.directive('inline', ["octo", "$routeParams", function (octo, $routeParams) {
+app.directive('inline', ["octoService", "$routeParams", function (octoService, $routeParams) {
 
 	return {
 		restrict: 'EA',
@@ -50,7 +50,7 @@ app.directive('inline', ["octo", "$routeParams", function (octo, $routeParams) {
 
 				scope.showSaveBtn = function (bool) {
 					if (bool) {
-						octo.showSaveBtn = true;
+						octoService.showSaveBtn = true;
 						element.css('color', "#FF5722");
 					}
 				};
