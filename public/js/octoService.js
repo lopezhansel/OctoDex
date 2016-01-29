@@ -55,20 +55,20 @@ app.service('octoService', ['$routeParams', '$resource', '$mdMedia', '$mdDialog'
 
 	// getOtherUsers is for retrieving another users that are not the client profile
 	service.getOtherUsers = function () {
-		var username = $routeParams.user; // userName is the gitHub username
-		// if username exist in cachedUsers exit
-		if (service.cachedUsers[username]) {
+		var ghUser = $routeParams.user; // ghUser is the gitHub login name
+		var cacheAlias = service.cachedUsers; // give cachedUsers an alias
+		// if user is already cached then exit
+		if (cacheAlias[ghUser]) {
 			return;
 		}
-		// if username doesn't exist in cachedUsers then retrieve 
-		$http.get('https://api.github.com/users/' + username + secret).then(function (response) {
-			service.cachedUsers[username] = response.data;
-			service.cachedUsers[username].username = service.cachedUsers[username].login;
-			service.getFollowersAndRepos(service.cachedUsers[username]);
+		// if user doesn't exist in cachedUsers then retrieve 
+		$http.get('https://api.github.com/users/' + ghUser + secret).then(function (response) {
+			cacheAlias[ghUser] = response.data;
+			cacheAlias[ghUser].username = cacheAlias[ghUser].login; // reassigning properties
+			service.getFollowersAndRepos(cacheAlias[ghUser]);
 		}, function (responseErr) {
 			// this function will run in case of an error
-			var username = $routeParams.user;
-			service.cachedUsers[username] = responseErr.data;
+			cacheAlias[ghUser] = responseErr.data;
 		});
 	};
 }]);
