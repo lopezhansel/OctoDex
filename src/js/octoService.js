@@ -1,69 +1,71 @@
-app.service('octo', ['$routeParams','$resource', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout",
+app.service('octoService', ['$routeParams','$resource', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout",
 	function($routeParams,$resource, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout) {
 		
-		var octo = this; // just an alias for this
-		octo.signInBtn = "Sign In";// text of the sign in button 
-		var secret = ' ';
-		octo.showSaveBtn = false;
-		var apiME = $resource('/api/me', {}, {});
+		// initializing
+		var service = this; // just an alias
+		service.signInBtn = "Sign In";// text of the sign in button 
+		var secret = ' '; //  ?client_id=xxxx&client_secret=yyyy' I use Only When developing
+		service.showSaveBtn = false; // orange "Update Profile" Button
+		var ApiMe = $resource('/api/me', {}, {}); // Creates a class with GET POST etc methods 
+		service.cachedUsers = {}; // initializing other Users
 
-		// // First action to do is check if user is logged in. 
-		octo.client = apiME.get(function () { // octo.client.error = "not logged in" || octo.client.username
-			octo.client.isLoggedIn = (octo.client.error)? false : true;
-			octo.signInBtn = (octo.client.isLoggedIn)? "Sign out": "Sign In";
-			// if client is not logged in octo.client will have a error property 
-			if (octo.client.isLoggedIn) {
-				// if logged in, will trigger the following two functions to retrieve more data about the github user
-				if (!octo.client.repos.length || !octo.client.followers.length){
-					octo.getFollowers(octo.client);
-					octo.getRepos(octo.client);
-				}
+
+		// Check if Client is Logged in using GET . service.client is an instance of ApiMe
+		service.client = ApiMe.get(function () { // service.client.error = "not logged in" || service.client.username
+			service.client.isLoggedIn = (service.client.error)? false : true; // If not loggedIn thhen service.client.error = "not logged in"
+			service.signInBtn = (service.client.isLoggedIn)? "Sign out": "Sign In"; 
+			// If client is logged and doesn't have repos||follower then fetch github
+			// BUG : followers and repos wont get updated ever
+			if (service.client.isLoggedIn && (!service.client.repos.length || !service.client.followers.length) ) {
+				service.getFollowersAndRepos(service.client);
 			}
 		});
 		
-		octo.getFollowers = (user) => {
-			// the 'user' parameter contains information about the client that the server sent to us
-			$http.get('https://api.github.com/users/' + user.username + '/followers' + secret).then((response) => {
-				user.followers = response.data;
-				octo.updateUser();
-
-			});
-		};
-
-		octo.getRepos = (user) => {
-			// the 'user' parameter contains information about the client that the server sent to us
-			$http.get('https://api.github.com/users/' + user.username + '/repos' + secret).then((response) => {
-				user.repos = response.data;
-				octo.updateUser();
-			});
-		};
-		octo.otherUsers = {};
-
-		// getAnotherUser is for retrieving another user that is not the client profile 
-		octo.getAnotherUser = (user) => {
-			$http.get('https://api.github.com/users/' + user + secret).then((response) => {
-				octo.otherUsers[$routeParams.user] = response.data;
-				octo.otherUsers[$routeParams.user].username = octo.otherUsers[$routeParams.user].login;
-				octo.getFollowers(octo.otherUsers[$routeParams.user]);
-				octo.getRepos(octo.otherUsers[$routeParams.user]);
-			}, (response) => {
-				octo.otherUsers[$routeParams.user] = response.data;
-			});
-		};
-
-
-		octo.updateUser = function () {
-			octo.client.$save(function (response) {
-				octo.client.isLoggedIn = (octo.client.error)? false : true;
-				if (response.error){
+		// POST method.  Reminder: service.client is an instance of ApiMe
+		service.updateClient = function () {
+			if ($location.path() !== "/"){ return; } // only update if at home uri
+			service.client.$save(function (response) { // Post Method . Sends service.client
+				service.client.isLoggedIn = (service.client.error)? false : true;// 
+				if (response.error){ // incase of failure. Like if there a duplicate 
 					alert("Sorry Something went wrong. Please Try again in a few minutes.");
 				}
 				else{
-					octo.showSaveBtn = false;
+					service.showSaveBtn = false; // orange "Update Profile" Button
 				}
 			});
 		};
 
+		// add repo and follower properties to the UserObj since the regular api doesn't give them by default
+		// BUG : service.updateClient(); is being called by getOtherUsers
+		// BUG : Too much data is being stored into server
+		service.getFollowersAndRepos = (userObj) => {
+			$http.get('https://api.github.com/users/' + userObj.username + '/followers' + secret).then((response) => {
+				userObj.followers = response.data;
+				service.updateClient(); // Post Method . Sends service.client
+			});
+			$http.get('https://api.github.com/users/' + userObj.username + '/repos' + secret).then((response) => {
+				userObj.repos = response.data;
+				service.updateClient(); // Post Method . Sends service.client
+			});
+		};
 
-	}
-]);
+		// getOtherUsers is for retrieving another users that are not the client profile 
+		service.getOtherUsers = () => {
+			var username = $routeParams.user; // userName is the gitHub username
+			// if username exist in cachedUsers exit 
+			if (service.cachedUsers[username]) {return; }
+			// if username doesn't exist in cachedUsers then retrieve  
+			$http.get('https://api.github.com/users/' + username + secret).then((response) => {
+				service.cachedUsers[username] = response.data;
+				service.cachedUsers[username].username = service.cachedUsers[username].login;
+				service.getFollowersAndRepos(service.cachedUsers[username]);
+			}, (responseErr) => { // this function will run in case of an error
+				var username = $routeParams.user;
+				service.cachedUsers[username] = responseErr.data;
+			});
+
+		};
+
+
+
+}]);
