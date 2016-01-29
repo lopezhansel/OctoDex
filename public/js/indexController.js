@@ -6,11 +6,10 @@ app.controller('indexController', ["$scope", "$window", '$routeParams', '$mdMedi
 	$timeout(function () {
 		$scope.signInBtn = octo.signInBtn;
 		$scope.octo = octo;
-		// console.log($scope.octo.me);
 	}, 100);
 
 	$scope.logger = function () {
-		if (octo.me.error) {
+		if (octo.client.error) {
 			$window.open("/auth/github", "_self");
 		} else {
 			$window.open("/logout", "_self");

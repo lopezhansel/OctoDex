@@ -2,7 +2,7 @@
 <md-content 
   layout-fill 
   class="md-padding" layout="column" 
-  ng-if="!octo.me.isLoggedIn &&  atHome"
+  ng-if="!octo.client.isLoggedIn &&  atHome"
   layout-align="start center">
   <h1>Welcome to OctoDex!</h1> 
   <h1>An online vitual profile for Github Users</h1> 
@@ -12,7 +12,7 @@
 </md-content>
 
 <md-content 
-    ng-if="octo.me.isLoggedIn  ||  !atHome"
+    ng-if="octo.client.isLoggedIn  ||  !atHome"
     class="md-padding card-background main-md-content" layout="column"  layout-align="center center">
   <md-card layout="column" class="my-container md-whiteframe-5dp" >
 
@@ -50,9 +50,9 @@
         <div class="vertical-line"></div>
 
         <div class="contact-info" flex-gt-sm="10" layout="column"  layout-sm="row" >
-          <a ng-href="{{::octo.me.profileUrl}}"><span class="fa fa-github-square"></span> </a>
-          <a ng-href="{{::octo.me.profileUrl}}"><span class="fa fa-github-square"></span> </a>
-          <a ng-href="{{::octo.me.profileUrl}}"><span class="fa fa-github-square"></span> </a>
+          <a ng-href="{{::octo.client.profileUrl}}"><span class="fa fa-github-square"></span> </a>
+          <a ng-href="{{::octo.client.profileUrl}}"><span class="fa fa-github-square"></span> </a>
+          <a ng-href="{{::octo.client.profileUrl}}"><span class="fa fa-github-square"></span> </a>
         </div>
 
       </div>

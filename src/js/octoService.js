@@ -8,15 +8,15 @@ app.service('octo', ['$routeParams','$resource', '$mdMedia', '$mdDialog', '$mdTo
 		var apiME = $resource('/api/me', {}, {});
 
 		// // First action to do is check if user is logged in. 
-		octo.me = apiME.get(function () { // octo.me.error = "not logged in" || octo.me.username
-			octo.me.isLoggedIn = (octo.me.error)? false : true;
-			octo.signInBtn = (octo.me.isLoggedIn)? "Sign out": "Sign In";
-			// if client is not logged in octo.me will have a error property 
-			if (octo.me.isLoggedIn) {
+		octo.client = apiME.get(function () { // octo.client.error = "not logged in" || octo.client.username
+			octo.client.isLoggedIn = (octo.client.error)? false : true;
+			octo.signInBtn = (octo.client.isLoggedIn)? "Sign out": "Sign In";
+			// if client is not logged in octo.client will have a error property 
+			if (octo.client.isLoggedIn) {
 				// if logged in, will trigger the following two functions to retrieve more data about the github user
-				if (!octo.me.repos.length || !octo.me.followers.length){
-					octo.getFollowers(octo.me);
-					octo.getRepos(octo.me);
+				if (!octo.client.repos.length || !octo.client.followers.length){
+					octo.getFollowers(octo.client);
+					octo.getRepos(octo.client);
 				}
 			}
 		});
@@ -53,8 +53,8 @@ app.service('octo', ['$routeParams','$resource', '$mdMedia', '$mdDialog', '$mdTo
 
 
 		octo.updateUser = function () {
-			octo.me.$save(function (response) {
-				octo.me.isLoggedIn = (octo.me.error)? false : true;
+			octo.client.$save(function (response) {
+				octo.client.isLoggedIn = (octo.client.error)? false : true;
 				if (response.error){
 					alert("Sorry Something went wrong. Please Try again in a few minutes.");
 				}

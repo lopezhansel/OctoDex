@@ -13,11 +13,11 @@ Github's Octocat + Rolodex = OctoDex
 * Github's Oauth2
 
 ## TODO List
-- [x] learn to implement $q or $resource service from angular
-- [x] Improve api calls retrieving Repos and Followers;
 - [ ] Let user know if profile is an octodex user or not
 - [ ] comment more code
 - [ ] First Login Doesn't work
+- [x] Improve api calls retrieving Repos and Followers;
+- [x] learn to implement $q or $resource service from angular
 - [X] shareable link
 - [x] Inline directive not edit more when not in client profile
 - [X] Fix Api to request more info from github

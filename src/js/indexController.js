@@ -4,11 +4,11 @@ app.controller('indexController', [  "$scope", "$window", '$routeParams', '$mdMe
 	$timeout(() => {
 		$scope.signInBtn = octo.signInBtn;
 		$scope.octo = octo;
-		// console.log($scope.octo.me);
+		// console.log($scope.octo.client);
 	}, 100);
 
 	$scope.logger = () =>{
-		if (octo.me.error) {
+		if (octo.client.error) {
 			$window.open("/auth/github","_self");
 		}
 		else {
