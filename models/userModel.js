@@ -17,7 +17,9 @@ var userSchema = mongoose.Schema({
     createdGit    : {type: String},
     updatedGit    : {type: String},
     profileUrl    : {type: String},
-	displayName   : {type: String}
+    displayName   : {type: String},
+    followers     : {type: Array},
+	repos         : {type: Array}
 });
 
 module.exports = mongoose.model('user', userSchema);
