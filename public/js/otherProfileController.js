@@ -1,22 +1,23 @@
 'use strict';
 
 app.controller('otherProfileController', ["$scope", '$routeParams', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout", "octoService", function ($scope, $routeParams, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout, octoService) {
-	// octoService[$routeParams.user] = null;
-	var githubUsername = $routeParams.user;
-	octoService.getOtherUsers();
-	// $scope.user = octoService[githubUsername];
+
+	var ghUser = $routeParams.user; // just an alias
+	octoService.getOtherUsers(); // Fetch profile
 	$scope.atHome = $location.path() === "/" ? true : false;
+	$scope.fullProfileSwitch = false;
 	$scope.toggleFullProfileSwitch = function () {
 		$scope.fullProfileSwitch = !$scope.fullProfileSwitch;
 	};
-	$scope.fullProfileSwitch = false;
 
+	// interval to check if getOtherUsers ajax request came back
 	var updateUserInterval = $interval(function () {
-		$scope.user = octoService.cachedUsers[githubUsername];
-		console.log(octoService.cachedUsers[githubUsername]);
-		if ($scope.user && $scope.user.login === githubUsername || octoService.cachedUsers[githubUsername] && octoService.cachedUsers[githubUsername].message) {
-
+		var cacheUser = octoService.cachedUsers[ghUser];
+		// if cacheUser exist with a .login or .message propertie
+		if (cacheUser && (cacheUser.login || cacheUser.message)) {
+			// then update $scope.user;
+			$scope.user = cacheUser;
 			$interval.cancel(updateUserInterval);
 		}
-	}, 5);
+	}, 20);
 }]);
