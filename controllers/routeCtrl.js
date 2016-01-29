@@ -8,16 +8,16 @@ module.exports = (app, passport) => {
 
 
 	app.get('/api/me', ensureAuthenticatedAjax,  (req,res) => {
-			User.findById(req.user._id, (err, user) => {
-				if(err) { res.send("err");}
-				user.gitToken = null;
-				res.send(user);
-			});
+		User.findById(req.user._id, (err, user) => {
+			if(err) { res.send({ error: 'Sorry something went wrong' });}
+			user.gitToken = null;
+			res.send(user);
+		});
 	});
 
-	app.put('/api/me', ensureAuthenticatedAjax,  (req,res) => {
+	app.post('/api/me', ensureAuthenticatedAjax,  (req,res) => {
 		User.findById(req.user._id, (err, user) => {
-			if(err) { res.send("err");}
+			if(err) { res.send({ error: 'Sorry something went wrong' });}
 			user.displayName = req.body.displayName;
 			user.bio = req.body.bio;
 			user.hireable = req.body.hireable;
@@ -26,33 +26,21 @@ module.exports = (app, passport) => {
 			user.company = req.body.company;
 			user.email = req.body.email;
 			user.name = req.body.name;
+			user.repos = req.body.repos;
+			user.followers = req.body.followers;
 			user.save(function (err) {
-				if(err) { res.send("err");}
-				user.gitToken = null;
-				res.send(user);
+				if(err) { res.send({ error: 'Sorry something went wrong' });}
+				else{
+					user.gitToken = null;
+					res.send(user);
+				}
 			});
 		});
 	});
+	
 
-	// app.get('/api/users/:userParams', ensureAuthenticatedAjax , (req,res) => {
-	// 	// find latest 10 public profiles
-	// });
-
-	// app.get('/card/:githubId', ensureAuthenticatedAjax, (req,res) => {
-	// 	User.findOne(req.params, (err,user) => {
-	// 		// need better error handling for if user not found
-	// 		if (err) { res.send(null);}
-	// 		else{
-	// 			if(user &&  user.gitToken) { user.gitToken = null;} 
-	// 			res.send(user);
-	// 		}
-	// 	});
-	// });
-
-	app.get('/auth/github', passport.authenticate('github', {scope: ['user']}), (req, res) => {
-
-	});
-
+	app.get('/auth/github', passport.authenticate('github', {scope: ['user']}), (req, res) => {});
+	
 	app.get('/auth/github/callback', passport.authenticate('github', {failureRedirect: '/'}), (req, res) => {
 		req.logIn(req.user, err => {
 			if (err) {return next(err); }
