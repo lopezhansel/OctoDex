@@ -19,12 +19,13 @@
 	</head>
 	<body ng-cloak ng-controller="indexController">
 		<!-- main-wrap is persistent throughout the whole app -->
-		<div layout="column" class="main-wrap" layout-fill>
+		<div class="main-wrap" layout="column"  layout-fill>
 		  <md-toolbar layout="row" md-scroll-shrink>
 		  	<!-- this back button wont show if at home  -->
 		  	<md-button ng-if="isAtHome()" ng-click="redirect('/')">Back</md-button>
 		    <div class="md-toolbar-tools">
 		      <span>OctoDex</span>
+		      <span ng-if="octo.client.name"> - {{octo.client.name}}</span>
 		      <span flex></span>
 		      <!-- Logger function Logs in  -->
 		      <md-button ng-click="logger()">

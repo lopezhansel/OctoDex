@@ -46,7 +46,6 @@ module.exports = (passport) => {
 						newUser.createdGit   = profile._json.created_at;
 						newUser.updatedGit   = profile._json.updated_at;
 						newUser.profileUrl   = profile.profileUrl;
-						newUser.displayName  = profile.displayName;
 						newUser.save(err => {
 							if (err){throw err; }
 							return done(null, newUser);

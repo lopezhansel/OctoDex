@@ -65,8 +65,5 @@ app.service('octo', ['$routeParams','$resource', '$mdMedia', '$mdDialog', '$mdTo
 		};
 
 
-
-
-
 	}
 ]);

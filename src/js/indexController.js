@@ -4,7 +4,6 @@ app.controller('indexController', [  "$scope", "$window", '$routeParams', '$mdMe
 	$timeout(() => {
 		$scope.signInBtn = octo.signInBtn;
 		$scope.octo = octo;
-		// console.log($scope.octo.client);
 	}, 100);
 
 	$scope.logger = () =>{

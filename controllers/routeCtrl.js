@@ -18,7 +18,6 @@ module.exports = (app, passport) => {
 	app.post('/api/me', ensureAuthenticatedAjax,  (req,res) => {
 		User.findById(req.user._id, (err, user) => {
 			if(err) { res.send({ error: 'Sorry something went wrong' });}
-			user.displayName = req.body.displayName;
 			user.bio = req.body.bio;
 			user.hireable = req.body.hireable;
 			user.location = req.body.location;
@@ -28,7 +27,7 @@ module.exports = (app, passport) => {
 			user.name = req.body.name;
 			user.repos = req.body.repos;
 			user.followers = req.body.followers;
-			user.save(function (err) {
+			user.save((err) => {
 				if(err) { res.send({ error: 'Sorry something went wrong' });}
 				else{
 					user.gitToken = null;
@@ -37,7 +36,7 @@ module.exports = (app, passport) => {
 			});
 		});
 	});
-	
+
 
 	app.get('/auth/github', passport.authenticate('github', {scope: ['user']}), (req, res) => {});
 	
