@@ -14,8 +14,12 @@ Github's Octocat + Rolodex = OctoDex
 
 ## TODO List
 - [ ] Let user know if profile is an octodex user or not
-- [ ] comment more code
 - [ ] First Login Doesn't work
+- [ ] Fix: "UPDATE PROFILE" button showing up everywhere
+- [x] comment more code
+- [x] Simplified Inline Directive
+- [x] UX: Changing color properties when Updating
+- [x] improve inlineDirective performance
 - [x] Renaming Variables and Improve Organization
 - [x] improve service.getFollowersAndRepos.
 - [x] Improve api calls retrieving Repos and Followers;
