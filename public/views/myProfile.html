@@ -22,10 +22,10 @@
         </div>
         <div layout="column"  class="md-padding" layout-align-sm="center center">
           <div>
-            <span inline user="user" key="name" class="md-display-2 display-name inline"></span>
+            <span inline value="user.name" key="name" class="md-display-2 display-name inline"></span>
 			<!--  Error Here when width is too long of both username -->
             <span class="md-display-2 display-name inline"> | </span>
-            <span inline user="user" key="username" class="md-display-2 display-name inline"></span>
+            <span inline value="user.username" key="username" class="md-display-2 display-name inline"></span>
           </div>
           <span class="md-display-1 display-name">Software Developer </span>
           <div class="md-display-1 display-name"> 
@@ -38,12 +38,12 @@
       <div class="md-padding " layout="row" layout-sm="column"  layout-align-sm="center center" >
         <div layout="column" flex="95" class="contact-info-wrap">
             <div class="contact-info">
-              <div inline user="user" key="phone"></div>
-              <div inline user="user" key="blog"></div>
-              <div inline user="user" key="company"></div>
-              <div inline user="user" key="email"></div>
-              <div inline user="user" key="hireable"></div>
-              <div inline user="user" key="location"></div>
+              <div inline value="user.phone" key="phone"></div>
+              <div inline value="user.blog" key="blog"></div>
+              <div inline value="user.company" key="company"></div>
+              <div inline value="user.email" key="email"></div>
+              <div inline value="user.hireable" key="hireable"></div>
+              <div inline value="user.location" key="location"></div>
             </div>
         </div>
 
@@ -62,7 +62,7 @@
         <span flex></span>
         <md-button ng-show="octoService.showSaveBtn" 
           class="md-warn md-raised" 
-          ng-click="updateClient()"
+          ng-click="octoService.updateClient()"
           aria-label="save button">
           Update Profile
         </md-button>
