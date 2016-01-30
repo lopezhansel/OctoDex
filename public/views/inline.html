@@ -1,24 +1,20 @@
-<!-- ngif - show if textValue exist or if textValue is blank -->
-<!-- ng-mouseLeave/ng-mouseEnter- enable/disable edit mode when entering  -->
-
-<span ng-if="textValue === '' || textValue" ng-click="toggleInput(true)"   ng-mouseLeave="toggleIcon(1)" ng-mouseEnter="toggleIcon(1)">
-
-	<!--if  iconVisability is false/true hide/show icon -->
-	<i ng-show="!iconVisability && icon" class="material-icons info-icons ">{{icon}}</i>
-	<i ng-show="iconVisability && icon && !myForm['user'+key].$dirty" class="material-icons info-edit">edit</i>
-	<!-- <i ng-show=" icon && inlineForm['user'+key].$dirty" class="material-icons info-edit">clear</i> -->
-
-	<!-- textValue can be number, website, email -->
-	<span class="my-input" ng-show="!inputVisability" >{{user[key]}}</span>
-
-	<!-- form and input to change value  -->
-	<form ng-show="inputVisability"     name="inlineForm" 
+<!-- THIS INLINE DIRECTIVE CONSIST OF  3 MAIN ELEMENTS: ICONS VALUE AND INPUT-->
+<!-- only show if value, when clicked toggle Input mode, show edit icons when hovering -->
+<span ng-if="value === '' || value" ng-click="toggleInput(true)"  ng-mouseLeave="togglePencil()" ng-mouseEnter="togglePencil()">
+	<!-- ICONS -->
+	<!--if  pencilIcon is false/true hide/show icon -->
+	<!-- <span>{{isClient}}</span> -->
+	<i ng-show="(!pencilIcon && icon)" class="material-icons info-icons ">{{icon}}</i>
+	<i ng-show="(pencilIcon &&  icon)" class="material-icons info-edit">edit</i>
+	<!-- VALUE -->
+	<!-- Example  Phone number, Website, Email -->
+	<span class="my-input" ng-show="!inputShow" >{{value}}</span>
+	<!-- INPUT -->
+	<!-- Only show when client profile.  -->
+	<form ng-show="inputShow"  ng-if="isClient" name="inlineForm" 
 		  ng-mouseleave="toggleInput(false)"  novalidate class="contact-info inline">
-		<div class="inline" >
-			<input name="user{{key}}" 
-				   type="text" ng-model="user[key]"
-				   ng-mouseleave="showSaveBtn(inlineForm['user'+key].$dirty)">
-		</div>
+		<input name="{{key}}" class="inline"
+			   type="text" ng-model="octoService.client[key]"
+			   ng-mouseleave="dirtyElem(inlineForm[key].$dirty)">
 	</form>
-
 </span>
