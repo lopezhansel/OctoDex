@@ -9,11 +9,19 @@ app.service('octoService', ['$routeParams', '$resource', '$mdMedia', '$mdDialog'
 	service.showSaveBtn = false; // orange "Update Profile" Button
 	var ApiMe = $resource('/api/me', {}, {}); // Creates a class with GET POST etc methods
 	service.cachedUsers = {}; // initializing other Users
+	service.inlineElem = []; // array of inline elements that are dirty
+	// function to update each element's css properties and values
+	service.foreachElement = function (array, value, prop) {
+		prop = prop || "color";
+		array.map(function (el) {
+			el.css(prop, value);
+		});
+	};
 
 	// Check if Client is Logged in using GET . service.client is an instance of ApiMe
 	service.client = ApiMe.get(function () {
 		// service.client.error = "not logged in" || service.client.username
-		service.client.isLoggedIn = service.client.error ? false : true; // If not loggedIn thhen service.client.error = "not logged in"
+		service.client.isLoggedIn = service.client.error ? false : true; // If not loggedIn then service.client.error = "not logged in"
 		service.signInBtn = service.client.isLoggedIn ? "Sign out" : "Sign In";
 		// If client is logged and doesn't have repos||follower then fetch github
 		// BUG : followers and repos wont get updated ever
@@ -24,6 +32,7 @@ app.service('octoService', ['$routeParams', '$resource', '$mdMedia', '$mdDialog'
 
 	// POST method.  Reminder: service.client is an instance of ApiMe
 	service.updateClient = function () {
+		service.foreachElement(service.inlineElem, "#79E1FF"); // change to blue while POSTing
 		if ($location.path() !== "/") {
 			return;
 		} // only update if at home uri
@@ -32,9 +41,11 @@ app.service('octoService', ['$routeParams', '$resource', '$mdMedia', '$mdDialog'
 			service.client.isLoggedIn = service.client.error ? false : true; //
 			if (response.error) {
 				// incase of failure. Like if there a duplicate
+				service.foreachElement(service.inlineElem, "#FF3838"); // change color to red if erro
 				alert("Sorry Something went wrong. Please Try again in a few minutes.");
 			} else {
 				service.showSaveBtn = false; // orange "Update Profile" Button
+				service.foreachElement(service.inlineElem, "#333333"); // change back to black if success
 			}
 		});
 	};
