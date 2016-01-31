@@ -1,10 +1,16 @@
 # OctoDex
 Github's Octocat + Rolodex = OctoDex
-* Easily create and share a virtual business card using your Github information
+* Easily create and share a virtual business card using your Github information.
+
+## Features
+* Custom Directive "inline". Component to easily edit and user information when selected without.
+* Shareable links to profiles.
 
 ## Front-End
-* Angular - For MVC 
-* Angular Material - For nice Design 
+* Angular 
+* Angular Material. Many Material design Components built by Google
+* Angular Router. Front End Router
+* ng-Resource a better way way to communicate with Restful Apis.
 
 ## Back-End 
 * Node.js - Server
@@ -16,6 +22,12 @@ Github's Octocat + Rolodex = OctoDex
 - [ ] Let user know if profile is an octodex user or not
 - [ ] First Login Doesn't work
 - [ ] Fix: "UPDATE PROFILE" button showing up everywhere
+- [ ] Show Octodex Users at home page
+- [ ] Show random Git Users at home page.
+- [ ] See if octoDex User first then check github.
+- [ ] Fix Social Profiles Icon.
+- [ ] Make Account Page to edit more information.
+- [ ] Fix Following Number in card
 - [x] comment more code
 - [x] Simplified Inline Directive
 - [x] UX: Changing color properties when Updating
@@ -33,3 +45,10 @@ Github's Octocat + Rolodex = OctoDex
 - [x] Revamp inline directive. Fix edit I'mode in directive. Edit mode toggle button.
 - [x] Enable "Full Profile" Button
 - [x] Fixed other github users not being able to log in
+
+## Future Possibility
+- [ ] Upload Image to Node server
+- [ ] Use Ng-file Upload
+- [ ] Download vcf contact file
+- [ ] Convert ReadMe contact files
+- [ ] Highlight Syntax
