@@ -26,8 +26,8 @@ Github's Octocat + Rolodex = OctoDex
 - [ ] Show random Git Users at home page.
 - [ ] See if octoDex User first then check github.
 - [ ] Fix Social Profiles Icon.
-- [ ] Make Account Page to edit more information.
-- [ ] Fix Following Number in card
+- [ ] Make Account Setting Page for editing more information.
+- [x] Fix Following Number in card 1-30
 - [x] comment more code
 - [x] Simplified Inline Directive
 - [x] UX: Changing color properties when Updating
@@ -48,6 +48,7 @@ Github's Octocat + Rolodex = OctoDex
 
 ## Future Possibility
 - [ ] Upload Image to Node server
+- [ ] Repo Project Page 
 - [ ] Use Ng-file Upload
 - [ ] Download vcf contact file
 - [ ] Convert ReadMe contact files

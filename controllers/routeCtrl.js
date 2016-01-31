@@ -24,8 +24,8 @@ module.exports = (app, passport) => {
 			user.company = req.body.company;
 			user.email = req.body.email;
 			user.name = req.body.name;
-			user.repos = req.body.repos;
-			user.followers = req.body.followers;
+			user.reposArray = req.body.reposArray;
+			user.followersArray = req.body.followersArray;
 			user.save((err) => {
 				if(err) { res.send({ error: 'Sorry something went wrong' });}
 				else{

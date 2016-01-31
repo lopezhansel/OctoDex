@@ -23,9 +23,9 @@ app.service('octoService', ['$routeParams', '$resource', '$mdMedia', '$mdDialog'
 		// service.client.error = "not logged in" || service.client.username
 		service.client.isLoggedIn = service.client.error ? false : true; // If not loggedIn then service.client.error = "not logged in"
 		service.signInBtn = service.client.isLoggedIn ? "Sign out" : "Sign In";
-		// If client is logged and doesn't have repos||follower then fetch github
+		// If client is logged and doesn't have repos||followers then fetch github
 		// BUG : followers and repos wont get updated ever
-		if (service.client.isLoggedIn && (!service.client.repos.length || !service.client.followers.length)) {
+		if (service.client.isLoggedIn && (!service.client.reposArray.length || !service.client.followersArray.length)) {
 			service.getFollowersAndRepos(service.client);
 		}
 	});
@@ -50,16 +50,16 @@ app.service('octoService', ['$routeParams', '$resource', '$mdMedia', '$mdDialog'
 		});
 	};
 
-	// add repo and follower properties to the UserObj since the regular api doesn't give them by default
+	// add repos and followers properties to the UserObj since the regular api doesn't give them by default
 	// BUG : service.updateClient(); is being called by getOtherUsers
 	// BUG : Too much data is being stored into server
 	service.getFollowersAndRepos = function (userObj) {
 		$http.get('https://api.github.com/users/' + userObj.username + '/followers' + secret).then(function (response) {
-			userObj.followers = response.data;
+			userObj.followersArray = response.data;
 			service.updateClient(); // Post Method . Sends service.client
 		});
 		$http.get('https://api.github.com/users/' + userObj.username + '/repos' + secret).then(function (response) {
-			userObj.repos = response.data;
+			userObj.reposArray = response.data;
 			service.updateClient(); // Post Method . Sends service.client
 		});
 	};

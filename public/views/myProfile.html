@@ -29,7 +29,7 @@
           </div>
           <span class="md-display-1 display-name">Software Developer </span>
           <div class="md-display-1 display-name"> 
-            {{user.repos.length }} Repos | {{ user.followers.length }} Followers | {{ user.following.length }} Following
+            {{user.public_repos }} Repos | {{ user.followers }} Followers | {{ user.following }} Following
           </div>
         </div>
       </div>
@@ -76,7 +76,7 @@
 	<md-content flex class="my-container md-padding md-whiteframe-5dp" layout="column">
 		<div class="md-display-1"	>{{::user.username | uppercase}}'s Repositories </div>
 		<br>
-		<div ng-repeat="repo in ::user.repos" flex  layout="column">
+		<div ng-repeat="repo in ::user.reposArray" flex  layout="column">
 			<md-divider ></md-divider>
 			<p class="md-headline">
 				<a ng-href="{{::repo.svn_url}}" target="_blank">{{::repo.name}}</a>
@@ -104,7 +104,7 @@
 	           md-cols-sm="2" md-cols-md="4" md-cols-gt-md="5"
 	           md-row-height-gt-md="1:1" md-row-height="1:1"
 	           md-gutter="12px" md-gutter-gt-sm="8px" >
-	       <md-grid-tile  ng-repeat="follow in user.followers" 
+	       <md-grid-tile  ng-repeat="follow in user.followersArray" 
 	           md-rowspan="1" md-colspan="1" md-colspan-sm="1">
 	           <a class="tile-name" ng-href="#profile/{{::follow.login}}">
 		           <img class="tile" ng-src="{{::follow.avatar_url}}" />
