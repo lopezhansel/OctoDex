@@ -6,7 +6,6 @@ module.exports = (app, passport) => {
 		res.sendFile('index.html', {root: './public/views'});
 	});
 
-
 	app.get('/api/me', ensureAuthenticatedAjax,  (req,res) => {
 		User.findById(req.user._id, (err, user) => {
 			if(err) { res.send({ error: 'Sorry something went wrong' });}
@@ -37,6 +36,24 @@ module.exports = (app, passport) => {
 		});
 	});
 
+	app.get("/api/user/", (req,res)=>{
+		User.find(req.query, (err,users)=>{
+			if(err) { res.send({ error: 'Sorry something went wrong' });}
+			else{
+				user.gitToken = null;
+				res.send(users);
+			}
+		});
+	});
+
+	app.get("/api/usernames/", (req,res)=>{
+		User.find( (err,users)=>{
+			if(err) { res.send({ error: 'Sorry something went wrong' });}
+			else{
+				res.send(users.map( (e) => e.username));
+			}
+		});
+	});
 
 	app.get('/auth/github', passport.authenticate('github', {scope: ['user']}), (req, res) => {});
 	
