@@ -6,7 +6,7 @@ module.exports = (passport) => {
 
 	passport.serializeUser((user, done) => {
 		done(null, user._id);
-	});
+	});	
 
 	passport.deserializeUser((id, done) => {
 		User.findById(id, (err, user) => {
@@ -20,7 +20,6 @@ module.exports = (passport) => {
 			callbackURL: secrets.github.callbackURL
 		},
 		(accessToken, refreshToken, profile, done) => {
-			console.log(profile);
 			process.nextTick(() => {
 				User.findOne({'githubId': profile.id }, (err, userDoc) => {
 					if (err) {

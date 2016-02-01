@@ -9,6 +9,7 @@ var userSchema = mongoose.Schema({
     githubId        : {type: String, required: true}, // Bug :  Number or String // id instead 
     avatar_url      : {type: String},
     company         : {type: String},
+    phone           : {type: String}, // Created by octoDex
     blog            : {type: String},
     location        : {type: String},
     hireable        : {type: String},

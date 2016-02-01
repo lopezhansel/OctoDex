@@ -36,21 +36,25 @@ module.exports = (app, passport) => {
 		});
 	});
 
-	app.get("/api/user/", (req,res)=>{
-		User.find(req.query, (err,users)=>{
+	app.get("/api/users/:username", (req,res)=>{ // gets one
+		User.find(req.params,(err,user)=>{
 			if(err) { res.send({ error: 'Sorry something went wrong' });}
 			else{
 				user.gitToken = null;
-				res.send(users);
+				res.send(user);
 			}
 		});
 	});
 
-	app.get("/api/usernames/", (req,res)=>{
-		User.find( (err,users)=>{
+
+	app.get("/api/users/", (req,res)=>{	 
+		var projection = req.query.projection;
+		delete req.query.projection;
+		User.find(req.query,projection,(err,users)=>{
 			if(err) { res.send({ error: 'Sorry something went wrong' });}
 			else{
-				res.send(users.map( (e) => e.username));
+				if(!projection){users.forEach( (e) => e.gitToken = null);}
+				res.send(users);
 			}
 		});
 	});
