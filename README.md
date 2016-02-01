@@ -27,6 +27,7 @@ Github's Octocat + Rolodex = OctoDex
 - [ ] See if octoDex User first then check github.
 - [ ] Fix Social Profiles Icon.
 - [ ] Make Account Setting Page for editing more information.
+- [x] Making Server a bit more restful
 - [x] Fix Following Number in card 1-30
 - [x] comment more code
 - [x] Simplified Inline Directive

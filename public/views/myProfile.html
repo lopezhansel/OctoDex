@@ -80,7 +80,8 @@
 			<md-divider ></md-divider>
 			<p class="md-headline">
 				<a ng-href="{{::repo.svn_url}}" target="_blank">{{::repo.name}}</a>
-			</p>
+        <span class="md-subhead">External Link</span>
+      </p>
 			<p ng-if="repo.homepage">
 				<i class="material-icons">visibility</i>
 				<!-- Error Here when repo.hompage doesn't have http -->
