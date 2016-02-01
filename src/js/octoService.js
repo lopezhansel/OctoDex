@@ -1,6 +1,6 @@
 app.service('octoService', ['$routeParams','$resource', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout",
 	function($routeParams,$resource, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout) {
-		
+
 		// initializing
 		var service = this; // just an alias
 		service.signInBtn = "Sign In";// text of the sign in button 
@@ -20,22 +20,25 @@ app.service('octoService', ['$routeParams','$resource', '$mdMedia', '$mdDialog',
 			{user: '@user'}, {
 			 update: {method:'POST', url:"api/me"},
 			 search: {method:'GET', url:"api/users",isArray : true},
+			 check: {method:'GET', url:"api/users/:userParam",params:{userParam:"@login"},isArray : true},
 			 gitUser: {method:'GET', url:"https://api.github.com/users/:userParam",params:{userParam:"@login"}},
 			 gitRepos: {method:'GET', url:"https://api.github.com/users/:userParam/repos",params:{userParam:"@login"},isArray:true},
 			 gitFollowers: {method:'GET', url:"https://api.github.com/users/:userParam/followers",params:{userParam:"@login"},isArray:true}
 		}); 
 
-
+			
 
 		// Check if Client is Logged in using GET . service.client is an instance of OctoApi
 		service.client = OctoApi.get({},{params: "me"},function () { // service.client.error = "not logged in" || service.client.username
+			// console.log(service.client);
 			service.client.isLoggedIn = (service.client.error)? false : true; // If not loggedIn then service.client.error = "not logged in"
 			service.signInBtn = (service.client.isLoggedIn)? "Sign out": "Sign In"; 
 			// If client is logged and doesn't have repos||followers then fetch github
 			// BUG : followers and repos wont get updated ever
+			if (service.client.error){ return;}
 			service.client.repoUpdate =  (service.client.reposArray.length !== service.client.public_repos);
 			service.client.followerUpdate =  (service.client.followersArray.length !== service.client.followers);
-			if (service.client.isLoggedIn && (service.client.followerUpdate || service.client.repoUpdate) ) {
+			if (service.client.followerUpdate || service.client.repoUpdate) {
 				service.getFollowersAndRepos(service.client);
 			}
 		});
@@ -72,12 +75,22 @@ app.service('octoService', ['$routeParams','$resource', '$mdMedia', '$mdDialog',
 			var cacheAlias = service.cachedUsers; // give cachedUsers an alias
 			// if user is already cached then exit 
 			if (cacheAlias[ghUser]) {return; } 
+
+			OctoApi.check({userParam:ghUser},function (data) {
+				if (!data[0]){return; }
+				cacheAlias[ghUser] = data[0];
+				cacheAlias[ghUser].login = data[0].username;
+				cacheAlias[ghUser].reposArray = OctoApi.gitRepos({userParam:ghUser});
+				cacheAlias[ghUser].followersArray = OctoApi.gitFollowers({userParam:ghUser});
+			});
+
 			// if user doesn't exist in cachedUsers then retrieve  
-			cacheAlias[ghUser] = OctoApi.gitUser({userParam:ghUser},function  (data,responseHeaders) {
-				var login  = cacheAlias[ghUser].login;
-				cacheAlias[ghUser].username = login; // reassigning properties
-				cacheAlias[ghUser].reposArray = OctoApi.gitRepos({userParam:login});
-				cacheAlias[ghUser].followersArray = OctoApi.gitFollowers({userParam:login});
+			OctoApi.gitUser({userParam:ghUser},function  (data,responseHeaders) {
+				if (cacheAlias[ghUser]) {return; }
+				cacheAlias[ghUser] = data;
+				cacheAlias[ghUser].username = data.login; // reassigning properties
+				cacheAlias[ghUser].reposArray = OctoApi.gitRepos({userParam:ghUser});
+				cacheAlias[ghUser].followersArray = OctoApi.gitFollowers({userParam:ghUser});
 			});
 		};
 
