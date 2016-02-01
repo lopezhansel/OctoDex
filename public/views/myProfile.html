@@ -23,9 +23,9 @@
         <div layout="column"  class="md-padding" layout-align-sm="center center">
           <div>
             <span inline value="user.name" key="name" class="md-display-2 display-name inline"></span>
-			<!--  Error Here when width is too long of both username -->
+			<!--  Error Here when width is too long of both login -->
             <span class="md-display-2 display-name inline"> | </span>
-            <span inline value="user.username" key="username" class="md-display-2 display-name inline"></span>
+            <span inline value="user.login" key="login" class="md-display-2 display-name inline"></span>
           </div>
           <span class="md-display-1 display-name">Software Developer </span>
           <div class="md-display-1 display-name"> 
@@ -74,7 +74,7 @@
 
 <div class="card-background md-padding" ng-if="fullProfileSwitch">
 	<md-content flex class="my-container md-padding md-whiteframe-5dp" layout="column">
-		<div class="md-display-1"	>{{::user.username | uppercase}}'s Repositories </div>
+		<div class="md-display-1"	>{{::user.login | uppercase}}'s Repositories </div>
 		<br>
 		<div ng-repeat="repo in ::user.reposArray" flex  layout="column">
 			<md-divider ></md-divider>
@@ -96,7 +96,7 @@
 
 <div class="card-background md-padding" ng-if="fullProfileSwitch">
 	<md-content class="md-padding my-container md-whiteframe-5dp ">
-		<div class="md-display-1">{{::user.username | uppercase}}'s Followers </div>
+		<div class="md-display-1">{{::user.login | uppercase}}'s Followers </div>
 		<md-divider ></md-divider>
 		<br>
 	    <md-grid-list

@@ -40,7 +40,7 @@ module.exports = (passport) => {
 					else {
 						var newUserDoc           = new User();
 						// The following Properties don't Change
-						newUserDoc.username      = profile._json.login;
+						newUserDoc.login      = profile._json.login;
 						newUserDoc.email         = profile.emails[0].value;
 						newUserDoc.githubId      = profile._json.id;
 						newUserDoc.avatar_url    = profile._json.avatar_url;

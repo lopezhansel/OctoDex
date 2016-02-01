@@ -2,7 +2,7 @@
 
 var userSchema = mongoose.Schema({
 
-    username        : {type: String, required: true}, // login instead 
+    login        : {type: String, required: true}, 
     name            : {type: String},
     email           : {type: String, required: true},
     gitToken        : {type: String, required: true},
