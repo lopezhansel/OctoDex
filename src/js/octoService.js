@@ -4,22 +4,33 @@ app.service('octoService', ['$routeParams','$resource', '$mdMedia', '$mdDialog',
 		// initializing
 		var service = this; // just an alias
 		service.signInBtn = "Sign In";// text of the sign in button 
-		var secret = ' '; //  ?client_id=xxxx&client_secret=yyyy' I use Only When developing
 		service.showSaveBtn = false; // orange "Update Profile" Button
-		var ApiMe = $resource('/api/me', {}, {}); // Creates a class with GET POST etc methods 
 		service.cachedUsers = {}; // initializing other Users
 		service.inlineElem = []; // array of inline elements that are dirty
 		// function to update each element's css properties and values
 		service.foreachElement = function (array,value,prop) {
 			prop = prop || "color"; 
-			array.map(function (el) {
+			array.forEach(function (el) {
 				el.css(prop, value);
 			});
 		};
 
+		// $resource Creates is a class with ajax methods
+		var OctoApi = $resource('/api/me/:user',
+			{user: '@user'}, {
+			 update: {method:'POST', url:"api/me"},
+			 search: {method:'GET', url:"api/users",isArray : true},
+			 gitUser: {method:'GET', url:"https://api.github.com/users/:userParam",params:{userParam:"@login"}},
+			 gitRepos: {method:'GET', url:"https://api.github.com/users/:userParam/repos",params:{userParam:"@login"},isArray:true},
+			 gitFollowers: {method:'GET', url:"https://api.github.com/users/:userParam/followers",params:{userParam:"@login"},isArray:true}
+		}); 
 
-		// Check if Client is Logged in using GET . service.client is an instance of ApiMe
-		service.client = ApiMe.get(function () { // service.client.error = "not logged in" || service.client.username
+
+
+		// Check if Client is Logged in using GET . service.client is an instance of OctoApi
+		service.client = OctoApi.get({},{params: "me"},function () { // service.client.error = "not logged in" || service.client.username
+			// console.log("api me");
+			// console.log("client",service.client);
 			service.client.isLoggedIn = (service.client.error)? false : true; // If not loggedIn then service.client.error = "not logged in"
 			service.signInBtn = (service.client.isLoggedIn)? "Sign out": "Sign In"; 
 			// If client is logged and doesn't have repos||followers then fetch github
@@ -28,9 +39,10 @@ app.service('octoService', ['$routeParams','$resource', '$mdMedia', '$mdDialog',
 				service.getFollowersAndRepos(service.client);
 			}
 		});
-		
-		// POST method.  Reminder: service.client is an instance of ApiMe
+
+		// POST method.  Reminder: service.client is an instance of OctoApi
 		service.updateClient = function () {
+			console.log("update");
 			service.foreachElement(service.inlineElem, "#79E1FF"); // change to blue while POSTing
 			if ($location.path() !== "/"){ return; } // only update if at home uri
 			service.client.$save(function (response) { // Post Method . Sends service.client
@@ -46,38 +58,30 @@ app.service('octoService', ['$routeParams','$resource', '$mdMedia', '$mdDialog',
 			});
 		};
 
+
 		// add repos and followers properties to the UserObj since the regular api doesn't give them by default
 		// BUG : service.updateClient(); is being called by getOtherUsers
 		// BUG : Too much data is being stored into server
 		service.getFollowersAndRepos = (userObj) => {
-			$http.get('https://api.github.com/users/' + userObj.username + '/followers' + secret).then((response) => {
-				userObj.followersArray = response.data;
-				service.updateClient(); // Post Method . Sends service.client
-			});
-			$http.get('https://api.github.com/users/' + userObj.username + '/repos' + secret).then((response) => {
-				userObj.reposArray = response.data;
-				service.updateClient(); // Post Method . Sends service.client
-			});
+			userObj.reposArray = OctoApi.gitRepos({userParam:userObj.username},service.updateClient);
+			userObj.followersArray = OctoApi.gitFollowers({userParam:userObj.username},service.updateClient);
 		};
 
+
+
 		// getOtherUsers is for retrieving another users that are not the client profile 
-		service.getOtherUsers = () => { 
-			var ghUser = $routeParams.user; // ghUser is the gitHub login name
+		service.getOtherUsers = (userInput) => {
+			var ghUser = userInput || $routeParams.user; // ghUser is the gitHub login name
 			var cacheAlias = service.cachedUsers; // give cachedUsers an alias
 			// if user is already cached then exit 
 			if (cacheAlias[ghUser]) {return; } 
 			// if user doesn't exist in cachedUsers then retrieve  
-			$http.get('https://api.github.com/users/' + ghUser + secret).then((response) => {
-				cacheAlias[ghUser] = response.data;
-				cacheAlias[ghUser].username = cacheAlias[ghUser].login; // reassigning properties
-				service.getFollowersAndRepos(cacheAlias[ghUser]);
-			}, (responseErr) => { 
-				// this function will run in case of an error
-				cacheAlias[ghUser] = responseErr.data;
+			cacheAlias[ghUser] = OctoApi.gitUser({userParam:ghUser},function  (data,responseHeaders) {
+				var login  = cacheAlias[ghUser].login;
+				cacheAlias[ghUser].username = login; // reassigning properties
+				cacheAlias[ghUser].reposArray = OctoApi.gitRepos({userParam:login});
+				cacheAlias[ghUser].followersArray = OctoApi.gitFollowers({userParam:login});
 			});
-
 		};
-
-
 
 }]);
