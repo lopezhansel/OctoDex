@@ -36,7 +36,7 @@ module.exports = (app, passport) => {
 		});
 	});
 
-	app.get("/api/users/:username", (req,res)=>{ // gets one
+	app.get("/api/users/:login", (req,res)=>{ 
 		User.find(req.params,(err,user)=>{
 			if(err) { res.send({ error: 'Sorry something went wrong' });}
 			else{
@@ -48,9 +48,18 @@ module.exports = (app, passport) => {
 
 
 	app.get("/api/users/", (req,res)=>{	 
+		console.log(req.query);
 		var projection = req.query.projection;
 		delete req.query.projection;
-		User.find(req.query,projection,(err,users)=>{
+
+		if(Object.keys(req.query).length === 1) {
+			var key = Object.keys(req.query)[0];
+			var value = req.query[key];
+			var regex = new RegExp(["^", value, "$"].join(""), "i");
+			req.query[key] = regex;
+		}
+		console.log(req.query);
+		User.find( req.query , projection ,(err,users)=>{
 			if(err) { res.send({ error: 'Sorry something went wrong' });}
 			else{
 				if(!projection){users.forEach( (e) => e.gitToken = null);}
