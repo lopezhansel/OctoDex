@@ -29,20 +29,19 @@ app.service('octoService', ['$routeParams','$resource', '$mdMedia', '$mdDialog',
 
 		// Check if Client is Logged in using GET . service.client is an instance of OctoApi
 		service.client = OctoApi.get({},{params: "me"},function () { // service.client.error = "not logged in" || service.client.username
-			// console.log("api me");
-			// console.log("client",service.client);
 			service.client.isLoggedIn = (service.client.error)? false : true; // If not loggedIn then service.client.error = "not logged in"
 			service.signInBtn = (service.client.isLoggedIn)? "Sign out": "Sign In"; 
 			// If client is logged and doesn't have repos||followers then fetch github
 			// BUG : followers and repos wont get updated ever
-			if (service.client.isLoggedIn && (!service.client.reposArray.length || !service.client.followersArray.length) ) {
+			service.client.repoUpdate =  (service.client.reposArray.length !== service.client.public_repos);
+			service.client.followerUpdate =  (service.client.followersArray.length !== service.client.followers);
+			if (service.client.isLoggedIn && (service.client.followerUpdate || service.client.repoUpdate) ) {
 				service.getFollowersAndRepos(service.client);
 			}
 		});
 
 		// POST method.  Reminder: service.client is an instance of OctoApi
 		service.updateClient = function () {
-			console.log("update");
 			service.foreachElement(service.inlineElem, "#79E1FF"); // change to blue while POSTing
 			if ($location.path() !== "/"){ return; } // only update if at home uri
 			service.client.$save(function (response) { // Post Method . Sends service.client
@@ -50,14 +49,12 @@ app.service('octoService', ['$routeParams','$resource', '$mdMedia', '$mdDialog',
 				if (response.error){ // incase of failure. Like if there a duplicate 
 					service.foreachElement(service.inlineElem, "#FF3838"); // change color to red if erro
 					alert("Sorry Something went wrong. Please Try again in a few minutes.");
-				}
-				else{
+				} else{
 					service.showSaveBtn = false; // orange "Update Profile" Button
 					service.foreachElement(service.inlineElem, "#333333"); // change back to black if success
 				}
 			});
 		};
-
 
 		// add repos and followers properties to the UserObj since the regular api doesn't give them by default
 		// BUG : service.updateClient(); is being called by getOtherUsers
