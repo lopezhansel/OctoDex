@@ -16,8 +16,7 @@ app.service('octoService', ['$routeParams','$resource', '$mdMedia', '$mdDialog',
 		};
 
 		// $resource Creates is a class with ajax methods
-		var OctoApi = $resource('/api/users/:user',
-			{user: '@user'}, {
+		var OctoApi = $resource('/api/users/:login', {login: '@login'}, {
 			 getMe: {method:'GET', url:"api/me"},
 			 update: {method:'POST', url:"api/me"},
 			 search: {method:'GET', url:"api/users",isArray : true},
@@ -29,8 +28,7 @@ app.service('octoService', ['$routeParams','$resource', '$mdMedia', '$mdDialog',
 
 
 		// Check if Client is Logged in using GET . service.client is an instance of OctoApi
-		service.client = OctoApi.getMe({},{params: "me"},function () { // service.client.error = "not logged in" || service.client.login
-			// console.log(service.client);
+		service.client = OctoApi.getMe(function () { // service.client.error = "not logged in" || service.client.login
 			service.client.isLoggedIn = (service.client.error)? false : true; // If not loggedIn then service.client.error = "not logged in"
 			service.signInBtn = (service.client.isLoggedIn)? "Sign out": "Sign In"; 
 			// If client is logged and doesn't have repos||followers then fetch github
@@ -45,7 +43,6 @@ app.service('octoService', ['$routeParams','$resource', '$mdMedia', '$mdDialog',
 
 		// POST method.  Reminder: service.client is an instance of OctoApi
 		service.updateClient = function () {
-			console.log(service.client);
 			service.foreachElement(service.inlineElem, "#79E1FF"); // change to blue while POSTing
 			if ($location.path() !== "/"){ return; } // only update if at home uri
 			service.client.$update(function (response) { // Post Method . Sends service.client
@@ -61,14 +58,11 @@ app.service('octoService', ['$routeParams','$resource', '$mdMedia', '$mdDialog',
 		};
 
 		// add repos and followers properties to the UserObj since the regular api doesn't give them by default
-		// BUG : service.updateClient(); is being called by getOtherUsers
 		// BUG : Too much data is being stored into server
 		service.getFollowersAndRepos = (userObj) => {
-			userObj.reposArray = OctoApi.gitRepos({userParam:userObj.login},service.updateClient);
-			userObj.followersArray = OctoApi.gitFollowers({userParam:userObj.login},service.updateClient);
+			userObj.reposArray = OctoApi.gitRepos({userParam:userObj.login},userObj.$save({login:userObj.login}) );
+			userObj.followersArray = OctoApi.gitFollowers({userParam:userObj.login},userObj.$save({login:userObj.login}) );
 		};
-
-
 
 		// getOtherUsers is for retrieving another users that are not the client profile 
 		service.getOtherUsers = (userInput) => {
@@ -76,24 +70,14 @@ app.service('octoService', ['$routeParams','$resource', '$mdMedia', '$mdDialog',
 			var cacheAlias = service.cachedUsers; // give cachedUsers an alias
 			// if user is already cached then exit 
 			if (cacheAlias[ghUser]) {return; } 
-
-			OctoApi.check({userParam:ghUser},function (data) {
-				console.log("check",ghUser,data);
-				if (!data[0]){return; }
-				cacheAlias[ghUser] = data[0];
-				cacheAlias[ghUser].reposArray = OctoApi.gitRepos({userParam:ghUser});
-				cacheAlias[ghUser].followersArray = OctoApi.gitFollowers({userParam:ghUser});
-			});
-
-			// if user doesn't exist in cachedUsers then retrieve  
-			OctoApi.gitUser({userParam:ghUser},function  (data,responseHeaders) {
-
-				if (cacheAlias[ghUser]) {return; }
-				console.log("git",ghUser,data);
-				cacheAlias[ghUser] = data;
-				cacheAlias[ghUser].reposArray = OctoApi.gitRepos({userParam:ghUser});
-				cacheAlias[ghUser].followersArray = OctoApi.gitFollowers({userParam:ghUser});
+			OctoApi.check({userParam:ghUser},function (data,responseHeaders) {
+				if (data.length) { // If user Exist.
+					cacheAlias[ghUser] = data[0];
+				}else{
+					cacheAlias[ghUser] = OctoApi.gitUser({userParam:ghUser},function (data,responseHeaders) {
+							service.getFollowersAndRepos(cacheAlias[ghUser]);
+					});
+				}				
 			});
 		};
-
 }]);
