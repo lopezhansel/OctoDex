@@ -37,21 +37,42 @@ module.exports = (app, passport) => {
 	});
 
 	app.post("/api/users/:login", ensureAuthenticatedAjax, (req,res)=>{ 
+		if(Object.keys(req.params).length === 1) {
+			var key = Object.keys(req.params)[0];
+			var value = req.params[key];
+			var regex = new RegExp(["^", value, "$"].join(""), "i");
+			req.params[key] = regex;
+		}
 		User.find(req.params,(err,users)=>{
-			if (!users.length) {return;} // Bug: if it doesn't find one CRASH
+			if (!users.length) {
+				console.log(req.params,"not found");
+				return;
+			} 
 			var userDoc = users[0];
-			if(err) { res.send({ error: 'Sorry something went wrong' });}
+			if(err) { res.send({ error: 'Search went wrong' });}
 			userDoc.bio            = req.body.bio;
-			userDoc.hireable       = req.body.hireable;
-			userDoc.location       = req.body.location;
-			userDoc.blog           = req.body.blog;
+			userDoc.name           = req.body.name; // enable this
 			userDoc.company        = req.body.company;
-			userDoc.email          = req.body.email;
-			userDoc.name           = req.body.name;
+			userDoc.blog           = req.body.blog;
+			userDoc.location       = req.body.location;
+			userDoc.hireable       = req.body.hireable;
+			userDoc.public_repos   = req.body.public_repos;
+			userDoc.public_gists   = req.body.public_gists;
+			userDoc.following      = req.body.following;
+			userDoc.followers      = req.body.followers;
+			userDoc.created_at     = req.body.created_at;
+			userDoc.updated_at     = req.body.updated_at;
 			userDoc.reposArray     = req.body.reposArray;
 			userDoc.followersArray = req.body.followersArray;
+			userDoc.followingArray = req.body.followingArray;
+			// Email is required by schema thus will break if null
+			if(req.body.email) {userDoc.email = req.body.email;}
+
 			userDoc.save((err) => {	
-				if(err) { res.send({ error: 'Sorry something went wrong' });}
+				if(err) { 
+					console.log("save",err);
+					res.send({ error: 'Save went wrong' });
+				}
 				else{
 					userDoc.gitToken = null;
 					res.send(userDoc);
