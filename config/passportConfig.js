@@ -56,10 +56,10 @@ module.exports = (passport) => {
 						newUserDoc.hireable      = (profile._json.hireable)? "Available for hire" : "Not available for hire";
 						// The following Properties DO change, and  DO affect my Mongo
 						newUserDoc.updated_at    = profile._json.updated_at;
-						newUserDoc.followers   = profile._json.followers;
-						newUserDoc.following  = profile._json.following;
-						newUserDoc.public_gists   = profile._json.public_gists;
-						newUserDoc.public_repos   = profile._json.public_repos;
+						newUserDoc.followers     = profile._json.followers;
+						newUserDoc.following     = profile._json.following;
+						newUserDoc.public_gists  = profile._json.public_gists;
+						newUserDoc.public_repos  = profile._json.public_repos;
 
 						newUserDoc.save(err => {
 							if (err){throw err; }
