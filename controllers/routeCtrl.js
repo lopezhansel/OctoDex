@@ -15,22 +15,46 @@ module.exports = (app, passport) => {
 	});
 
 	app.post('/api/me', ensureAuthenticatedAjax,  (req,res) => {
-		User.findById(req.user._id, (err, user) => {
+		User.findById(req.user._id, (err, me) => {
 			if(err) { res.send({ error: 'Sorry something went wrong' });}
-			user.bio = req.body.bio;
-			user.hireable = req.body.hireable;
-			user.location = req.body.location;
-			user.blog = req.body.blog;
-			user.company = req.body.company;
-			user.email = req.body.email;
-			user.name = req.body.name;
-			user.reposArray = req.body.reposArray;
-			user.followersArray = req.body.followersArray;
-			user.save((err) => {
+			me.bio            = req.body.bio;
+			me.hireable       = req.body.hireable;
+			me.location       = req.body.location;
+			me.blog           = req.body.blog;
+			me.company        = req.body.company;
+			me.email          = req.body.email;
+			me.name           = req.body.name;
+			me.reposArray     = req.body.reposArray;
+			me.followersArray = req.body.followersArray;
+			me.save((err) => {
 				if(err) { res.send({ error: 'Sorry something went wrong' });}
 				else{
-					user.gitToken = null;
-					res.send(user);
+					me.gitToken = null;
+					res.send(me);
+				}
+			});
+		});
+	});
+
+	app.post("/api/users/:login", ensureAuthenticatedAjax, (req,res)=>{ 
+		User.find(req.params,(err,users)=>{
+			if (!users.length) {return;} // Bug: if it doesn't find one CRASH
+			var userDoc = users[0];
+			if(err) { res.send({ error: 'Sorry something went wrong' });}
+			userDoc.bio            = req.body.bio;
+			userDoc.hireable       = req.body.hireable;
+			userDoc.location       = req.body.location;
+			userDoc.blog           = req.body.blog;
+			userDoc.company        = req.body.company;
+			userDoc.email          = req.body.email;
+			userDoc.name           = req.body.name;
+			userDoc.reposArray     = req.body.reposArray;
+			userDoc.followersArray = req.body.followersArray;
+			userDoc.save((err) => {	
+				if(err) { res.send({ error: 'Sorry something went wrong' });}
+				else{
+					userDoc.gitToken = null;
+					res.send(userDoc);
 				}
 			});
 		});
@@ -48,17 +72,14 @@ module.exports = (app, passport) => {
 
 
 	app.get("/api/users/", (req,res)=>{	 
-		console.log(req.query);
 		var projection = req.query.projection;
 		delete req.query.projection;
-
 		if(Object.keys(req.query).length === 1) {
 			var key = Object.keys(req.query)[0];
 			var value = req.query[key];
 			var regex = new RegExp(["^", value, "$"].join(""), "i");
 			req.query[key] = regex;
 		}
-		console.log(req.query);
 		User.find( req.query , projection ,(err,users)=>{
 			if(err) { res.send({ error: 'Sorry something went wrong' });}
 			else{

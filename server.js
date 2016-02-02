@@ -11,8 +11,8 @@ var sercrets = require("./config/secrets");  // my app secrets
 
 mongoose.connect('mongodb://localhost/octoDex');
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(express.static(__dirname + '/public'));
 
 app.use(session({
