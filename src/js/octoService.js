@@ -23,7 +23,8 @@ app.service('octoService', ['$routeParams','$resource', '$mdMedia', '$mdDialog',
 			 check: {method:'GET', url:"api/users/:userParam",params:{userParam:"@login"},isArray : true},
 			 gitUser: {method:'GET', url:"https://api.github.com/users/:userParam",params:{userParam:"@login"}},
 			 gitRepos: {method:'GET', url:"https://api.github.com/users/:userParam/repos",params:{userParam:"@login"},isArray:true},
-			 gitFollowers: {method:'GET', url:"https://api.github.com/users/:userParam/followers",params:{userParam:"@login"},isArray:true}
+			 gitFollowers: {method:'GET', url:"https://api.github.com/users/:userParam/followers",params:{userParam:"@login"},isArray:true},
+			 gitFollowing: {method:'GET', url:"https://api.github.com/users/:userParam/following",params:{userParam:"@login"},isArray:true}
 		}); 
 
 
@@ -58,10 +59,15 @@ app.service('octoService', ['$routeParams','$resource', '$mdMedia', '$mdDialog',
 		};
 
 		// add repos and followers properties to the UserObj since the regular api doesn't give them by default
-		// BUG : Too much data is being stored into server
+		// BUG : Too much data is being Sent to server and saved. REPOS are heavy and duplicated info
 		service.getFollowersAndRepos = (userObj) => {
-			userObj.reposArray = OctoApi.gitRepos({userParam:userObj.login},userObj.$save({login:userObj.login}) );
-			userObj.followersArray = OctoApi.gitFollowers({userParam:userObj.login},userObj.$save({login:userObj.login}) );
+			userObj.reposArray =OctoApi.gitRepos({userParam:userObj.login},function (data) {
+				userObj.followersArray = OctoApi.gitFollowers({userParam:userObj.login},function (data) {
+					userObj.followingArray = OctoApi.gitFollowing({userParam:userObj.login},function (data) {
+						userObj.$save({login:userObj.login},function (returnData) {});
+					});
+				});
+			});
 		};
 
 		// getOtherUsers is for retrieving another users that are not the client profile 
