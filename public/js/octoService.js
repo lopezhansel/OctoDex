@@ -25,7 +25,8 @@ app.service('octoService', ['$routeParams', '$resource', '$mdMedia', '$mdDialog'
 		gitUser: { method: 'GET', url: "https://api.github.com/users/:userParam", params: { userParam: "@login" } },
 		gitRepos: { method: 'GET', url: "https://api.github.com/users/:userParam/repos", params: { userParam: "@login" }, isArray: true },
 		gitFollowers: { method: 'GET', url: "https://api.github.com/users/:userParam/followers", params: { userParam: "@login" }, isArray: true },
-		gitFollowing: { method: 'GET', url: "https://api.github.com/users/:userParam/following", params: { userParam: "@login" }, isArray: true }
+		gitFollowing: { method: 'GET', url: "https://api.github.com/users/:userParam/following", params: { userParam: "@login" }, isArray: true },
+		searchGit: { method: 'GET', url: "https://api.github.com/search/users", params: { userParam: "@login" } }
 	});
 
 	// Check if Client is Logged in using GET . service.client is an instance of OctoApi

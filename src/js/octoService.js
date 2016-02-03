@@ -14,17 +14,18 @@ app.service('octoService', ['$routeParams','$resource', '$mdMedia', '$mdDialog',
 				el.css(prop, value);
 			});
 		};
-
+		
 		// $resource Creates is a class with ajax methods
 		var OctoApi = $resource('/api/users/:login', {login: '@login'}, {
-			 getMe: {method:'GET', url:"api/me"},
-			 update: {method:'POST', url:"api/me"},
-			 search: {method:'GET', url:"api/users",isArray : true},
-			 check: {method:'GET', url:"api/users/:userParam",params:{userParam:"@login"},isArray : true},
-			 gitUser: {method:'GET', url:"https://api.github.com/users/:userParam",params:{userParam:"@login"}},
-			 gitRepos: {method:'GET', url:"https://api.github.com/users/:userParam/repos",params:{userParam:"@login"},isArray:true},
+			 getMe:        {method:'GET', url:"api/me"},
+			 update:       {method:'POST', url:"api/me"},
+			 search:       {method:'GET', url:"api/users",isArray : true},
+			 check:        {method:'GET', url:"api/users/:userParam",params:{userParam:"@login"},isArray : true},
+			 gitUser:      {method:'GET', url:"https://api.github.com/users/:userParam",params:{userParam:"@login"}},
+			 gitRepos:     {method:'GET', url:"https://api.github.com/users/:userParam/repos",params:{userParam:"@login"},isArray:true},
 			 gitFollowers: {method:'GET', url:"https://api.github.com/users/:userParam/followers",params:{userParam:"@login"},isArray:true},
-			 gitFollowing: {method:'GET', url:"https://api.github.com/users/:userParam/following",params:{userParam:"@login"},isArray:true}
+			 gitFollowing: {method:'GET', url:"https://api.github.com/users/:userParam/following",params:{userParam:"@login"},isArray:true},
+			 searchGit:    {method:'GET', url:"https://api.github.com/search/users",params:{userParam:"@login"}}
 		}); 
 
 
