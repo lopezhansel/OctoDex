@@ -6,38 +6,62 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.9/angular-aria.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.9/angular-route.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.9/angular-resource.min.js"></script>
-
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.0-rc6/angular-material.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.4/angular-material.min.js"></script>
 
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.0-rc2/angular-material.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.4/angular-material.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui" />
 		<link rel="stylesheet" type="text/css" href="./style/main.css">
 		<title>OctoDex - Github Cards</title>
 	</head>
 	<body ng-cloak ng-controller="indexController">
 		<!-- main-wrap is persistent throughout the whole app -->
-		<div class="main-wrap" layout="column"  layout-fill>
-		  <md-toolbar layout="row" md-scroll-shrink>
-		  	<!-- this back button wont show if at home  -->
-		  	<md-button ng-if="isAtHome()" ng-click="redirect('/')">Back</md-button>
-		    <div class="md-toolbar-tools">
-		      <span>OctoDex</span>
-		      <span ng-if="octoService.client.name"> - {{octoService.client.name}}</span>
-		      <span flex></span>
-		      <!-- Logger function Logs in  -->
-		      <md-button ng-click="logger()">
-		        {{signInBtn}}
-		      </md-button>
-		    </div>
-		  </md-toolbar>
-
-		  <md-content layout-fill layout="column">
-		  	<!-- Rendered View will go inside of ng-view -->
-		    <ng-view flex ></ng-view>
-		  </md-content>
+		<div class="main-wrap" layout="column" >
+		 	<md-toolbar layout="row" md-scroll-shrink>
+				<!-- this back button wont show if at home  -->
+				<md-button ng-if="isAtHome()" ng-click="redirect('/')">Back</md-button>
+				<div class="md-toolbar-tools">
+					<span>OctoDex</span>
+					<span ng-if="octoService.client.name"> - {{octoService.client.name}}</span>
+					<span flex></span>
+					<!-- Logger function Logs in  -->
+					<md-button ng-click="logger()">
+						{{signInBtn}}
+					</md-button>
+				</div>
+			</md-toolbar>
+			<md-content layout="column">
+				<!-- Rendered View will go inside of ng-view -->
+				<ng-view flex ></ng-view>
+			</md-content>
+			<md-content class="md-padding" >
+				<div layout="row" layout-wrap layout-align="center center">
+					<md-card ng-repeat="user in octoService.cachedUsers" flex="45">
+						<md-card-title>
+							<md-card-title-text>
+								<span class="md-headline">{{user.name}}</span>
+								<span class="md-subhead">{{user.login}}</span>
+								<span>{{user.blog}}</span>
+								<span>{{user.email}}</span>
+								<span>{{user.login}}</span>
+								<span>{{user.company}}</span>
+								<span>{{user.location}}</span>
+								<span>{{user.updated_at|date}}</span>
+							</md-card-title-text>
+							<md-card-title-media>
+								<img ng-src="{{user.avatar_url}}" class="md-media-md card-media" alt="{{user.login}}"></img>
+							</md-card-title-media>
+						</md-card-title>
+						<md-card-actions layout="row" layout-align="end center">
+							<md-button ng-href="#profile/{{user.login}}">Visit Profile</md-button>
+							<md-button>Visit Repos</md-button>
+						</md-card-actions>
+					</md-card>
+				</div>
+			</md-content>
 		</div>
 
 
