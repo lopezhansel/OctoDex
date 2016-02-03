@@ -1,5 +1,9 @@
 var User = require("../models/userModel");
-
+var retrnNDel =  (obj,str) => {
+	var output = obj[str];
+	delete obj[str];
+	return output;
+};
 module.exports = (app, passport) => {
 
 	app.get('/', (req, res) => {
@@ -82,19 +86,21 @@ module.exports = (app, passport) => {
 	});
 
 	app.get("/api/users/:login", (req,res)=>{ 
-		User.find(req.params,(err,user)=>{
+
+		User.find(req.params,(err,users)=>{
 			if(err) { res.send({ error: 'Sorry something went wrong' });}
 			else{
-				user.gitToken = null;
-				res.send(user);
+				users.gitToken = null;
+				res.send(users);
 			}
 		});
 	});
 
 
-	app.get("/api/users/", (req,res)=>{	 
-		var projection = req.query.projection;
-		delete req.query.projection;
+	app.get("/api/users/", (req,res)=>{	
+		var limit = retrnNDel(req.query,"limit");
+		var projection = retrnNDel(req.query,"projection");
+		var skip = retrnNDel(req.query,"skip");
 		if(Object.keys(req.query).length === 1) {
 			var key = Object.keys(req.query)[0];
 			var value = req.query[key];
@@ -107,7 +113,7 @@ module.exports = (app, passport) => {
 				if(!projection){users.forEach( (e) => e.gitToken = null);}
 				res.send(users);
 			}
-		});
+		}).skip(skip).limit(limit);
 	});
 
 	app.get('/auth/github', passport.authenticate('github', {scope: ['user']}), (req, res) => {});

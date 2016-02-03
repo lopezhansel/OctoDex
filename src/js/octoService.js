@@ -28,6 +28,13 @@ app.service('octoService', ['$routeParams','$resource', '$mdMedia', '$mdDialog',
 			 searchGit:    {method:'GET', url:"https://api.github.com/search/users",params:{userParam:"@login"}}
 		}); 
 
+		// Get 20 Users Skip 1
+		OctoApi.search({limit:20,skip:1},function (data) {
+			data.forEach(function (el) {
+				service.cachedUsers[el.login] = el;
+			});
+		});
+
 
 		// Check if Client is Logged in using GET . service.client is an instance of OctoApi
 		service.client = OctoApi.getMe(function () { // service.client.error = "not logged in" || service.client.login
