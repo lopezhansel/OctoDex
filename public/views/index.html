@@ -17,72 +17,62 @@
 		<link rel="stylesheet" type="text/css" href="./style/main.css">
 		<title>OctoDex - Github Cards</title>
 	</head>
-	<body ng-cloak ng-controller="indexController">
-		<!-- main-wrap is persistent throughout the whole app -->
-		<div class="main-wrap" layout="column" >
-		 	<md-toolbar layout="row" md-scroll-shrink>
-				<!-- this back button wont show if at home  -->
-				<md-button ng-if="isAtHome()" ng-click="redirect('/')">Back</md-button>
-				<div class="md-toolbar-tools">
-					<span>OctoDex</span>
-					<span flex></span>
-					<md-button ng-click="toggleSidenav('right')" hide-gt-lg class="md-icon-button">
-						<md-icon aria-label="Menu" md-svg-icon="https://s3-us-west-2.amazonaws.com/s.cdpn.io/68133/menu.svg"></md-icon>
-					</md-button>
-				</div>
-			</md-toolbar>
+	<body ng-cloak ng-controller="indexController" >
 
-			<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right" md-is-locked-open="$mdMedia('gt-lg')">
-				<md-toolbar class="md-theme-light" layout>
-					<h1 class="md-toolbar-tools"> {{octoService.client.name|| "Please Login"}}</h1>
-					<md-button ng-click="logger('right')">
-						{{signInBtn}}
-					</md-button>
+		<div layout layout-fill>
+			<md-sidenav od-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right" md-is-locked-open="$mdMedia('gt-lg')"></md-sidenav>  
+			<md-content layout="column" flex>
+			 	<md-toolbar layout md-scroll-shrink>
+					<md-button ng-if="isAtHome()" ng-click="redirect('/')">Back</md-button>
+					<div class="md-toolbar-tools">
+						<span>OctoDex</span>
+						<span flex></span>
+						<md-button ng-click="toggleSidenav('right')" hide-gt-lg class="md-icon-button">
+							<md-icon aria-label="Menu" md-svg-icon="https://s3-us-west-2.amazonaws.com/s.cdpn.io/68133/menu.svg"></md-icon>
+						</md-button>
+					</div>
 				</md-toolbar>
-				<md-content layout-padding>
 			
-				</md-content>
-			</md-sidenav>   
-
-			<md-content layout="column">
-				<!-- Rendered View will go inside of ng-view -->
+				<!-- <ng-view flex ></ng-view> -->
 				<ng-view flex ></ng-view>
+				<md-content ng-if="!octoService.client.isLoggedIn &&  isAtHome"
+				class="md-padding" layout-align="center center">
+					<div layout="column" layout-gt-sm="row" layout-wrap >
+						<md-card ng-repeat="user in octoService.cachedUsers" flex-xs="100" flex-md="40" flex-lg="30" flex-xl="20" class="cachedUsers" >
+							<md-card-title>
+								<md-card-title-text>
+									<span class="md-headline">{{user.name}}</span>
+									<span class="md-subhead">{{user.login}}</span>
+									<span>{{user.blog}}</span>
+									<span>{{user.email}}</span>
+									<span>{{user.login}}</span>
+									<span>{{user.company}}</span>
+									<span>{{user.location}}</span>
+									<span>{{user.updated_at|date}}</span>
+								</md-card-title-text>
+								<md-card-title-media>
+									<img ng-src="{{user.avatar_url}}" class="md-media-md card-media" alt="{{user.login}}"></img>
+								</md-card-title-media>
+							</md-card-title>
+							<md-card-actions layout="row" layout-align="end center">
+								<md-button ng-href="#profile/{{user.login}}">Visit Profile</md-button>
+								<md-button>Visit Repos</md-button>
+							</md-card-actions>
+						</md-card>
+					</div>
+				</md-content>
 			</md-content>
-			<md-content ng-if="!octoService.client.isLoggedIn &&  isAtHome"
-			class="md-padding" layout-align="center center">
-				<div layout="column" layout-gt-sm="row" layout-wrap >
-					<md-card ng-repeat="user in octoService.cachedUsers" flex-xs="100" flex-md="40" flex-lg="30" flex-xl="20" class="cachedUsers" >
-						<md-card-title>
-							<md-card-title-text>
-								<span class="md-headline">{{user.name}}</span>
-								<span class="md-subhead">{{user.login}}</span>
-								<span>{{user.blog}}</span>
-								<span>{{user.email}}</span>
-								<span>{{user.login}}</span>
-								<span>{{user.company}}</span>
-								<span>{{user.location}}</span>
-								<span>{{user.updated_at|date}}</span>
-							</md-card-title-text>
-							<md-card-title-media>
-								<img ng-src="{{user.avatar_url}}" class="md-media-md card-media" alt="{{user.login}}"></img>
-							</md-card-title-media>
-						</md-card-title>
-						<md-card-actions layout="row" layout-align="end center">
-							<md-button ng-href="#profile/{{user.login}}">Visit Profile</md-button>
-							<md-button>Visit Repos</md-button>
-						</md-card-actions>
-					</md-card>
-				</div>
-			</md-content>
+			
+			
 		</div>
-
-
-		<script src="/js/octoModule.js" type="text/javascript" charset="utf-8"></script>
-		<script src="/js/octoService.js" type="text/javascript" charset="utf-8"></script>
-		<script src="/js/inlineDirective.js" type="text/javascript" charset="utf-8"></script>
-		<script src="/js/indexController.js" type="text/javascript" charset="utf-8"></script>
-		<script src="/js/myProfileController.js" type="text/javascript" charset="utf-8"></script>
-		<script src="/js/otherProfileController.js" type="text/javascript" charset="utf-8"></script>
+			
+			<script src="/js/octoModule.js" type="text/javascript" charset="utf-8"></script>
+			<script src="/js/octoService.js" type="text/javascript" charset="utf-8"></script>
+			<script src="/js/inlineDirective.js" type="text/javascript" charset="utf-8"></script>
+			<script src="/js/octoDirectives.js" type="text/javascript" charset="utf-8"></script>
+			<script src="/js/indexController.js" type="text/javascript" charset="utf-8"></script>
+			<script src="/js/myProfileController.js" type="text/javascript" charset="utf-8"></script>
+			<script src="/js/otherProfileController.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 </html>
 

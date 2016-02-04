@@ -11,7 +11,7 @@ html,body{
 	margin-bottom: 50px;
 }
 ng-view{
-	background: #79E1FF;
+	background: #F8F8F8;
 }
 
 .my-container{
@@ -83,4 +83,9 @@ md-grid-list {
 
 md-card.cachedUsers{
 	height: 260px;
+}
+img.sidenav-avatar {
+    width: 100px;
+    height: 100px;
+    margin: auto;
 }
