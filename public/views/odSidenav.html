@@ -1,0 +1,50 @@
+<md-toolbar class="md-theme-light" layout>
+	<h1 class="md-toolbar-tools"> {{octoService.client.name|| "Please Login"}}</h1>
+	<md-button ng-click="logger('right')">
+		{{signInBtn}}
+	</md-button>
+</md-toolbar>	
+
+<md-content>
+
+	<md-subheader class="md-accent avatar-subheader">
+		Account
+	</md-subheader>
+	<md-content layout="column" layout-align="start center">
+		<div layout ng-if="octoService.client.isLoggedIn">
+			<img class="sidenav-avatar" ng-src="{{octoService.client.avatar_url}}" alt="image caption">
+		</div>
+		<h2> {{octoService.client.name|| "Please Login"}} </h2>
+	</md-content>
+
+	<md-list>
+      <div layout><md-button flex>Acount Page</md-button></div>
+	  <md-divider></md-divider>
+	  <div layout><md-button flex>Edit Account</md-button></div>
+	  <md-divider></md-divider>
+	  <div layout><md-button flex>Log Out</md-button></div>
+	  <md-divider></md-divider>
+	  <div layout><md-button flex>Share Link</md-button></div>
+	</md-list>
+
+	<md-subheader class="md-accent">Navigation</md-subheader>		
+	<md-list>
+      <div layout><md-button flex> Home</md-button></div>
+	  <md-divider></md-divider>
+	  <div layout><md-button flex> About Page</md-button></div>
+	  <md-divider></md-divider>
+	  <div layout><md-button flex> OctoDex Github Page</md-button></div>
+	</md-list>
+
+	<md-subheader class="md-accent">Groups</md-subheader>		
+	<md-list>
+      <div layout><md-button flex>RefactoU Grads</md-button></div>
+	  <md-divider></md-divider>
+	  <div layout><md-button flex>Denver Devs Slack</md-button></div>
+	  <md-divider></md-divider>
+	  <div layout><md-button flex> Tech Friends </md-button></div>
+	  <md-divider></md-divider>
+	  <div layout><md-button flex> Fav Repos</md-button></div>
+	</md-list>
+					
+</md-content>
