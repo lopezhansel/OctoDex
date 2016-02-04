@@ -53,11 +53,10 @@
           <div class="vertical-line"></div>
 
           <div class="contact-info" flex-gt-sm="10" layout="column"  layout-sm="row" >
-            <a ng-href="{{::octoService.client.profileUrl}}"><span class="fa fa-github-square"></span> </a>
-            <a ng-href="{{::octoService.client.profileUrl}}"><span class="fa fa-github-square"></span> </a>
-            <a ng-href="{{::octoService.client.profileUrl}}"><span class="fa fa-github-square"></span> </a>
+            <a ng-href="{{::user.html_url || user.profileUrl}}"><span class="fa fa-github-square"></span> </a>
+            <a ng-href="{{::user.html_url || user.profileUrl}}"><span class="fa fa-github-square"></span> </a>
+            <a ng-href="{{::user.html_url || user.profileUrl}}"><span class="fa fa-github-square"></span> </a>
           </div>
-
         </div>
 
 
