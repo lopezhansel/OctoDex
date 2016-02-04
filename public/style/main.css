@@ -80,3 +80,7 @@ md-grid-list {
 .inline{
 	display: inline;
 }
+
+md-card.cachedUsers{
+	height: 260px;
+}
