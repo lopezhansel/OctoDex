@@ -2,6 +2,7 @@
 const gulp = require('gulp');
 const babel = require('gulp-babel');
 // const concat = require('gulp-concat');
+const plumber = require('gulp-plumber');
 const browserSync = require('browser-sync');
 const nodemon = require('gulp-nodemon');
 // const uglify = require('gulp-uglify');
@@ -46,6 +47,7 @@ gulp.task('javascript',()=>{
     console.log("javascript")
     browserSync.reload()
     return gulp.src(paths.jsSrc)
+        .pipe(plumber())
         .pipe(babel({
             presets: ['es2015']
         }))
