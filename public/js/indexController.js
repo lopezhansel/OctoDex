@@ -1,6 +1,6 @@
 "use strict";
 
-app.controller('indexController', ["$scope", "$window", '$routeParams', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout", "octoService", function ($scope, $window, $routeParams, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout, octoService) {
+app.controller('indexController', ["$scope", "$mdSidenav", "$window", '$routeParams', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout", "octoService", function ($scope, $mdSidenav, $window, $routeParams, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout, octoService) {
 	$scope.signInBtn = octoService.signInBtn;
 
 	$timeout(function () {
@@ -21,5 +21,8 @@ app.controller('indexController', ["$scope", "$window", '$routeParams', '$mdMedi
 	};
 	$scope.redirect = function (str) {
 		$location.path(str);
+	};
+	$scope.toggleSidenav = function (menuId) {
+		$mdSidenav(menuId).toggle();
 	};
 }]);

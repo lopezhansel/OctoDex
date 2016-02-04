@@ -25,14 +25,25 @@
 				<md-button ng-if="isAtHome()" ng-click="redirect('/')">Back</md-button>
 				<div class="md-toolbar-tools">
 					<span>OctoDex</span>
-					<span ng-if="octoService.client.name"> - {{octoService.client.name}}</span>
 					<span flex></span>
-					<!-- Logger function Logs in  -->
-					<md-button ng-click="logger()">
-						{{signInBtn}}
+					<md-button ng-click="toggleSidenav('right')" hide-gt-lg class="md-icon-button">
+						<md-icon aria-label="Menu" md-svg-icon="https://s3-us-west-2.amazonaws.com/s.cdpn.io/68133/menu.svg"></md-icon>
 					</md-button>
 				</div>
 			</md-toolbar>
+
+			<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right" md-is-locked-open="$mdMedia('gt-lg')">
+				<md-toolbar class="md-theme-light" layout>
+					<h1 class="md-toolbar-tools"> {{octoService.client.name|| "Please Login"}}</h1>
+					<md-button ng-click="logger('right')">
+						{{signInBtn}}
+					</md-button>
+				</md-toolbar>
+				<md-content layout-padding>
+			
+				</md-content>
+			</md-sidenav>   
+
 			<md-content layout="column">
 				<!-- Rendered View will go inside of ng-view -->
 				<ng-view flex ></ng-view>
