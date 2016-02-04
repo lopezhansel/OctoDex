@@ -37,9 +37,9 @@
 				<!-- Rendered View will go inside of ng-view -->
 				<ng-view flex ></ng-view>
 			</md-content>
-			<md-content class="md-padding" >
-				<div layout="row" layout-wrap layout-align="center center">
-					<md-card ng-repeat="user in octoService.cachedUsers" flex="45">
+			<md-content class="md-padding" layout-align="center center">
+				<div layout="column" layout-gt-sm="row" layout-wrap >
+					<md-card ng-repeat="user in octoService.cachedUsers" flex-xs="100" flex-md="40" flex-lg="30" flex-xl="20" class="cachedUsers" >
 						<md-card-title>
 							<md-card-title-text>
 								<span class="md-headline">{{user.name}}</span>
