@@ -11,6 +11,7 @@ app.service('octoService', ['$routeParams', '$resource', '$mdMedia', '$mdDialog'
 	service.showSaveBtn = false; // orange "Update Profile" Button
 	service.cachedUsers = {}; // initializing other Users
 	service.inlineElem = []; // array of inline elements that are dirty
+	service.organizations = {};
 	// function to update each element's css properties and values
 	service.foreachElement = function (array, value, prop) {
 		prop = prop || "color";
@@ -38,6 +39,17 @@ app.service('octoService', ['$routeParams', '$resource', '$mdMedia', '$mdDialog'
 			service.cachedUsers[el.login] = el;
 		});
 	});
+
+	service.getOrganizations = function (str) {
+		OctoApi.search({ organizations: str }, function (data) {
+			var org = str;
+			service.organizations[org] = {};
+			data.forEach(function (el) {
+				service.organizations[org][el.login] = el;
+			});
+		});
+	};
+	service.getOrganizations("RefactorU");
 
 	// Check if Client is Logged in using GET . service.client is an instance of OctoApi
 	service.client = OctoApi.getMe(function () {

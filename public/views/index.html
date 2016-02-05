@@ -32,13 +32,15 @@
 					</div>
 				</md-toolbar>
 			
-				<!-- <ng-view flex ></ng-view> -->
-				<ng-view flex ></ng-view>
-				<md-content od-groups
-				ng-if="!octoService.client.isLoggedIn &&  isAtHome"
-				class="md-padding" layout-align="center center">	
+				<md-content layout="column">
+					<!-- <ng-view flex ></ng-view> -->
+					<ng-view flex ></ng-view>
+					<md-content od-groups groups="octoService.organizations.RefactorU"
+					ng-if="!octoService.client.isLoggedIn &&  isAtHome"
+					class="md-padding" layout-align="center center">	
+					</md-content>
 				</md-content>
-			</md-content>
+			</md-content> 
 		</div>
 		<div>
 			<script src="/js/octoModule.js" type="text/javascript" charset="utf-8"></script>

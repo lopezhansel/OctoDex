@@ -23,8 +23,8 @@ var userSchema = mongoose.Schema({
     public_repos    : {type: Number},
     followingArray  : {type: Array},
     following       : {type: Number},
-    public_gists    : {type: Number} 
-
+    public_gists    : {type: Number},
+    organizations   : {type: String}
 });
 
 module.exports = mongoose.model('user', userSchema);

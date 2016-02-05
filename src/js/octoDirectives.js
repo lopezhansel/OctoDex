@@ -31,6 +31,9 @@ app.directive('odSidenav', ["octoService","$routeParams",function (octoService,$
 .directive('odGroups', ["octoService","$routeParams",function (octoService,$routeParams) {
 	return {
 		restrict: 'EA',
+		scope: {
+		  groups: "="
+		},
 		templateUrl : "views/odGroups.html",
 	};
 }]);
