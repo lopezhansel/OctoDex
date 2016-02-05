@@ -1,0 +1,19 @@
+<md-content flex class="my-container md-padding md-whiteframe-5dp" layout="column">
+  <div class="md-display-1" >{{::user.login | uppercase}}'s Repositories </div>
+  <br>
+  <div ng-repeat="repo in ::user.reposArray" flex  layout="column">
+    <md-divider ></md-divider>
+    <p class="md-headline">
+      <a ng-href="{{::repo.svn_url}}" target="_blank">{{::repo.name}}</a>
+      <span class="md-subhead">External Link</span>
+    </p>
+    <p ng-if="repo.homepage">
+      <i class="material-icons">visibility</i>
+      <!-- Error Here when repo.hompage doesn't have http -->
+      <a ng-href="{{::repo.homepage}}">{{::repo.homepage}}</a>
+    </p>
+    <p class="md-subhead">{{::repo.description}}</p>
+    <p>Last updated {{::repo.updated_at | date}}</p>
+    <p>Primary project language : {{::repo.language}}</p>
+  </div>
+</md-content>

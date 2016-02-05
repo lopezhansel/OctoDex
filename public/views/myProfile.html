@@ -1,130 +1,27 @@
 
-<md-content 
-  layout-padding layout="column" 
-  ng-if="!octoService.client.isLoggedIn &&  atHome"
-  layout-align="start center">
-  <h1>Welcome to octoDex!</h1> 
-  <h1>An online vitual profile for Github Users</h1> 
-  <md-button class="md-raised md-primary" ng-click="logger()">
-    {{signInBtn}}
-  </md-button>
+<md-content od-welcome>
 </md-content>
 
 
 <md-tabs md-dynamic-height md-border-bottom ng-if="octoService.client.isLoggedIn  ||  !atHome">
 
   <md-tab label="{{user.login}}">
-  <md-content 
-      ng-if="octoService.client.isLoggedIn  ||  !atHome"
-      class="md-padding card-background main-md-content" layout="column"  layout-align="center center">
-    <md-card layout="column" class="my-container md-whiteframe-5dp" >
-
-        <div layout-sm="column" layout="row"  class="card-header">
-          <div flex="33" flex-sm="100" >
-            <img  ng-src="{{::user.avatar_url}}" alt="profile picture"/>
-          </div>
-          <div layout="column" layout-padding layout-align-sm="center center">
-            <div>
-              <span inline value="user.name" key="name" class="md-display-2 display-name inline"></span>
-        <!--  Error Here when width is too long of both login -->
-              <span class="md-display-2 display-name inline"> | </span>
-              <span inline value="user.login" key="login" class="md-display-2 display-name inline"></span>
-            </div>
-            <span class="md-display-1 display-name">Software Developer </span>
-            <div class="md-display-1 display-name"> 
-              {{user.public_repos }} Repos | {{ user.followers }} Followers | {{ user.following }} Following
-            </div>
-          </div>
-        </div>
-
-
-        <div class="md-padding " layout="row" layout-sm="column"  layout-align-sm="center center" >
-          <div layout="column" flex="95" class="contact-info-wrap">
-              <div class="contact-info">
-                <div inline value="user.phone" key="phone"></div>
-                <div inline value="user.blog" key="blog"></div>
-                <div inline value="user.company" key="company"></div>
-                <div inline value="user.email" key="email"></div>
-                <div inline value="user.hireable" key="hireable"></div>
-                <div inline value="user.location" key="location"></div>
-              </div>
-          </div>
-
-          <div class="vertical-line"></div>
-
-          <div class="contact-info" flex-gt-sm="10" layout="column"  layout-sm="row" >
-            <a ng-href="{{::user.html_url || user.profileUrl}}"><span class="fa fa-github-square"></span> </a>
-          </div>
-        </div>
-
-
-        <md-card-actions layout="row" layout-align="end center">
-          <span flex></span>
-          <md-button ng-show="octoService.showSaveBtn" 
-            class="md-warn md-raised" 
-            ng-click="octoService.updateClient()"
-            aria-label="save button">
-            Update Profile
-          </md-button>
-        </md-card-actions>
-    </md-card>
-
-  </md-content >
-
+    <md-content od-card
+        ng-if="octoService.client.isLoggedIn  ||  !atHome"
+        class="md-padding card-background main-md-content" layout="column"  layout-align="center center">
+    </md-content >
   </md-tab>
 
   <md-tab label="Repos">
-    <md-content class="card-background md-padding" ng-if="true">
-      <md-content flex class="my-container md-padding md-whiteframe-5dp" layout="column">
-        <div class="md-display-1" >{{::user.login | uppercase}}'s Repositories </div>
-        <br>
-        <div ng-repeat="repo in ::user.reposArray" flex  layout="column">
-          <md-divider ></md-divider>
-          <p class="md-headline">
-            <a ng-href="{{::repo.svn_url}}" target="_blank">{{::repo.name}}</a>
-            <span class="md-subhead">External Link</span>
-          </p>
-          <p ng-if="repo.homepage">
-            <i class="material-icons">visibility</i>
-            <!-- Error Here when repo.hompage doesn't have http -->
-            <a ng-href="{{::repo.homepage}}">{{::repo.homepage}}</a>
-          </p>
-          <p class="md-subhead">{{::repo.description}}</p>
-          <p>Last updated {{::repo.updated_at | date}}</p>
-          <p>Primary project language : {{::repo.language}}</p>
-        </div>
-      </md-content>
+    <md-content od-repo
+    class="card-background md-padding" ng-if="true">
     </md-content>
-
   </md-tab>
 
   <md-tab label="Followers">
-    <md-content class="card-background md-padding" ng-if="true">
-      <md-content class="md-padding my-container md-whiteframe-5dp ">
-        <div class="md-display-1">{{::user.login | uppercase}}'s Followers </div>
-        <md-divider ></md-divider>
-        <br>
-          <md-grid-list
-               md-cols="1"
-               md-cols-xm="1"
-                 md-cols-sm="2" md-cols-md="4" md-cols-gt-md="5"
-                 md-row-height-gt-md="1:1" md-row-height="1:1"
-                 md-gutter="12px" md-gutter-gt-sm="8px" >
-             <md-grid-tile  ng-repeat="follow in user.followersArray" 
-                 md-rowspan="1" md-colspan="1" md-colspan-sm="1">
-                 <a class="tile-name" ng-href="#profile/{{::follow.login}}">
-                   <img class="tile" ng-src="{{::follow.avatar_url}}" />
-                 </a>
-               <a class="tile-name" ng-href="#profile/{{::follow.login}}">
-                 <md-grid-tile-footer layout-align="center center">
-                   <h2>{{:: follow.login }}</h2>
-                 </md-grid-tile-footer>
-             </a>
-             </md-grid-tile>
-          </md-grid-list>
-      </md-content>
+    <md-content od-followers
+    class="card-background md-padding" ng-if="true">
     </md-content>
-
   </md-tab>
 
 </md-tabs>
