@@ -20,14 +20,16 @@ Github's Octocat + Rolodex = OctoDex
 
 ## TODO List
 - [ ] Show users in different views
+- [ ] View into Components 
 - [ ] Let user know if profile is an octodex user or not
-- [ ] First Login Doesn't work
 - [ ] "Sign In" button doesn't update after logging in
 - [ ] BUG: If POST timeout css color wont change
 - [ ] Fix: "UPDATE PROFILE" button showing up everywhere
 - [ ] Show random Git Users at home page.
 - [ ] See if octoDex User first then check github.
 - [ ] Make Account Setting Page for editing more information.
+- [x] Remove Full Profile Button
+- [x] First Login Doesn't work
 - [X] Fix Social Profiles Icon.
 - [x] Show Octodex Users at home page
 - [x] BUG : service.updateClient(); is being called by getOtherUsers

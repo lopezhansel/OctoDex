@@ -5,10 +5,6 @@ app.controller('myProfileController', ["$scope", '$routeParams', '$mdMedia', '$m
 	// atHome enables different views
 	$scope.atHome = $location.path() === "/" ? true : false;
 	$scope.octoService = octoService;
-	$scope.fullProfileSwitch = false;
-	$scope.toggleFullProfileSwitch = function () {
-		$scope.fullProfileSwitch = !$scope.fullProfileSwitch;
-	};
 
 	// interval to check if update ajax request came back
 	var updateUserInterval = $interval(function () {

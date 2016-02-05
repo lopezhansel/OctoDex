@@ -5,10 +5,6 @@ app.controller('otherProfileController', ["$scope", '$routeParams', '$mdMedia', 
 	var ghUser = $routeParams.user; // just an alias
 	octoService.getOtherUsers(ghUser); // Fetch profile
 	$scope.atHome = $location.path() === "/" ? true : false;
-	$scope.fullProfileSwitch = false;
-	$scope.toggleFullProfileSwitch = function () {
-		$scope.fullProfileSwitch = !$scope.fullProfileSwitch;
-	};
 
 	// interval to check if getOtherUsers ajax request came back
 	var updateUserInterval = $interval(function () {
