@@ -4,6 +4,9 @@ app.service('octoService', ['$routeParams','$resource', '$mdMedia', '$mdDialog',
 		// initializing
 		var service = this; // just an alias
 		service.signInBtn = "Sign In";// text of the sign in button 
+		service.getSignInBtn = function () {
+			return service.signInBtn;
+		};
 		service.showSaveBtn = false; // orange "Update Profile" Button
 		service.cachedUsers = {}; // initializing other Users
 		service.inlineElem = []; // array of inline elements that are dirty

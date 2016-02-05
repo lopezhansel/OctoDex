@@ -1,7 +1,7 @@
 <md-toolbar class="md-theme-light" layout>
 	<h1 class="md-toolbar-tools"> {{octoService.client.name|| "Please Login"}}</h1>
 	<md-button ng-click="logger('right')">
-		{{signInBtn}}
+		{{octoService.getSignInBtn()}}
 	</md-button>
 </md-toolbar>	
 
@@ -22,7 +22,7 @@
 	  <md-divider></md-divider>
 	  <div layout><md-button flex>Edit Account</md-button></div>
 	  <md-divider></md-divider>
-	  <div layout><md-button flex>Log Out</md-button></div>
+	  <div layout><md-button flex>{{octoService.getSignInBtn()}}</md-button></div>
 	  <md-divider></md-divider>
 	  <div layout><md-button flex>Share Link</md-button></div>
 	</md-list>
