@@ -6,10 +6,10 @@ var app = angular.module('octodex', ["ngMaterial", "ngAnimate", "ngAria", "ngRou
 app.config(function ($routeProvider, $locationProvider) {
 	$routeProvider.when('/', {
 		controller: "myProfileController",
-		templateUrl: "views/myProfile.html"
+		templateUrl: "views/profileView.html"
 	}).when('/profile/:user', {
 		controller: "otherProfileController",
-		templateUrl: "views/myProfile.html"
+		templateUrl: "views/profileView.html"
 	}).otherwise({ redirectTo: '/' });
 	// $locationProvider.html5Mode(true);
 });
