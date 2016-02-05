@@ -13,3 +13,7 @@ app.config(function ($routeProvider, $locationProvider) {
 	}).otherwise({ redirectTo: '/' });
 	// $locationProvider.html5Mode(true);
 });
+
+app.config(function ($mdThemingProvider) {
+	$mdThemingProvider.theme('default').primaryPalette('teal').accentPalette('light-blue');
+});

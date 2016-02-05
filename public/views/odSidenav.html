@@ -1,8 +1,5 @@
 <md-toolbar class="md-theme-light" layout>
-	<h1 class="md-toolbar-tools"> {{octoService.client.name|| "Please Login"}}</h1>
-	<md-button ng-click="logger('right')">
-		{{octoService.getSignInBtn()}}
-	</md-button>
+	<h1 class="md-toolbar-tools"> {{od.client.name|| "Please Login"}}</h1>
 </md-toolbar>	
 
 <md-content>
@@ -11,40 +8,77 @@
 		Account
 	</md-subheader>
 	<md-content layout="column" layout-align="start center">
-		<div layout ng-if="octoService.client.isLoggedIn">
-			<img class="sidenav-avatar" ng-src="{{octoService.client.avatar_url}}" alt="image caption">
+		<div layout ng-if="::od.client.isLoggedIn">
+			<img class="sidenav-avatar" ng-src="{{::od.client.avatar_url}}" alt="image caption">
 		</div>
-		<h2> {{octoService.client.name|| "Please Login"}} </h2>
+		<h2> {{::od.client.name}} </h2>
+		<h2 ng-if="!od.client.name"> "Please Login" </h2>
 	</md-content>
 
-	<md-list>
-      <div layout><md-button flex>Acount Page</md-button></div>
-	  <md-divider></md-divider>
-	  <div layout><md-button flex>Edit Account</md-button></div>
-	  <md-divider></md-divider>
-	  <div layout><md-button flex>{{octoService.getSignInBtn()}}</md-button></div>
-	  <md-divider></md-divider>
-	  <div layout><md-button flex>Share Link</md-button></div>
+	<md-list layout layout-wrap>
+		<md-button flex="100" ng-href="#profile/{{od.client.login}}" >
+			<div>
+				<span ng-if="::client.isLoggedIn">{{::client.login}} account</span>
+				<span ng-if="::!client.isLoggedIn">Account Page</span>
+				<md-divider></md-divider>
+			</div>
+		</md-button>
+
+		<md-button flex="100" ng-disabled="::true">
+			Edit Account
+			<md-divider></md-divider>
+		</md-button>
+
+		<md-button flex="100" ng-click="::logger()" ng-class="{'md-primary':!client.isLoggedIn,'md-raised': !client.isLoggedIn}">
+			{{od.getSignInBtn()}}
+			<md-divider></md-divider>
+		</md-button>
+
+		<md-button flex="100" ng-disabled="::true">
+			Share Link
+		</md-button>
 	</md-list>
 
-	<md-subheader class="md-accent">Navigation</md-subheader>		
-	<md-list>
-      <div layout><md-button flex> Home</md-button></div>
-	  <md-divider></md-divider>
-	  <div layout><md-button flex> About Page</md-button></div>
-	  <md-divider></md-divider>
-	  <div layout><md-button flex> OctoDex Github Page</md-button></div>
-	</md-list>
+	
+	<div>
+		<md-subheader class="md-accent">{{list.subheader}}</md-subheader>		
+		<md-list layout layout-wrap>
+			<md-button flex="100" ng-href="#/">
+				Home
+			</md-button>
+		
+			<md-button flex="100" ng-disabled="::true">
+				About Page
+				<md-divider></md-divider>
+			</md-button>
+		
+			<md-button flex="100" ng-href="https://github.com/lopezhansel/OctoDex" target="_blank">
+				OctoDex Github Page
+			</md-button >
+		</md-list>
+	</div>
 
 	<md-subheader class="md-accent">Groups</md-subheader>		
-	<md-list>
-      <div layout><md-button flex>RefactoU Grads</md-button></div>
-	  <md-divider></md-divider>
-	  <div layout><md-button flex>Denver Devs Slack</md-button></div>
-	  <md-divider></md-divider>
-	  <div layout><md-button flex> Tech Friends </md-button></div>
-	  <md-divider></md-divider>
-	  <div layout><md-button flex> Fav Repos</md-button></div>
+	<md-list layout layout-wrap >
+		<md-button flex="100" ng-disabled="::true"> 
+			RefactoU Grads
+			<md-divider></md-divider>
+		</md-button>
+
+		<md-button flex="100" ng-disabled="::true" >
+			Denver Devs Slack
+			<md-divider></md-divider>
+		</md-button>
+
+		<md-button flex="100" ng-disabled="::true">
+			Tech Friends
+			<md-divider></md-divider>
+		</md-button>
+
+		<md-button flex="100" ng-disabled="::true">
+			Popular Repos
+		</md-button>
+
 	</md-list>
 					
 </md-content>

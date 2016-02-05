@@ -2,6 +2,9 @@ app.controller('indexController', [  "$scope","$mdSidenav", "$window", '$routePa
 	$scope.signInBtn = octoService.signInBtn;
 	
 	$scope.octoService = octoService;
+	$scope.od = octoService;
+
+	$scope.client = octoService.getClient()	;
 
 	$scope.logger = () =>{
 		if (octoService.client.error) {

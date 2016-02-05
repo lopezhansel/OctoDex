@@ -53,6 +53,10 @@ app.service('octoService', ['$routeParams','$resource', '$mdMedia', '$mdDialog',
 			}
 		});
 
+		service.getClient = function  () {
+			return service.client;
+		};
+
 		// POST method.  Reminder: service.client is an instance of OctoApi
 		service.updateClient = function () {
 			service.foreachElement(service.inlineElem, "#79E1FF"); // change to blue while POSTing
@@ -97,4 +101,5 @@ app.service('octoService', ['$routeParams','$resource', '$mdMedia', '$mdDialog',
 				}				
 			});
 		};
+		return service;
 }]);
