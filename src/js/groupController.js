@@ -6,5 +6,12 @@ app.controller('groupController',
 	octoService.getOrganizations(group); // Fetch profile
 	$scope.atHome = ($location.path() === "/")? true : false;
 
+}])
+.controller('accountController', 
+	[  "$scope", '$routeParams', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout", "octoService",
+	function ($scope, $routeParams, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout, octoService) {
+	$scope.od = octoService;
+	$scope.atHome = ($location.path() === "/")? true : false;
+
 }]);
 
