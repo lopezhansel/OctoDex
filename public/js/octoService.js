@@ -73,7 +73,7 @@ app.service('octoService', ['$routeParams', '$resource', '$mdMedia', '$mdDialog'
 	};
 
 	// POST method.  Reminder: service.client is an instance of OctoApi
-	service.updateClient = function () {
+	service.updateClient = function (form) {
 		service.foreachElement(service.inlineElem, "#79E1FF"); // change to blue while POSTing
 		if ($location.path() !== "/" && $location.path() !== "/account") {
 			return;
@@ -86,6 +86,7 @@ app.service('octoService', ['$routeParams', '$resource', '$mdMedia', '$mdDialog'
 				service.foreachElement(service.inlineElem, "#FF3838"); // change color to red if erro
 				alert("Sorry Something went wrong. Please Try again in a few minutes.");
 			} else {
+				form.$setPristine();
 				service.showSaveBtn = false; // orange "Update Profile" Button
 				service.foreachElement(service.inlineElem, "#333333"); // change back to black if success
 			}

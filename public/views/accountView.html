@@ -1,83 +1,83 @@
 <div layout="column" class="md-inline-form" layout-padding>
-  <md-content layout-padding>
-    <div>
-      <form name="userForm">
-        <div layout-gt-sm="row">
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>Full Name</label>
-            <input ng-model="user.name" placeholder="Steve Jobs">
-          </md-input-container>
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>Title</label>
-            <input ng-model="user.title" placeholder="CEO/Founder">
-          </md-input-container>
-        </div>
-        <div layout-gt-sm="row">
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>Email</label>
-            <input ng-model="user.email" type="email" placeholder="steve@apple.com">
-          </md-input-container>
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>Phone</label>
-            <input ng-model="user.phone" placeholder="555-555-5555">
-          </md-input-container>
-        </div>
-        <div layout-gt-sm="row">
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>Company</label>
-            <input ng-model="user.company" placeholder="Apple Inc.">
-          </md-input-container>
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>Hireable</label>
-            <input ng-model="user.hireable" placeholder="Available for Hire">
-          </md-input-container>
-        </div>
-        <div layout-gt-sm="row">
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>Location</label>
-            <input ng-model="user.location" placeholder="Cupertino, CA">
-          </md-input-container>
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>Organizations</label>
-            <input ng-model="user.organizations">
-          </md-input-container>
-        </div>
-        <div layout-gt-sm="row">
-          <md-input-container class="md-block" flex-gt-sm>
-            <label >Website</label>
-            <input ng-model="user.blog" placeholder="https://SteveJobs.com">
-          </md-input-container>
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>Avatar Picture Url</label>
-            <input ng-model="user.avatar_url">
-          </md-input-container>
-        </div>
-        <div layout-gt-sm="row">
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>Twitter (Disabled)</label>
-            <input ng-model="user.twitter" disabled>
-          </md-input-container>
-          <md-input-container class="md-block" flex-gt-sm>
-            <label >Facebook (Disabled)</label>
-            <input ng-model="user.twitter" disabled >
-          </md-input-container>
-        </div>
+	<md-content layout-padding>
+		<div>
+			<form name="userForm">
+				<div layout-gt-sm="row">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Full Name</label>
+						<input ng-model="user.name" placeholder="Steve Jobs">
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Title</label>
+						<input ng-model="user.title" placeholder="CEO/Founder">
+					</md-input-container>
+				</div>
+				<div layout-gt-sm="row">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Email</label>
+						<input ng-model="user.email" type="email" placeholder="steve@apple.com">
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Phone</label>
+						<input ng-model="user.phone" placeholder="555-555-5555">
+					</md-input-container>
+				</div>
+				<div layout-gt-sm="row">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Company</label>
+						<input ng-model="user.company" placeholder="Apple Inc.">
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Hireable</label>
+						<input ng-model="user.hireable" placeholder="Available for Hire">
+					</md-input-container>
+				</div>
+				<div layout-gt-sm="row">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Location</label>
+						<input ng-model="user.location" placeholder="Cupertino, CA">
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Organizations</label>
+						<input ng-model="user.organizations">
+					</md-input-container>
+				</div>
+				<div layout-gt-sm="row">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label >Website</label>
+						<input ng-model="user.blog" placeholder="https://SteveJobs.com">
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Avatar Picture Url</label>
+						<input ng-model="user.avatar_url">
+					</md-input-container>
+				</div>
+				<div layout-gt-sm="row">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Twitter (Disabled)</label>
+						<input ng-model="user.twitter" disabled>
+					</md-input-container>
+					<md-input-container class="md-block" flex-gt-sm>
+						<label >Facebook (Disabled)</label>
+						<input ng-model="user.twitter" disabled >
+					</md-input-container>
+				</div>
 
-        <md-input-container class="md-block">
-          <label>Biography</label>
-          <textarea ng-model="user.bio" md-maxlength="150" rows="5" md-select-on-focus></textarea>
-        </md-input-container>
-      </form>
-    </div>
-  </md-content>
+				<md-input-container class="md-block">
+					<label>Biography</label>
+					<textarea ng-model="user.bio" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+				</md-input-container>
+			</form>
+		</div>
+	</md-content>
 </div>
 
 <div layout-padding>
-  <md-button ng-show="userForm.$dirty" 
-
-          class="md-warn md-raised" 
-          ng-click="od.updateClient()"
-          aria-label="save button">
-          Update Profile
-  </md-button>
+	<md-button ng-show="userForm.$dirty" 
+		type="submit"
+		class="md-warn md-raised" 
+		ng-click="od.updateClient(userForm)"
+		aria-label="save button">
+		Update Profile
+	</md-button>
 </div>

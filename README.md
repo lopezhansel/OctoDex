@@ -23,7 +23,7 @@ Github's Octocat + Rolodex = OctoDex
 - [ ] BUG: If POST timeout css color wont change
 - [ ] Fix: "UPDATE PROFILE" button showing up everywhere
 - [ ] Show random Git Users at home page.
-- [ ] Fix: Update button in accountView
+- [x] Fix: Update button in accountView
 - [x] Show users in different views
 - [x] Make Account Setting Page for editing more information.
 - [x] Break views into directive Components 
