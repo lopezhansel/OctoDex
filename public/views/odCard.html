@@ -1,50 +1,49 @@
 <md-card layout="column" class="my-container md-whiteframe-5dp" >
+	<div layout="column" layout-gt-sm="row"  class="card-header">
+		<div flex="100" flex-gt-sm="33" >
+			<img  ng-src="{{::user.avatar_url}}" alt="profile picture"/>
+		</div>
+		<div layout="column" layout-padding layout-align="start start">
+			<div>
+				<span flex inline value="user.name" key="name" class="md-display-2 display-name inline"></span>
+				<span flex class="md-display-1 display-name inline">({{user.login}})</span>
+			</div>
+			<span class="md-display-1 display-name">Software Developer </span>
+			<div class="md-title" layout layout-wrap> 
+				<span flex-sm="100" flex-xs="100">{{user.public_repos }} <span class="md-subhead">Repos</span></span>
+				<span hide-sm hide-xs class="vertical-line"></span>
+				<span flex-sm="100" flex-xs="100">{{ user.followers }} <span class="md-subhead">Followers</span></span> 
+				<span   hide-sm hide-xs class="vertical-line"></span>
+				<span flex-sm="100" flex-xs="100">{{ user.following }} <span class="md-subhead">Following</span></span>
+			</div>
+		</div>
+	</div>
 
-    <div layout-sm="column" layout="row"  class="card-header">
-      <div flex="33" flex-sm="100" >
-        <img  ng-src="{{::user.avatar_url}}" alt="profile picture"/>
-      </div>
-      <div layout="column" layout-padding layout-align-sm="center center">
-        <div>
-          <span inline value="user.name" key="name" class="md-display-2 display-name inline"></span>
-    <!--  Error Here when width is too long of both login -->
-          <span class="md-display-2 display-name inline"> | </span>
-          <span inline value="user.login" key="login" class="md-display-2 display-name inline"></span>
-        </div>
-        <span class="md-display-1 display-name">Software Developer </span>
-        <div class="md-display-1 display-name"> 
-          {{user.public_repos }} Repos | {{ user.followers }} Followers | {{ user.following }} Following
-        </div>
-      </div>
-    </div>
+	<div class="md-padding " layout="column" layout-gt-sm="row"   >
+		<div layout="column" flex="95" class="contact-info-wrap">
+			<div class="contact-info">
+				<div inline value="user.phone" key="phone"></div>
+				<div inline value="user.blog" key="blog"></div>
+				<div inline value="user.company" key="company"></div>
+				<div inline value="user.email" key="email"></div>
+				<div inline value="user.hireable" key="hireable"></div>
+				<div inline value="user.location" key="location"></div>
+			</div>
+		</div>
 
+		<div class="vertical-line"></div>
+		<div class="contact-info" flex-gt-sm="10" layout="column"  layout-sm="row" >
+			<a ng-href="{{::user.html_url || user.profileUrl}}"><span class="fa fa-github-square"></span> </a>
+		</div>
+	</div>
 
-    <div class="md-padding " layout="row" layout-sm="column"  layout-align-sm="center center" >
-      <div layout="column" flex="95" class="contact-info-wrap">
-          <div class="contact-info">
-            <div inline value="user.phone" key="phone"></div>
-            <div inline value="user.blog" key="blog"></div>
-            <div inline value="user.company" key="company"></div>
-            <div inline value="user.email" key="email"></div>
-            <div inline value="user.hireable" key="hireable"></div>
-            <div inline value="user.location" key="location"></div>
-          </div>
-      </div>
-
-      <div class="vertical-line"></div>
-      <div class="contact-info" flex-gt-sm="10" layout="column"  layout-sm="row" >
-        <a ng-href="{{::user.html_url || user.profileUrl}}"><span class="fa fa-github-square"></span> </a>
-      </div>
-    </div>
-
-
-    <md-card-actions layout="row" layout-align="end center">
-      <span flex></span>
-      <md-button ng-show="octoService.showSaveBtn" 
-        class="md-warn md-raised" 
-        ng-click="octoService.updateClient()"
-        aria-label="save button">
-        Update Profile
-      </md-button>
-    </md-card-actions>
+	<md-card-actions layout="row" layout-align="end center">
+		<span flex></span>
+		<md-button ng-show="octoService.showSaveBtn" 
+			class="md-warn md-raised" 
+			ng-click="octoService.updateClient()"
+			aria-label="save button">
+			Update Profile
+		</md-button>
+	</md-card-actions>
 </md-card>
