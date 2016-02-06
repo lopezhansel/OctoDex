@@ -9,6 +9,9 @@ app.config(function($routeProvider,$locationProvider){
 	}).when('/profile/:user',{
 		controller : "otherProfileController",
 		templateUrl : "views/profileView.html"
+	}).when('/groups/:group',{
+		controller : "groupController",
+		templateUrl : "views/groupView.html"
 	}).otherwise({ redirectTo: '/' });
 	// $locationProvider.html5Mode(true);
 });	

@@ -18,8 +18,8 @@
 	<md-list layout layout-wrap>
 		<md-button flex="100" ng-href="#profile/{{od.client.login}}" >
 			<div>
-				<span ng-if="client.isLoggedIn">{{::client.login}} account</span>
-				<span ng-if="!client.isLoggedIn">Account Page</span>
+				<span ng-if="client.isLoggedIn">{{::client.login}} Profile</span>
+				<span ng-if="!client.isLoggedIn">User Profile</span>
 				<md-divider></md-divider>
 			</div>
 		</md-button>
@@ -41,7 +41,7 @@
 
 	
 	<div>
-		<md-subheader class="md-accent">{{list.subheader}}</md-subheader>		
+		<md-subheader class="md-accent">Navigation</md-subheader>		
 		<md-list layout layout-wrap>
 			<md-button flex="100" ng-href="#/">
 				Home
@@ -60,7 +60,7 @@
 
 	<md-subheader class="md-accent">Groups</md-subheader>		
 	<md-list layout layout-wrap >
-		<md-button flex="100" ng-disabled="::true"> 
+		<md-button flex="100" ng-href="#groups/RefactorU" ng-disabled="false"> 
 			RefactoU Grads
 			<md-divider></md-divider>
 		</md-button>
