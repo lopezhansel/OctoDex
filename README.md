@@ -19,12 +19,13 @@ Github's Octocat + Rolodex = OctoDex
 * Github's Oauth2
 
 ## TODO List
-- [ ] Show users in different views
 - [ ] Let user know if profile is an octodex user or not
 - [ ] BUG: If POST timeout css color wont change
 - [ ] Fix: "UPDATE PROFILE" button showing up everywhere
 - [ ] Show random Git Users at home page.
-- [ ] Make Account Setting Page for editing more information.
+- [ ] Fix: Update button in accountView
+- [x] Show users in different views
+- [x] Make Account Setting Page for editing more information.
 - [x] Break views into directive Components 
 - [x] See if octoDex User first then check github.
 - [x] "Sign In" button doesn't update after logging in

@@ -75,9 +75,9 @@ app.service('octoService', ['$routeParams', '$resource', '$mdMedia', '$mdDialog'
 	// POST method.  Reminder: service.client is an instance of OctoApi
 	service.updateClient = function () {
 		service.foreachElement(service.inlineElem, "#79E1FF"); // change to blue while POSTing
-		if ($location.path() !== "/") {
+		if ($location.path() !== "/" && $location.path() !== "/account") {
 			return;
-		} // only update if at home uri
+		} // only update if at home or account page uri
 		service.client.$update(function (response) {
 			// Post Method . Sends service.client
 			service.client.isLoggedIn = service.client.error ? false : true; //
