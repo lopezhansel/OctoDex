@@ -22,14 +22,26 @@ module.exports = (app, passport) => {
 		User.findById(req.user._id, (err, me) => {
 			if(err) { res.send({ error: 'Sorry something went wrong' });}
 			me.bio            = req.body.bio;
-			me.hireable       = req.body.hireable;
-			me.location       = req.body.location;
-			me.blog           = req.body.blog;
+			me.name           = req.body.name; // enable this
 			me.company        = req.body.company;
-			me.email          = req.body.email;
-			me.name           = req.body.name;
+			me.blog           = req.body.blog;
+			me.location       = req.body.location;
+			me.hireable       = req.body.hireable;
+			me.public_repos   = req.body.public_repos;
+			me.public_gists   = req.body.public_gists;
+			me.following      = req.body.following;
+			me.followers      = req.body.followers;
+			me.created_at     = req.body.created_at;
+			me.updated_at     = req.body.updated_at;
 			me.reposArray     = req.body.reposArray;
 			me.followersArray = req.body.followersArray;
+			me.followingArray = req.body.followingArray;
+			me.twitterHandle  = req.body.twitterHandle;
+			me.facebookUrl    = req.body.facebookUrl;
+			me.linkedInUrl    = req.body.linkedInUrl;
+			me.phone          = req.body.phone;
+			me.jobTitle       = req.body.jobTitle;
+			if(req.body.email) {me.email = req.body.email;}
 			me.save((err) => {
 				if(err) { res.send({ error: 'Sorry something went wrong' });}
 				else{
@@ -69,6 +81,12 @@ module.exports = (app, passport) => {
 			userDoc.reposArray     = req.body.reposArray;
 			userDoc.followersArray = req.body.followersArray;
 			userDoc.followingArray = req.body.followingArray;
+			userDoc.twitterHandle  = req.body.twitterHandle;
+			userDoc.facebookUrl    = req.body.facebookUrl;
+			userDoc.linkedInUrl    = req.body.linkedInUrl;
+			userDoc.phone          = req.body.phone;
+			userDoc.jobTitle       = req.body.jobTitle;
+
 			// Email is required by schema thus will break if null
 			if(req.body.email) {userDoc.email = req.body.email;}
 

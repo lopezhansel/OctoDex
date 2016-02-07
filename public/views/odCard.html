@@ -1,14 +1,14 @@
 <md-card layout="column" class="my-container md-whiteframe-5dp" >
-	<div layout="column" layout-gt-sm="row"  class="card-header">
-		<div flex="100" flex-gt-sm="33" >
+	<div layout="column" layout-gt-xs="row"  class="card-header">
+		<div flex-xs="100" flex-sm="50" flex-gt-sm="33" >
 			<img  ng-src="{{::user.avatar_url}}" alt="profile picture"/>
 		</div>
-		<div layout="column" layout-padding layout-align="start start">
+		<div layout="column" layout-padding layout-align="start start" flex="50">
 			<div>
 				<span flex inline value="user.name" key="name" class="md-display-2 display-name inline"></span>
 				<span flex class="md-display-1 display-name inline">({{user.login}})</span>
 			</div>
-			<span class="md-display-1 display-name">Software Developer </span>
+			<span class="md-display-1 display-name">{{user.jobTitle || "Web Master"}} </span>
 			<div class="md-title" layout layout-wrap> 
 				<span flex-sm="100" flex-xs="100">{{user.public_repos }} <span class="md-subhead">Repos</span></span>
 				<span hide-sm hide-xs class="vertical-line"></span>
@@ -32,9 +32,21 @@
 		</div>
 
 		<div class="vertical-line"></div>
-		<div class="contact-info" flex-gt-sm="10" layout="column"  layout-sm="row" >
-			<a ng-href="{{::user.html_url || user.profileUrl}}"><span class="fa fa-github-square"></span> </a>
+		<div layout="row" layout-gt-sm="column" layout-padding layout-align="center center">
+			<div class="contact-info" flex-gt-sm="10" >
+				<a ng-href="{{::user.html_url || user.profileUrl}}"><span class="fa fa-github-square"></span> </a>
+			</div>
+			<div ng-if="user.linkedInUrl" class="contact-info" flex-gt-sm="10" >
+				<a ng-href="{{user.linkedInUrl}}"><span class="fa fa-linkedin-square"></span> </a>
+			</div>
+			<div ng-if="user.twitterHandle" class="contact-info" flex-gt-sm="10" >
+				<a ng-href="https://twitter.com/{{user.twitterUrl}}"><span class="fa fa-twitter-square"></span> </a>
+			</div>
+			<div ng-if="user.facebookUrl" class="contact-info" flex-gt-sm="10" >
+				<a ng-href="{{user.facebookUrl}}"><span class="fa fa-facebook-square"></span> </a>
+			</div>
 		</div>
+
 	</div>
 
 	<md-card-actions layout="row" layout-align="end center">

@@ -24,7 +24,11 @@ var userSchema = mongoose.Schema({
     followingArray  : {type: Array},
     following       : {type: Number},
     public_gists    : {type: Number},
-    organizations   : {type: String}
+    organizations   : {type: String},
+    twitterHandle   : {type: String},
+    facebookUrl     : {type: String},
+    linkedInUrl     : {type: String},
+    jobTitle        : {type: String}
 });
 
 module.exports = mongoose.model('user', userSchema);
