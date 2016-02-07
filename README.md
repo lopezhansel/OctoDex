@@ -19,10 +19,14 @@ Github's Octocat + Rolodex = OctoDex
 * Github's Oauth2
 
 ## TODO List
+- [ ] Add LinkedIn Facebook and Twiter options
 - [ ] Let user know if profile is an octodex user or not
+- [ ] Add Following tab to profile view
 - [ ] BUG: If POST timeout css color wont change
 - [ ] Fix: "UPDATE PROFILE" button showing up everywhere
-- [ ] Show random Git Users at home page.
+- [ ] Show random OctoDex Users at home page.
+- [x] add toggleSidenav when clicking on sidenav list item
+- [x] Perfect Mobile layout of profileView
 - [x] Fix: Update button in accountView
 - [x] Show users in different views
 - [x] Make Account Setting Page for editing more information.
@@ -56,8 +60,9 @@ Github's Octocat + Rolodex = OctoDex
 
 ## Future Possibility
 - [ ] Upload Image to Node server
-- [ ] Repo Project Page 
+- [ ] Add Repo Project View
+- [ ] Add Organization/Group  View
 - [ ] Use Ng-file Upload
 - [ ] Download vcf contact file
-- [ ] Convert ReadMe contact files
+- [ ] Convert ReadMe files to html
 - [ ] Highlight Syntax

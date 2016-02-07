@@ -21,7 +21,7 @@
 
 	<div class="md-padding " layout="column" layout-gt-sm="row"   >
 		<div layout="column" flex="95" class="contact-info-wrap">
-			<div class="contact-info">
+			<div ng-class="{'md-title':$mdMedia('sm'), 'md-headline':$mdMedia('gt-sm') }">
 				<div inline value="user.phone" key="phone"></div>
 				<div inline value="user.blog" key="blog"></div>
 				<div inline value="user.company" key="company"></div>

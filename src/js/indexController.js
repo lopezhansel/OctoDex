@@ -1,5 +1,6 @@
 app.controller('indexController', [  "$scope","$mdSidenav", "$window", '$routeParams', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout", "octoService",function ($scope,$mdSidenav,$window, $routeParams, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout, octoService) {
 	$scope.signInBtn = octoService.signInBtn;
+	$scope.$mdMedia = $mdMedia;
 	
 	$scope.octoService = octoService;
 	$scope.od = octoService;

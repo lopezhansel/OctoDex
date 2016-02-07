@@ -16,68 +16,68 @@
 	</md-content>
 
 	<md-list layout layout-wrap>
-		<md-button flex="100" ng-href="#profile/{{od.client.login}}" >
+		<md-button ng-click="::toggleSidenav('right')" flex="100" ng-href="#profile/{{od.client.login}}" >
 			<div>
 				<span ng-if="client.isLoggedIn">{{::client.login}} Profile</span>
 				<span ng-if="!client.isLoggedIn">User Profile</span>
 				<md-divider></md-divider>
 			</div>
-		</md-button>
+		</md-button ng-click="::toggleSidenav('right')">
 
-		<md-button flex="100" ng-href="#account"ng-disabled="::false">
+		<md-button ng-click="::toggleSidenav('right')" flex="100" ng-href="#account"ng-disabled="::false">
 			Edit Account
 			<md-divider></md-divider>
-		</md-button>
+		</md-button ng-click="::toggleSidenav('right')">
 
-		<md-button flex="100" ng-click="::logger()" ng-class="{'md-primary':!client.isLoggedIn,'md-raised': !client.isLoggedIn}">
+		<md-button ng-click="::toggleSidenav('right');logger()" flex="100"  ng-class="{'md-primary':!client.isLoggedIn,'md-raised': !client.isLoggedIn}">
 			{{od.getSignInBtn()}}
 			<md-divider></md-divider>
-		</md-button>
+		</md-button ng-click="::toggleSidenav('right')">
 
-		<md-button flex="100" ng-disabled="::true">
+		<md-button ng-click="::toggleSidenav('right')" flex="100" ng-disabled="::true">
 			Share Link
-		</md-button>
+		</md-button ng-click="::toggleSidenav('right')">
 	</md-list>
 
 	
 	<div>
 		<md-subheader class="md-accent">Navigation</md-subheader>		
 		<md-list layout layout-wrap>
-			<md-button flex="100" ng-href="#/">
+			<md-button ng-click="::toggleSidenav('right')" flex="100" ng-href="#/">
 				Home
-			</md-button>
+			</md-button ng-click="::toggleSidenav('right')">
 		
-			<md-button flex="100" ng-disabled="::true">
+			<md-button ng-click="::toggleSidenav('right')" flex="100" ng-disabled="::true">
 				About Page
 				<md-divider></md-divider>
-			</md-button>
+			</md-button ng-click="::toggleSidenav('right')">
 		
-			<md-button flex="100" ng-href="https://github.com/lopezhansel/OctoDex" target="_blank">
+			<md-button ng-click="::toggleSidenav('right')" flex="100" ng-href="https://github.com/lopezhansel/OctoDex" target="_blank">
 				OctoDex Github Page
-			</md-button >
+			</md-button ng-click="::toggleSidenav('right')" >
 		</md-list>
 	</div>
 
 	<md-subheader class="md-accent">Groups</md-subheader>		
 	<md-list layout layout-wrap >
-		<md-button flex="100" ng-href="#groups/RefactorU" ng-disabled="false"> 
+		<md-button ng-click="::toggleSidenav('right')" flex="100" ng-href="#groups/RefactorU" ng-disabled="false"> 
 			RefactoU Grads
 			<md-divider></md-divider>
-		</md-button>
+		</md-button ng-click="::toggleSidenav('right')">
 
-		<md-button flex="100" ng-disabled="::true" >
+		<md-button ng-click="::toggleSidenav('right')" flex="100" ng-disabled="::true" >
 			Denver Devs Slack
 			<md-divider></md-divider>
-		</md-button>
+		</md-button ng-click="::toggleSidenav('right')">
 
-		<md-button flex="100" ng-disabled="::true">
+		<md-button ng-click="::toggleSidenav('right')" flex="100" ng-disabled="::true">
 			Tech Friends
 			<md-divider></md-divider>
-		</md-button>
+		</md-button ng-click="::toggleSidenav('right')">
 
-		<md-button flex="100" ng-disabled="::true">
+		<md-button ng-click="::toggleSidenav('right')" flex="100" ng-disabled="::true">
 			Popular Repos
-		</md-button>
+		</md-button ng-click="::toggleSidenav('right')">
 
 	</md-list>
 					

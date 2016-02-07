@@ -30,17 +30,11 @@ ng-view{
 }
 .contact-info-wrap .material-icons.info-icons,.contact-info-wrap .fa{
     position: relative;
-    padding: 15px;
-    margin-right: 15px;
+    padding: 5px;
+    margin-right: 3px;
     font-size: 20px;
     border-right: solid 1px;
 }
-.contact-info {
-    color: #333333;
-    font-size: 25px;
-    padding: 5px;
-}
-
 .fa{
 	font-size: 40px;
 	color: #333333;
@@ -48,15 +42,14 @@ ng-view{
 
 .info-edit{
 	position: relative;
-    padding: 15px;
-    margin-right: 15px;
+    padding: 5px;
+    margin-right: 3px;
     font-size: 20px;
 }
 
 .display-name{
     color: #333333;
 }
-
 
 .main-wrap {
     overflow: hidden;
