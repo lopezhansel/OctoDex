@@ -18,6 +18,31 @@ module.exports = (app, passport) => {
 		});
 	});
 
+	app.post('/getCard', function (req, res, next) {
+
+		var vCard = require('vcards-js');
+	    vCard = vCard();
+
+	    vCard.firstName = req.body.name;
+	    vCard.organization = req.body.organizations;
+	    vCard.photo.attachFromUrl(req.body.avatar_url, 'JPEG');
+	    vCard.workPhone = req.body.phone;
+	    vCard.title = req.body.jobTitle;
+	    vCard.url = req.body.blog;
+	    vCard.note = req.body.bio;
+	    vCard.nickname = req.body.login;
+	    vCard.email = req.body.email;
+	    vCard.homeAddress.city = req.body.location;
+	    vCard.socialUrls['github'] = req.body.html_url;
+	    vCard.socialUrls['facebook'] = req.body.facebookUrl;
+	    vCard.socialUrls['linkedIn'] = req.body.linkedInUrl;
+	    vCard.socialUrls['twitter'] = req.body.twitter;
+	    vCard.version = '4.0';
+	    res.set('Content-Type', 'text/vcard; name="enesser.vcf"');
+	    res.set('Content-Disposition', 'inline; filename="enesser.vcf"');
+	    res.send(vCard.getFormattedString());
+	});
+
 	app.post('/api/me', ensureAuthenticatedAjax,  (req,res) => {
 		User.findById(req.user._id, (err, me) => {
 			if(err) { res.send({ error: 'Sorry something went wrong' });}

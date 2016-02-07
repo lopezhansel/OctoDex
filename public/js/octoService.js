@@ -1,6 +1,6 @@
 'use strict';
 
-app.service('octoService', ['$routeParams', '$resource', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout", function ($routeParams, $resource, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout) {
+app.service('octoService', ['$window', '$routeParams', '$resource', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout", function ($window, $routeParams, $resource, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout) {
 
 	// initializing
 	var service = this; // just an alias
@@ -12,6 +12,15 @@ app.service('octoService', ['$routeParams', '$resource', '$mdMedia', '$mdDialog'
 	service.cachedUsers = {}; // initializing other Users
 	service.inlineElem = []; // array of inline elements that are dirty
 	service.organizations = {};
+	service.downloadVcard = function (filename, text) {
+		var elem = document.createElement('a');
+		elem.setAttribute('href', 'data:text/vcard;charset=utf-8,' + encodeURIComponent(text));
+		elem.setAttribute('download', filename);
+		elem.style.display = 'none';
+		document.body.appendChild(elem);
+		elem.click();
+		document.body.removeChild(elem);
+	};
 	// function to update each element's css properties and values
 	service.foreachElement = function (array, value, prop) {
 		prop = prop || "color";
@@ -33,6 +42,13 @@ app.service('octoService', ['$routeParams', '$resource', '$mdMedia', '$mdDialog'
 		searchGit: { method: 'GET', url: "https://api.github.com/search/users", params: { userParam: "@login" } }
 	});
 
+	service.getCard = function () {
+		$http.post('/getCard', service.client).then(function (response) {
+			service.downloadVcard(service.client.name + ".vcf", response.data);
+		}, function (ifErr) {
+			alert(ifErr);
+		});
+	};
 	// Get 20 Users Skip 1
 	OctoApi.search({ limit: 20, skip: 1 }, function (data) {
 		data.forEach(function (el) {
