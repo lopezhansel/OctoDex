@@ -42,9 +42,9 @@ app.service('octoService', ['$window', '$routeParams', '$resource', '$mdMedia', 
 		searchGit: { method: 'GET', url: "https://api.github.com/search/users", params: { userParam: "@login" } }
 	});
 
-	service.getCard = function () {
-		$http.post('/getCard', service.client).then(function (response) {
-			service.downloadVcard(service.client.name + ".vcf", response.data);
+	service.getCard = function (user) {
+		$http.post('/getCard', user).then(function (response) {
+			service.downloadVcard(user.login + ".vcf", response.data);
 		}, function (ifErr) {
 			alert("Sorry. Error Downloading Contact File \n " + ifErr.data);
 		});
