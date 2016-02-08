@@ -19,10 +19,8 @@ module.exports = (app, passport) => {
 	});
 
 	app.post('/getCard', function (req, res, next) {
-
 		var vCard = require('vcards-js');
 	    vCard = vCard();
-
 	    vCard.firstName = req.body.name;
 	    vCard.organization = req.body.organizations;
 	    vCard.photo.attachFromUrl(req.body.avatar_url, 'JPEG');
@@ -37,7 +35,7 @@ module.exports = (app, passport) => {
 	    vCard.socialUrls['facebook'] = req.body.facebookUrl;
 	    vCard.socialUrls['linkedIn'] = req.body.linkedInUrl;
 	    vCard.socialUrls['twitter'] = req.body.twitter;
-	    vCard.version = '4.0';
+	    // vCard.version = '4.0';
 	    res.set('Content-Type', 'text/vcard; name="enesser.vcf"');
 	    res.set('Content-Disposition', 'inline; filename="enesser.vcf"');
 	    res.send(vCard.getFormattedString());

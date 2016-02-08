@@ -46,7 +46,7 @@ app.service('octoService', ['$window', '$routeParams', '$resource', '$mdMedia', 
 		$http.post('/getCard', service.client).then(function (response) {
 			service.downloadVcard(service.client.name + ".vcf", response.data);
 		}, function (ifErr) {
-			alert(ifErr);
+			alert("Sorry. Error Downloading Contact File \n " + ifErr.data);
 		});
 	};
 	// Get 20 Users Skip 1
