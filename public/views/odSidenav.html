@@ -34,7 +34,7 @@
 			<md-divider></md-divider>
 		</md-button>
 		
-		<md-button ng-click="::toggleSidenav('right');od.getCard()" flex="100" ng-disabled="!client.isLoggedIn">
+		<md-button ng-click="::toggleSidenav('right');od.getCard(client)" flex="100" ng-disabled="!client.isLoggedIn">
 			Download Contact File
 			<md-divider></md-divider>
 		</md-button>
@@ -44,7 +44,7 @@
 		</md-button>
 		<md-input-container class="md-block" flex ng-if="linkBool">
 			<label>Link to Profile</label>
-			<input ng-model="link + client.login"  >
+			<input value="{{link+client.login}}"  >
 		</md-input-container>
 	</md-list>
 
