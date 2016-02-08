@@ -5,11 +5,14 @@ const babel = require('gulp-babel');
 const plumber = require('gulp-plumber');
 const browserSync = require('browser-sync');
 const nodemon = require('gulp-nodemon');
+const markdown = require('./config/markdownGulp');
 // const uglify = require('gulp-uglify');
 
 const paths = {
-  jsSrc: './src/js/**/*.js',
-  jsBuild: './public//js'
+  jsSrc   : './src/js/**/*.js',
+  jsBuild : './public//js',
+  readme  : 'README.md',
+  mdView  : './public/views/readmeView.html'
 };
 
 
@@ -45,6 +48,7 @@ gulp.task('nodemon', (cb) => {
 
 gulp.task('javascript',()=>{
     console.log("javascript")
+    markdown(paths.readme, paths.mdView)
     browserSync.reload()
     return gulp.src(paths.jsSrc)
         .pipe(plumber())
@@ -56,7 +60,14 @@ gulp.task('javascript',()=>{
         .pipe(gulp.dest(paths.jsBuild));
 });
 
+gulp.task('markdown',()=>{
+    console.log("markdown")
+    markdown(paths.readme, paths.mdView)
+    browserSync.reload()
+});
+
 gulp.task('watch', () => {
   gulp.watch(paths.jsSrc, ['javascript']);
+  gulp.watch(paths.readme, ['markdown']);
 });
 
