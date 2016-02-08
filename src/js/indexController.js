@@ -4,8 +4,12 @@ app.controller('indexController', [  "$scope","$mdSidenav", "$window", '$routePa
 	
 	$scope.octoService = octoService;
 	$scope.od = octoService;
-
 	$scope.client = octoService.getClient()	;
+	$scope.toggleLink = function () {
+		$scope.linkBool = ($scope.linkBool)? false: true;
+	};
+
+	$scope.link = "http://lopezhansel.com:2000/#/profile/";
 
 	$scope.logger = () =>{
 		if (octoService.client.error) {
