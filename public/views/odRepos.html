@@ -1,7 +1,7 @@
 <md-content flex class="my-container md-padding md-whiteframe-5dp" layout="column">
   <div class="md-display-1" >{{::user.login | uppercase}}'s Repositories </div>
   <br>
-  <div ng-repeat="repo in ::user.reposArray" flex  layout="column">
+  <div ng-repeat="repo in user.reposArray" flex  layout="column">
     <md-divider ></md-divider>
     <p class="md-headline">
       <a ng-href="{{::repo.svn_url}}" target="_blank">{{::repo.name}}</a>

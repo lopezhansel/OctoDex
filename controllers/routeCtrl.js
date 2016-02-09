@@ -45,7 +45,7 @@ module.exports = (app, passport) => {
 		User.findById(req.user._id, (err, me) => {
 			if(err) { res.send({ error: 'Sorry something went wrong' });}
 			me.bio            = req.body.bio;
-			me.name           = req.body.name; // enable this
+			me.name           = req.body.name;
 			me.company        = req.body.company;
 			me.blog           = req.body.blog;
 			me.location       = req.body.location;
@@ -151,7 +151,12 @@ module.exports = (app, passport) => {
 		User.find( req.query , projection ,(err,users)=>{
 			if(err) { res.send({ error: 'Sorry something went wrong' });}
 			else{
-				if(!projection){users.forEach( (e) => e.gitToken = null);}
+				if(!projection){users.forEach( (e) => {
+					e.gitToken = null;
+					e.followingArray = null; // Temporary fix for mongo performance
+					e.reposArray = null; // Temporary fix for mongo performance
+					e.followersArray = null; // Temporary fix for mongo performance
+				});}
 				res.send(users);
 			}
 		}).skip(skip).limit(limit);

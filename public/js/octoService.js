@@ -127,6 +127,10 @@ app.service('octoService', ['$window', '$routeParams', '$resource', '$mdMedia', 
 		var cacheAlias = service.cachedUsers; // give cachedUsers an alias
 		// if user is already cached then exit
 		if (cacheAlias[ghUser]) {
+			if (cacheAlias[ghUser].reposArray === null || cacheAlias[ghUser].followersArray === null) {
+				// Temporary fix for mongo performance
+				service.getFollowersAndRepos(cacheAlias[ghUser]);
+			}
 			return;
 		}
 		OctoApi.check({ userParam: ghUser }, function (data, responseHeaders) {

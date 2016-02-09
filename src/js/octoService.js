@@ -118,7 +118,13 @@ app.service('octoService', ['$window','$routeParams','$resource', '$mdMedia', '$
 			var ghUser = userInput || $routeParams.user; // ghUser is the gitHub login name
 			var cacheAlias = service.cachedUsers; // give cachedUsers an alias
 			// if user is already cached then exit 
-			if (cacheAlias[ghUser]) {return; } 
+			if (cacheAlias[ghUser]) {
+				if ((cacheAlias[ghUser].reposArray === null) || (cacheAlias[ghUser].followersArray === null) ){
+					// Temporary fix for mongo performance
+					service.getFollowersAndRepos(cacheAlias[ghUser]);
+				}
+				return; 
+			} 
 			OctoApi.check({userParam:ghUser},function (data,responseHeaders) {
 				if (data.length) { // If user Exist.
 					cacheAlias[ghUser] = data[0];
