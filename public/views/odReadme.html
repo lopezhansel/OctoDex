@@ -1,86 +1,82 @@
-<h1 id="octodex">OctoDex</h1>
-<p>Github&#39;s Octocat + Rolodex = OctoDex</p>
-<ul>
-<li>Easily create and share a virtual business card using your Github information.</li>
-</ul>
+<h1 id="-octodex-http-lopezhansel-com-2000-"><a href="http://lopezhansel.com:2000">OctoDex</a></h1>
+<p>Github&#39;s Octocat + Rolodex = OctoDex.</p>
+<p>Easily create and share vCards using your Github information.</p>
 <h2 id="features">Features</h2>
 <ul>
-<li>Custom Directive &quot;inline&quot;. Component to easily edit and user information when selected without.</li>
-<li>Shareable links to profiles.</li>
+<li><strong>Inline component</strong> - Custom <a href="https://github.com/lopezhansel/OctoDex/blob/master/src/js/inlineDirective.js">inline-directive</a> to easily edit and user information when selected .</li>
+<li><a href="http://lopezhansel.com:2000/#/profile/lopezhansel"><strong>Shareable links</strong></a> to user profiles.</li>
+<li><strong>Responsive Design</strong> - Prioritizing mobile layout first utilizing Angular Material&#39;s Flexbox.</li>
+<li><strong>Up-to-Date About Page</strong> custom gulp task converting <a href="http://lopezhansel.com:2000/#/about"><strong>readme</strong></a> markdown file to html template.</li>
 </ul>
-<h2 id="front-end">Front-End</h2>
+<h2 id="library-and-frameworks">Library and Frameworks</h2>
 <ul>
-<li>Angular </li>
-<li>Angular Material. Many Material design Components built by Google</li>
-<li>Angular Router. Front End Router</li>
-<li>ng-Resource a better way way to communicate with Restful Apis.</li>
+<li><strong>Node.js, Express.js, Angular.js, and MongoDB</strong></li>
+<li><a href="https://material.angularjs.org/latest/demo/tabs"><strong>Angular Material</strong></a> Material design Components built by Google</li>
+<li><a href="https://docs.angularjs.org/api/ngRoute/directive/ngView"><strong>Angular Router</strong></a> Front End Router allowing Single Page Application.</li>
+<li><a href="https://docs.angularjs.org/api/ngResource/service/$resource"><strong>$resource</strong></a> A factory which creates a resource object that lets you interact with RESTful server-side data sources.</li>
+<li><a href="https://github.com/jaredhanson/passport"><strong>Passport.js</strong></a> -  Authentication middleware for Node.js.</li>
+<li><a href="https://github.com/jaredhanson/passport-github"><strong>passport-github</strong></a> - Log in using your Github account</li>
+<li><a href="https://github.com/cwjohan/markdown-to-html"><strong>Markdown-to-html</strong></a> Converts markdown text to HTML. A readable stream plus utilities and web demo.</li>
+<li><a href="https://github.com/enesser/vCards-js"><strong>vCards JS</strong></a> Create vCards to import contacts into Outlook, iOS, Mac OS, and Android devices from your website or application.</li>
 </ul>
-<h2 id="back-end">Back-End</h2>
+<h2 id="to-do-list">To-Do List</h2>
 <ul>
-<li>Node.js - Server</li>
-<li>MongoDb - Database</li>
-<li>Passport.js -  Authentication middleware for Node.js.</li>
-<li>Github&#39;s Oauth2</li>
-</ul>
-<h2 id="todo-list">TODO List</h2>
-<ul>
-<li>[ ] add css to od-readme directive</li>
-<li>[ ] Let user know if profile is an octodex user or not</li>
-<li>[ ] Add Following tab to profile view</li>
-<li>[ ] BUG: If POST timeout css color wont change</li>
-<li>[ ] Fix: &quot;UPDATE PROFILE&quot; button showing up everywhere</li>
-<li>[ ] Show random OctoDex Users at home page.</li>
-<li>[x] clicking share profile closes page</li>
-<li>[x] repo page refactorU too slow</li>
-<li>[x] Add LinkedIn Facebook and Twiter options</li>
-<li>[x] add toggleSidenav when clicking on sidenav list item</li>
-<li>[x] Perfect Mobile layout of profileView</li>
-<li>[x] Fix: Update button in accountView</li>
-<li>[x] Show users in different views</li>
-<li>[x] Make Account Setting Page for editing more information.</li>
-<li>[x] Break views into directive Components </li>
-<li>[x] See if octoDex User first then check github.</li>
-<li>[x] &quot;Sign In&quot; button doesn&#39;t update after logging in</li>
-<li>[x] Remove Full Profile Button</li>
-<li>[x] First Login Doesn&#39;t work</li>
-<li>[x] Fix Social Profiles Icon.</li>
-<li>[x] Show Octodex Users at home page</li>
-<li>[x] BUG : service.updateClient(); is being called by getOtherUsers</li>
-<li>[x] Making Server a bit more restful</li>
-<li>[x] Fix Following Number in card 1-30</li>
-<li>[x] comment more code</li>
-<li>[x] Simplified Inline Directive</li>
-<li>[x] UX: Changing color properties when Updating</li>
-<li>[x] improve inlineDirective performance</li>
-<li>[x] Renaming Variables and Improve Organization</li>
-<li>[x] improve service.getFollowersAndRepos.</li>
-<li>[x] Improve api calls retrieving Repos and Followers;</li>
-<li>[x] learn to implement $q or $resource service from angular</li>
-<li>[x] shareable link</li>
-<li>[x] Inline directive not edit more when not in client profile</li>
-<li>[x] Fix Api to request more info from github</li>
-<li>[x] save user data into database</li>
-<li>[x] Show &#39;Done&#39; icon in inline directive</li>
-<li>[x] add a variable for $dirty </li>
-<li>[x] Revamp inline directive. Fix edit I&#39;mode in directive. Edit mode toggle button.</li>
-<li>[x] Enable &quot;Full Profile&quot; Button</li>
-<li>[x] Fixed other github users not being able to log in</li>
-</ul>
-<h2 id="future-possibility">Future Possibility</h2>
-<ul>
+<li>[ ] add css to od-readme directive </li>
+<li>[ ] Let user know if profile is an octodex user or not </li>
+<li>[ ] Add &quot;Following&quot; tab to profile view </li>
+<li>[ ] BUG: If POST timeout css color wont change </li>
+<li>[ ] Fix: &quot;UPDATE PROFILE&quot; button showing up everywhere </li>
+<li>[ ] Show random OctoDex Users at home page. </li>
+<li>[x] Add links to readme.md <a href="https://github.com/lopezhansel/OctoDex/commit/"></a></li>
+<li>[x] Adding about readme view trigger and route <a href="https://github.com/lopezhansel/OctoDex/commit/c6a8658">c6a8658</a> <a href="https://github.com/lopezhansel/OctoDex/commit/d1494c5">d1494c5</a></li>
+<li>[x] Allowing user to download vCard from users <a href="https://github.com/lopezhansel/OctoDex/commit/8fc3dfa">8fc3dfa</a> </li>
+<li>[x] Fix &quot;unable to import vCard&quot; data corruption <a href="https://github.com/lopezhansel/OctoDex/commit/f51fbb9">f51fbb9</a></li>
+<li>[x] Client attempts to POST/save when not logged in. <a href="https://github.com/lopezhansel/OctoDex/commit/0a20d84">0a20d84</a></li>
+<li>[x] clicking &quot;Share Profile&quot; button closes sidenav <a href="https://github.com/lopezhansel/OctoDex/commit/e749d0c">e749d0c</a></li>
+<li>[x] repo page refactorU too slow because of MongoDb retrieving too much data <a href="https://github.com/lopezhansel/OctoDex/commit/801d13d">801d13d</a></li>
+<li>[x] shareable link <a href="https://github.com/lopezhansel/OctoDex/commit/7d209a5">7d209a5</a></li>
+<li>[x] Adding Jobtitle,LinkedIn,Facebook, and Twiter options <a href="https://github.com/lopezhansel/OctoDex/commit/4c9d23d">4c9d23d</a></li>
+<li>[x] add toggleSidenav() when clicking on sidenav list item <a href="https://github.com/lopezhansel/OctoDex/commit/83de42b">83de42b</a></li>
+<li>[x] Perfect Mobile layout of profileView <a href="https://github.com/lopezhansel/OctoDex/commit/83de42b">83de42b</a> <a href="https://github.com/lopezhansel/OctoDex/commit/efed9ec">efed9ec</a><a href="https://github.com/lopezhansel/OctoDex/commit/a845ff1">a845ff1</a></li>
+<li>[x] Fix: Update button in accountView <a href="https://github.com/lopezhansel/OctoDex/commit/50bcbe3">50bcbe3</a></li>
+<li>[x] Make Group page <a href="https://github.com/lopezhansel/OctoDex/commit/c8e40a2">c8e40a2</a> <a href="https://github.com/lopezhansel/OctoDex/commit/0426a6e">0426a6e</a></li>
+<li>[x] Fixing Layout Issues <a href="https://github.com/lopezhansel/OctoDex/commit/b0b43bf">b0b43bf</a></li>
+<li>[x] Change Color Scheme <a href="https://github.com/lopezhansel/OctoDex/commit/a845ff1">a845ff1</a></li>
+<li>[x] Make Account Setting Page for editing more information. <a href="https://github.com/lopezhansel/OctoDex/commit/428e3a5">428e3a5</a></li>
+<li>[x] Break views into directive Components  <a href="https://github.com/lopezhansel/OctoDex/commit/9cb5340">9cb5340</a></li>
+<li>[x] &quot;Sign In&quot; button doesn&#39;t update after logging in <a href="https://github.com/lopezhansel/OctoDex/commit/e2ba986">e2ba986</a></li>
+<li>[x] Improve sidenav <a href="https://github.com/lopezhansel/OctoDex/commit/47fdb4e">47fdb4e</a><a href="https://github.com/lopezhansel/OctoDex/commit/44413b1">44413b1</a></li>
+<li>[x] Add sidenav <a href="https://github.com/lopezhansel/OctoDex/commit/4da0259">4da0259</a></li>
+<li>[x] Remove Full Profile Button <a href="https://github.com/lopezhansel/OctoDex/commit/0e16448">0e16448</a></li>
+<li>[x] add plumber to gulpfile <a href="https://github.com/lopezhansel/OctoDex/commit/e1c395f">e1c395f</a></li>
+<li>[x] Fix Social Profiles Icon. <a href="https://github.com/lopezhansel/OctoDex/commit/7125bf9">7125bf9</a> <a href="https://github.com/lopezhansel/OctoDex/commit/e3f879e">e3f879e</a></li>
+<li>[x] Improve Responsive Design <a href="https://github.com/lopezhansel/OctoDex/commit/f766a43">f766a43</a></li>
+<li>[x] Use md-tabs for user profiles <a href="https://github.com/lopezhansel/OctoDex/commit/4c9bc31">4c9bc31</a></li>
+<li>[x] Search for users <a href="https://github.com/lopezhansel/OctoDex/commit/f8b1096">f8b1096</a> <a href="https://github.com/lopezhansel/OctoDex/commit/1e1c1d6">1e1c1d6</a> </li>
+<li>[x] Comment more code and simplify <a href="https://github.com/lopezhansel/OctoDex/commit/9ecc990">9ecc990</a> <a href="https://github.com/lopezhansel/OctoDex/commit/f61f003">f61f003</a></li>
+<li>[x] Simplify Code <a href="https://github.com/lopezhansel/OctoDex/commit/f61f003">f61f003</a> <a href="https://github.com/lopezhansel/OctoDex/commit/2693cf7">2693cf7</a> </li>
+<li>[x] Matching to schema to Githubs properties <a href="https://github.com/lopezhansel/OctoDex/commit/5de26a4">5de26a4</a> <a href="https://github.com/lopezhansel/OctoDex/commit/6273ee0">6273ee0</a> <a href="https://github.com/lopezhansel/OctoDex/commit/b4b6960">b4b6960</a></li>
+<li>[x] UX: Changing color properties when Updating <a href="https://github.com/lopezhansel/OctoDex/commit/04e8fdd">04e8fdd</a></li>
+<li>[x] See if octoDex User first then check github. <a href="https://github.com/lopezhansel/OctoDex/commit/52b91fa">52b91fa</a></li>
+<li>[x] Simplify and improve inlineDirective performance <a href="https://github.com/lopezhansel/OctoDex/commit/60bdd03">60bdd03</a> <a href="https://github.com/lopezhansel/OctoDex/commit/78acd2d">78acd2d</a></li>
+<li>[x] BUG : service.updateClient(); is being called by getOtherUsers <a href="https://github.com/lopezhansel/OctoDex/commit/c4269ba">c4269ba</a></li>
+<li>[x] Making Server a bit more restful <a href="https://github.com/lopezhansel/OctoDex/commit/0d1ed05">0d1ed05</a> <a href="https://github.com/lopezhansel/OctoDex/commit/f8b1096">f8b1096</a> <a href="https://github.com/lopezhansel/OctoDex/commit/08e59a2">08e59a2</a> <a href="https://github.com/lopezhansel/OctoDex/commit/6f04b09">6f04b09</a></li>
+<li>[x] improve service.getFollowersAndRepos. <a href="https://github.com/lopezhansel/OctoDex/commit/b783c6c">b783c6c</a> </li>
+<li>[x] Improve api calls retrieving Repos and Followers; <a href="https://github.com/lopezhansel/OctoDex/commit/0efde16">0efde16</a></li>
+<li>[x] learn to implement $q or $resource service from angular <a href="https://github.com/lopezhansel/OctoDex/commit/c468925">c468925</a></li>
+<li>[x] Inline directive not edit more when not in client profile <a href="https://github.com/lopezhansel/OctoDex/commit/60bdd03">60bdd03</a></li>
+<li>[x] add a variable for $dirty  <a href="https://github.com/lopezhansel/OctoDex/commit/1c3f58f">1c3f58f</a></li>
+<li>[x] Enable &quot;Full Profile&quot; Button <a href="https://github.com/lopezhansel/OctoDex/commit/ea1567c">ea1567c</a></li>
+<li>[x] Fixed other github users not being able to log in <a href="https://github.com/lopezhansel/OctoDex/commit/e9c1f9c">e9c1f9c</a> <a href="https://github.com/lopezhansel/OctoDex/commit/aaa36f9">aaa36f9</a><br><strong>Future Possibility</strong></li>
 <li>[ ] Upload Image to Node server</li>
 <li>[ ] Add Repo Project View</li>
 <li>[ ] Add Organization/Group  View</li>
 <li>[ ] Use Ng-file Upload</li>
-<li>[x] Download vcf contact file</li>
-<li>[x] Convert ReadMe Markdown files to html</li>
 <li>[ ] Highlight Syntax</li>
-<li>[ ] </li>
-</ul>
-<h2 id="not-priority-ios">Not Priority iOS</h2>
-<ul>
-<li>[ ] home page/od-card not flexing</li>
-<li>[ ] Sidenav flex problem </li>
-<li>[ ] edit page padding at bottom</li>
-<li>[ ] about page flex layout-fill</li>
+<li>[x] Create and Download vcf contact file <a href="https://github.com/lopezhansel/OctoDex/commit/fbecb24">fbecb24</a> <a href="https://github.com/lopezhansel/OctoDex/commit/8fc3dfa">8fc3dfa</a></li>
+<li>[x] Convert ReadMe Markdown files to html <a href="https://github.com/lopezhansel/OctoDex/commit/c52ffd2">c52ffd2</a><br><strong>Not a Priority</strong></li>
+<li>[ ] home page/od-card not flexing (iOS safari)</li>
+<li>[ ] Sidenav flex problem  (iOS safari)</li>
+<li>[ ] edit page padding at bottom (iOS safari)</li>
+<li>[ ] about page flex layout-fill (iOS safari)</li>
 </ul>
