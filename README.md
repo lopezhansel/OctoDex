@@ -19,11 +19,14 @@ Github's Octocat + Rolodex = OctoDex
 * Github's Oauth2
 
 ## TODO List
+- [ ] add css to od-readme directive
 - [ ] Let user know if profile is an octodex user or not
 - [ ] Add Following tab to profile view
 - [ ] BUG: If POST timeout css color wont change
 - [ ] Fix: "UPDATE PROFILE" button showing up everywhere
 - [ ] Show random OctoDex Users at home page.
+- [x] clicking share profile closes page
+- [x] repo page refactorU too slow
 - [x] Add LinkedIn Facebook and Twiter options
 - [x] add toggleSidenav when clicking on sidenav list item
 - [x] Perfect Mobile layout of profileView
@@ -35,7 +38,7 @@ Github's Octocat + Rolodex = OctoDex
 - [x] "Sign In" button doesn't update after logging in
 - [x] Remove Full Profile Button
 - [x] First Login Doesn't work
-- [X] Fix Social Profiles Icon.
+- [x] Fix Social Profiles Icon.
 - [x] Show Octodex Users at home page
 - [x] BUG : service.updateClient(); is being called by getOtherUsers
 - [x] Making Server a bit more restful
@@ -48,12 +51,12 @@ Github's Octocat + Rolodex = OctoDex
 - [x] improve service.getFollowersAndRepos.
 - [x] Improve api calls retrieving Repos and Followers;
 - [x] learn to implement $q or $resource service from angular
-- [X] shareable link
+- [x] shareable link
 - [x] Inline directive not edit more when not in client profile
-- [X] Fix Api to request more info from github
-- [X] save user data into database
-- [X] Show 'Done' icon in inline directive
-- [X] add a variable for $dirty 
+- [x] Fix Api to request more info from github
+- [x] save user data into database
+- [x] Show 'Done' icon in inline directive
+- [x] add a variable for $dirty 
 - [x] Revamp inline directive. Fix edit I'mode in directive. Edit mode toggle button.
 - [x] Enable "Full Profile" Button
 - [x] Fixed other github users not being able to log in
@@ -66,3 +69,10 @@ Github's Octocat + Rolodex = OctoDex
 - [x] Download vcf contact file
 - [x] Convert ReadMe Markdown files to html
 - [ ] Highlight Syntax
+- [ ] 
+
+## Not Priority iOS
+- [ ] home page/od-card not flexing
+- [ ] Sidenav flex problem 
+- [ ] edit page padding at bottom
+- [ ] about page flex layout-fill

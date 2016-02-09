@@ -82,3 +82,6 @@ img.sidenav-avatar {
     height: 100px;
     margin: auto;
 }
+.readme * li {
+	list-style-type: none;
+}
