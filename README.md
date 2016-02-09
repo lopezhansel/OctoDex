@@ -64,5 +64,5 @@ Github's Octocat + Rolodex = OctoDex
 - [ ] Add Organization/Group  View
 - [ ] Use Ng-file Upload
 - [x] Download vcf contact file
-- [ ] Convert ReadMe Markdown files to html
+- [x] Convert ReadMe Markdown files to html
 - [ ] Highlight Syntax

@@ -15,6 +15,9 @@ app.config(function($routeProvider,$locationProvider){
 	}).when('/account',{
 		controller : "myProfileController",
 		templateUrl : "views/accountView.html"
+	}).when('/about',{
+		controller : "myProfileController",
+		templateUrl : "views/readmeView.html"
 	}).otherwise({ redirectTo: '/' });
 	// $locationProvider.html5Mode(true);
 });	
