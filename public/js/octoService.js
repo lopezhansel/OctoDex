@@ -115,7 +115,9 @@ app.service('octoService', ['$window', '$routeParams', '$resource', '$mdMedia', 
 		userObj.reposArray = OctoApi.gitRepos({ userParam: userObj.login }, function (data) {
 			userObj.followersArray = OctoApi.gitFollowers({ userParam: userObj.login }, function (data) {
 				userObj.followingArray = OctoApi.gitFollowing({ userParam: userObj.login }, function (data) {
-					userObj.$save({ login: userObj.login }, function (returnData) {});
+					if (service.client.isLoggedIn) {
+						userObj.$save({ login: userObj.login }, function (returnData) {});
+					}
 				});
 			});
 		});
