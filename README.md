@@ -22,10 +22,20 @@ Easily create and share vCards using your Github information.
 - [ ] add css to od-readme directive 
 - [ ] Let user know if profile is an octodex user or not 
 - [ ] Add "Following" tab to profile view 
+- [ ] Add Repo Project View
+- [ ] Upload Image to Node server
+- [ ] Add Organization/Group  View
+- [ ] Use Ng-file Upload
 - [ ] BUG: If POST timeout css color wont change 
 - [ ] Fix: "UPDATE PROFILE" button showing up everywhere 
 - [ ] Show random OctoDex Users at home page. 
-- [x] Add links to readme.md [](https://github.com/lopezhansel/OctoDex/commit/)
+- [ ] Make jobTitle editable on od-Card 
+- [ ] Comment more code 
+- [ ] Make Server even more restful 
+- [ ] Save github response headers into mongo 
+- [x] Create and Download vcf contact file [fbecb24](https://github.com/lopezhansel/OctoDex/commit/fbecb24) [8fc3dfa](https://github.com/lopezhansel/OctoDex/commit/8fc3dfa)
+- [x] Convert ReadMe Markdown files to html [c52ffd2](https://github.com/lopezhansel/OctoDex/commit/c52ffd2)
+- [x] Rewrite and add links to readme.md [8b07647](https://github.com/lopezhansel/OctoDex/commit/8b07647)
 - [x] Adding about readme view trigger and route [c6a8658](https://github.com/lopezhansel/OctoDex/commit/c6a8658) [d1494c5](https://github.com/lopezhansel/OctoDex/commit/d1494c5)
 - [x] Allowing user to download vCard from users [8fc3dfa](https://github.com/lopezhansel/OctoDex/commit/8fc3dfa) 
 - [x] Fix "unable to import vCard" data corruption [f51fbb9](https://github.com/lopezhansel/OctoDex/commit/f51fbb9)
@@ -67,13 +77,7 @@ Easily create and share vCards using your Github information.
 - [x] Enable "Full Profile" Button [ea1567c](https://github.com/lopezhansel/OctoDex/commit/ea1567c)
 - [x] Fixed other github users not being able to log in [e9c1f9c](https://github.com/lopezhansel/OctoDex/commit/e9c1f9c) [aaa36f9](https://github.com/lopezhansel/OctoDex/commit/aaa36f9)
 **Future Possibility**
-- [ ] Upload Image to Node server
-- [ ] Add Repo Project View
-- [ ] Add Organization/Group  View
-- [ ] Use Ng-file Upload
 - [ ] Highlight Syntax
-- [x] Create and Download vcf contact file [fbecb24](https://github.com/lopezhansel/OctoDex/commit/fbecb24) [8fc3dfa](https://github.com/lopezhansel/OctoDex/commit/8fc3dfa)
-- [x] Convert ReadMe Markdown files to html [c52ffd2](https://github.com/lopezhansel/OctoDex/commit/c52ffd2)
 **Not a Priority**
 - [ ] home page/od-card not flexing (iOS safari)
 - [ ] Sidenav flex problem  (iOS safari)
