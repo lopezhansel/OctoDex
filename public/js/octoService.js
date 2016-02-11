@@ -121,9 +121,7 @@ app.service('octoService', ['$window', '$routeParams', '$resource', '$mdMedia', 
 					service.client.lastModified = headers()["last-modified"];
 					if (service.client.isLoggedIn) {
 						userObj.$save({ login: userObj.login }, function (returnData) {});
-						service.client.$update(function (da) {
-							console.dir(da);
-						});
+						service.client.$update(function (da) {});
 					}
 				});
 			});
