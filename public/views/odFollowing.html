@@ -1,0 +1,23 @@
+<md-content class="md-padding my-container md-whiteframe-5dp ">
+  <div class="md-display-1">{{::user.login | uppercase}} is Following </div>
+  <md-divider ></md-divider>
+  <br>
+    <md-grid-list
+         md-cols="1"
+         md-cols-xm="1"
+           md-cols-sm="2" md-cols-md="4" md-cols-gt-md="5"
+           md-row-height-gt-md="1:1" md-row-height="1:1"
+           md-gutter="12px" md-gutter-gt-sm="8px" >
+       <md-grid-tile  ng-repeat="follow in user.followingArray" 
+           md-rowspan="1" md-colspan="1" md-colspan-sm="1">
+           <a class="tile-name" ng-href="#profile/{{::follow.login}}">
+             <img class="tile" ng-src="{{::follow.avatar_url}}" />
+           </a>
+         <a class="tile-name" ng-href="#profile/{{::follow.login}}">
+           <md-grid-tile-footer layout-align="center center">
+             <h2>{{:: follow.login }}</h2>
+           </md-grid-tile-footer>
+       </a>
+       </md-grid-tile>
+    </md-grid-list>
+</md-content>

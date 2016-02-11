@@ -21,7 +21,6 @@ Easily create and share vCards using your Github information.
 ## To-Do List
 - [ ] add css to od-readme directive 
 - [ ] Let user know if profile is an octodex user or not 
-- [ ] Add "Following" tab to profile view 
 - [ ] Add Repo Project View
 - [ ] Upload Image to Node server
 - [ ] Add Organization/Group  View
@@ -33,6 +32,7 @@ Easily create and share vCards using your Github information.
 - [ ] Comment more code 
 - [ ] Make Server even more restful 
 - [ ] Save github response headers into mongo 
+- [x] Add "Following" tab to profile view 
 - [x] Create and Download vcf contact file [fbecb24](https://github.com/lopezhansel/OctoDex/commit/fbecb24) [8fc3dfa](https://github.com/lopezhansel/OctoDex/commit/8fc3dfa)
 - [x] Convert ReadMe Markdown files to html [c52ffd2](https://github.com/lopezhansel/OctoDex/commit/c52ffd2)
 - [x] Rewrite and add links to readme.md [8b07647](https://github.com/lopezhansel/OctoDex/commit/8b07647)

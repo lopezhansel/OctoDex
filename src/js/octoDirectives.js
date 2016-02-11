@@ -16,6 +16,12 @@ app.directive('odSidenav', ["octoService","$routeParams",function (octoService,$
 		templateUrl : "views/odFollowers.html",
 	};
 }])
+.directive('odFollowing', ["octoService","$routeParams",function (octoService,$routeParams) {
+	return {
+		restrict: 'EA',
+		templateUrl : "views/odFollowing.html",
+	};
+}])
 .directive('odWelcome', ["octoService","$routeParams",function (octoService,$routeParams) {
 	return {
 		restrict: 'EA',
