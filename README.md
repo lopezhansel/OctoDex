@@ -28,11 +28,11 @@ Easily create and share vCards using your Github information.
 - [ ] BUG: If POST timeout css color wont change 
 - [ ] Fix: "UPDATE PROFILE" button showing up everywhere 
 - [ ] Show random OctoDex Users at home page. 
-- [ ] Make jobTitle editable on od-Card 
 - [ ] Comment more code 
 - [ ] Make Server even more restful 
 - [ ] Save github response headers into mongo 
-- [x] Add "Following" tab to profile view 
+- [x] Make jobTitle editable on od-Card 
+- [x] Add "Following" tab to profile view [f0938c5](https://github.com/lopezhansel/OctoDex/commit/f0938c5) 
 - [x] Create and Download vcf contact file [fbecb24](https://github.com/lopezhansel/OctoDex/commit/fbecb24) [8fc3dfa](https://github.com/lopezhansel/OctoDex/commit/8fc3dfa)
 - [x] Convert ReadMe Markdown files to html [c52ffd2](https://github.com/lopezhansel/OctoDex/commit/c52ffd2)
 - [x] Rewrite and add links to readme.md [8b07647](https://github.com/lopezhansel/OctoDex/commit/8b07647)

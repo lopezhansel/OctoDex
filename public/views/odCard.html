@@ -8,7 +8,7 @@
 				<span flex inline value="user.name" key="name" class="md-display-2 display-name inline"></span>
 				<span flex class="md-display-1 display-name inline">({{user.login}})</span>
 			</div>
-			<span class="md-display-1 display-name">{{user.jobTitle || "Web Master"}} </span>
+			<span inline value="user.jobTitle" key="jobTitle" class="md-display-1 display-name">{{user.jobTitle || "Web Master"}} </span>
 			<div class="md-title" layout layout-wrap> 
 				<span flex-sm="100" flex-xs="100">{{user.public_repos }} <span class="md-subhead">Repos</span></span>
 				<span hide-sm hide-xs class="vertical-line"></span>
