@@ -106,9 +106,16 @@ app.service('octoService', ['$window','$routeParams','$resource', '$mdMedia', '$
 		service.getFollowersAndRepos = (userObj) => {
 			userObj.reposArray =OctoApi.gitRepos({userParam:userObj.login},function (data) {
 				userObj.followersArray = OctoApi.gitFollowers({userParam:userObj.login},function (data) {
-					userObj.followingArray = OctoApi.gitFollowing({userParam:userObj.login},function (data) {
+					userObj.followingArray = OctoApi.gitFollowing({userParam:userObj.login},function (data,headers) {
+						service.client.xRatelimitLimit = headers()["x-ratelimit-limit"];
+						service.client.xRatelimitRemaining = headers()["x-ratelimit-remaining"];
+						service.client.xRatelimitReset = headers()["x-ratelimit-reset"];
+						service.client.lastModified = headers()["last-modified"];
 						if (service.client.isLoggedIn){
 							userObj.$save({login:userObj.login},function (returnData) {});
+							service.client.$update(function  (da) {
+								console.dir(da);
+							});
 						}
 					});
 				});
