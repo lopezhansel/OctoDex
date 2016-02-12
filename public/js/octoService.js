@@ -32,7 +32,7 @@ app.service('octoService', ['$window', '$routeParams', '$resource', '$mdMedia', 
 	// $resource Creates is a class with ajax methods
 	var OctoApi = $resource('/api/users/:login', { login: '@login' }, {
 		getMe: { method: 'GET', url: "api/me" },
-		update: { method: 'POST', url: "api/me" },
+		updateMe: { method: 'POST', url: "api/me" },
 		search: { method: 'GET', url: "api/users", isArray: true },
 		check: { method: 'GET', url: "api/users/:userParam", params: { userParam: "@login" }, isArray: true },
 		gitUser: { method: 'GET', url: "https://api.github.com/users/:userParam", params: { userParam: "@login" } },
@@ -94,7 +94,7 @@ app.service('octoService', ['$window', '$routeParams', '$resource', '$mdMedia', 
 		if ($location.path() !== "/" && $location.path() !== "/account") {
 			return;
 		} // only update if at home or account page uri
-		service.client.$update(function (response) {
+		service.client.$updateMe(function (response) {
 			// Post Method . Sends service.client
 			service.client.isLoggedIn = service.client.error ? false : true; //
 			if (response.error) {
@@ -121,7 +121,7 @@ app.service('octoService', ['$window', '$routeParams', '$resource', '$mdMedia', 
 					service.client.lastModified = headers()["last-modified"];
 					if (service.client.isLoggedIn) {
 						userObj.$save({ login: userObj.login }, function (returnData) {});
-						service.client.$update(function (da) {});
+						service.client.$updateMe(function (da) {});
 					}
 				});
 			});
