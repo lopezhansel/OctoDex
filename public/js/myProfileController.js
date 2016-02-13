@@ -2,10 +2,6 @@
 
 app.controller('myProfileController', ["$scope", '$routeParams', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout", "octoService", function ($scope, $routeParams, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout, octoService) {
 
-	// atHome enables different views
-	$scope.atHome = $location.path() === "/" ? true : false;
-	$scope.octoService = octoService;
-
 	// interval to check if update ajax request came back
 	var updateUserInterval = $interval(function () {
 		var me = octoService.client;
