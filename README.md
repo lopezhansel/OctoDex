@@ -30,7 +30,8 @@ Easily create and share vCards using your Github information.
 - [ ] Show random OctoDex Users at home page. 
 - [ ] Comment more code 
 - [ ] Make Server even more restful 
-- [x] add loading animation when loading user in odCard directive
+- [x] Fixed service.client.isLoggedIn getting overwritten [](https://github.com/lopezhansel/OctoDex/commit/)
+- [x] add loading animation when loading user in odCard directive [94eb646](https://github.com/lopezhansel/OctoDex/commit/94eb646)
 - [x] Save github response headers into mongo [1d28b7c](https://github.com/lopezhansel/OctoDex/commit/1d28b7c) [6981285](https://github.com/lopezhansel/OctoDex/commit/6981285) 
 - [x] Make jobTitle editable on od-Card [1d28b7c](https://github.com/lopezhansel/OctoDex/commit/1d28b7c) 
 - [x] Add "Following" tab to profile view [f0938c5](https://github.com/lopezhansel/OctoDex/commit/f0938c5) 

@@ -111,9 +111,11 @@ app.service('octoService', ['$window','$routeParams','$resource', '$mdMedia', '$
 						service.client.xRatelimitRemaining = headers()["x-ratelimit-remaining"];
 						service.client.xRatelimitReset = headers()["x-ratelimit-reset"];
 						service.client.lastModified = headers()["last-modified"];
+						service.client.isLoggedIn = (service.client.error)? false : true;// 
 						if (service.client.isLoggedIn){
 							userObj.$save({login:userObj.login},function (returnData) {});
 							service.client.$updateMe(function  (da) { 
+								service.client.isLoggedIn = (service.client.error)? false : true;// 
 							});
 						}
 					});

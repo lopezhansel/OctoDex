@@ -1,13 +1,13 @@
 
-<md-content od-welcome>
+<md-content od-welcome ng-if="!od.client.isLoggedIn &&  !isAtHome()">
 </md-content>
 
 
-<md-tabs md-dynamic-height md-border-bottom ng-if="octoService.client.isLoggedIn  ||  !atHome">
+<md-tabs md-dynamic-height md-border-bottom ng-if="od.client.isLoggedIn  ||  isAtHome()">
 
   <md-tab label="{{user.login}}">
     <md-content od-card
-        ng-if="octoService.client.isLoggedIn  ||  !atHome"
+        ng-if="client.isLoggedIn  ||  isAtHome()"
         class="md-padding card-background main-md-content" layout="column"  layout-align="center center">
     </md-content >
   </md-tab>
