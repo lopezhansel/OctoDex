@@ -5,27 +5,27 @@
 
 <md-tabs md-dynamic-height md-border-bottom ng-if="od.client.isLoggedIn  ||  isAtHome()">
 
-  <md-tab label="{{user.login}}">
+  <md-tab label="{{::user.login}}">
     <md-content od-card
-        ng-if="client.isLoggedIn  ||  isAtHome()"
+        ng-if="od.client.isLoggedIn  ||  isAtHome()"
         class="md-padding card-background main-md-content" layout="column"  layout-align="center center">
     </md-content >
   </md-tab>
 
   <md-tab label="Repos">
     <md-content od-repos
-    class="card-background md-padding" ng-if="true">
+    class="card-background md-padding">
     </md-content>
   </md-tab>
 
   <md-tab label="Followers">
     <md-content od-followers
-    class="card-background md-padding" ng-if="true">
+    class="card-background md-padding">
     </md-content>
   </md-tab>
   <md-tab label="Following">
     <md-content od-following
-    class="card-background md-padding" ng-if="true">
+    class="card-background md-padding">
     </md-content>
   </md-tab>
 

@@ -18,8 +18,8 @@
 	<md-list layout layout-wrap>
 		<md-button ng-click="::toggleSidenav('right')" flex="100" ng-href="#profile/{{od.client.login}}" >
 			<div>
-				<span ng-if="client.isLoggedIn">{{::client.login}} Profile</span>
-				<span ng-if="!client.isLoggedIn">User Profile</span>
+				<span ng-if="od.client.isLoggedIn">{{::od.client.login}} Profile</span>
+				<span ng-if="!od.client.isLoggedIn">User Profile</span>
 				<md-divider></md-divider>
 			</div>
 		</md-button>
@@ -29,22 +29,22 @@
 			<md-divider></md-divider>
 		</md-button>
 
-		<md-button ng-click="::toggleSidenav('right');logger()" flex="100"  ng-class="{'md-primary':!client.isLoggedIn,'md-raised': !client.isLoggedIn}">
+		<md-button ng-click="::toggleSidenav('right');logger()" flex="100"  ng-class="{'md-primary':!od.client.isLoggedIn,'md-raised': !od.client.isLoggedIn}">
 			{{od.getSignInBtn()}}
 			<md-divider></md-divider>
 		</md-button>
 		
-		<md-button ng-click="::toggleSidenav('right');od.getCard(client)" flex="100" ng-disabled="!client.isLoggedIn">
+		<md-button ng-click="::toggleSidenav('right');od.getCard(od.client)" flex="100" ng-disabled="!od.client.isLoggedIn">
 			Download Contact File
 			<md-divider></md-divider>
 		</md-button>
 		
-		<md-button ng-click="::toggleLink()" flex="100" ng-disabled="!client.isLoggedIn">
+		<md-button ng-click="::toggleLink()" flex="100" ng-disabled="!od.client.isLoggedIn">
 			Share Profile
 		</md-button>
 		<md-input-container class="md-block" flex ng-if="linkBool">
 			<label>Link to Profile</label>
-			<input value="{{link+client.login}}"  >
+			<input value="{{link+od.client.login}}"  >
 		</md-input-container>
 	</md-list>
 

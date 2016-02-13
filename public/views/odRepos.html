@@ -7,7 +7,7 @@
       <a ng-href="{{::repo.svn_url}}" target="_blank">{{::repo.name}}</a>
       <span class="md-subhead">External Link</span>
     </p>
-    <p ng-if="repo.homepage">
+    <p ng-if="::repo.homepage">
       <i class="material-icons">visibility</i>
       <!-- Error Here when repo.hompage doesn't have http -->
       <a ng-href="{{::repo.homepage}}">{{::repo.homepage}}</a>
