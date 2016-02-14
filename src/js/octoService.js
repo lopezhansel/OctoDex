@@ -48,15 +48,17 @@ app.service('octoService', ['$window','$q','$document','$routeParams','$resource
 			);
 		};
 		OctoApi.prototype.gitReposFollowers = function (user) {
+			var that = user || this;
+			// Check Etag before going to github
 			return $q.all([
-				$http.get("https://api.github.com/users/"+user.login+"/repos"),
-				$http.get("https://api.github.com/users/"+user.login+"/following"),
-				$http.get("https://api.github.com/users/"+user.login+"/followers")
+				$http.get("https://api.github.com/users/"+that.login+"/repos"),
+				$http.get("https://api.github.com/users/"+that.login+"/following"),
+				$http.get("https://api.github.com/users/"+that.login+"/followers")
 			]).then(function(results) {
-				user.reposArray     = results[0].data;
-				user.followersArray = results[1].data;
-				user.followingArray = results[2].data;
-				return user;
+				that.reposArray     = results[0].data;
+				that.followingArray = results[1].data;
+				that.followersArray = results[2].data;
+				return that;
 			},function (err) {
 				alert("Sorry " + err.data.message);
 			});
@@ -130,7 +132,7 @@ app.service('octoService', ['$window','$q','$document','$routeParams','$resource
 			// if user is already cached then exit 
 			if (cacheAlias[gLogin]) {
 				if ((cacheAlias[gLogin].reposArray === null) || (cacheAlias[gLogin].followersArray === null) ){
-					// Temporary fix for mongo performance
+					// Temporary fix for mongo performance. Retrieving RefactorU Student data used to be really heavy.
 					cacheAlias[gLogin].gitReposFollowers();
 					// svc.getFollowersAndRepos(cacheAlias[gLogin]);
 				}
@@ -149,6 +151,6 @@ app.service('octoService', ['$window','$q','$document','$routeParams','$resource
 					});
 				}				
 			});
-		};		
+		};			
 		return svc;
 }]);
