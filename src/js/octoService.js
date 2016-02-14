@@ -1,5 +1,5 @@
-app.service('octoService', ['$window','$routeParams','$resource', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout",
-	function($window,$routeParams,$resource, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout) {
+app.service('octoService', ['$window','$q','$document','$routeParams','$resource', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout",
+	function($window,$q,$document,$routeParams,$resource, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout) {
 
 		// initializing
 		var service = this; // just an alias
@@ -27,20 +27,17 @@ app.service('octoService', ['$window','$routeParams','$resource', '$mdMedia', '$
 				el.css(prop, value);
 			});
 		};
+
 		
 		// $resource Creates is a class with ajax methods
 		var OctoApi = $resource('/api/users/:login', {login: '@login'}, {
-			 getMe:        {method:'GET', url:"api/me"},
-			 updateMe:       {method:'POST', url:"api/me"},
+			 getMe:    {method:'GET', url:"api/me"},
+			 updateMe : {method:'POST', url:"api/me"},
 			 search:       {method:'GET', url:"api/users",isArray : true},
 			 check:        {method:'GET', url:"api/users/:userParam",params:{userParam:"@login"},isArray : true},
-			 gitUser:      {method:'GET', url:"https://api.github.com/users/:userParam",params:{userParam:"@login"}},
-			 gitRepos:     {method:'GET', url:"https://api.github.com/users/:userParam/repos",params:{userParam:"@login"},isArray:true},
-			 gitFollowers: {method:'GET', url:"https://api.github.com/users/:userParam/followers",params:{userParam:"@login"},isArray:true},
-			 gitFollowing: {method:'GET', url:"https://api.github.com/users/:userParam/following",params:{userParam:"@login"},isArray:true},
 			 searchGit:    {method:'GET', url:"https://api.github.com/search/users",params:{userParam:"@login"}}
-		}); 
-		
+		}); 	
+
 		service.getCard = function (user) {
 			$http.post('/getCard', user).then(function (response) {
 				service.downloadVcard(user.login+".vcf",response.data);
@@ -76,7 +73,7 @@ app.service('octoService', ['$window','$routeParams','$resource', '$mdMedia', '$
 			service.client.repoUpdate =  (service.client.reposArray.length !== service.client.public_repos);
 			service.client.followerUpdate =  (service.client.followersArray.length !== service.client.followers);
 			if (service.client.followerUpdate || service.client.repoUpdate) {
-				service.getFollowersAndRepos(service.client);
+				service.client.gitReposFollowers();
 			}
 		});
 
@@ -85,10 +82,10 @@ app.service('octoService', ['$window','$routeParams','$resource', '$mdMedia', '$
 		};
 
 		// POST method.  Reminder: service.client is an instance of OctoApi
-		service.updateClient = function (form) {
+		service.updateClient  = function (form) {
 			service.foreachElement(service.inlineElem, "#79E1FF"); // change to blue while POSTing
 			if (($location.path() !== "/") && ($location.path() !== "/account")){ return; } // only update if at home or account page uri
-			service.client.$updateMe(function (response) { // Post Method . Sends service.client
+			service.client.$updateMe (function (response) { // Post Method . Sends service.client
 				service.client.isLoggedIn = (service.client.error)? false : true;// 
 				if (response.error){ // incase of failure. Like if there a duplicate 
 					service.foreachElement(service.inlineElem, "#FF3838"); // change color to red if erro
@@ -103,25 +100,25 @@ app.service('octoService', ['$window','$routeParams','$resource', '$mdMedia', '$
 
 		// add repos and followers properties to the UserObj since the regular api doesn't give them by default
 		// BUG : Too much data is being Sent to server and saved. REPOS are heavy and duplicated info
-		service.getFollowersAndRepos = (userObj) => {
-			userObj.reposArray =OctoApi.gitRepos({userParam:userObj.login},function (data) {
-				userObj.followersArray = OctoApi.gitFollowers({userParam:userObj.login},function (data) {
-					userObj.followingArray = OctoApi.gitFollowing({userParam:userObj.login},function (data,headers) {
-						service.client.xRatelimitLimit = headers()["x-ratelimit-limit"];
-						service.client.xRatelimitRemaining = headers()["x-ratelimit-remaining"];
-						service.client.xRatelimitReset = headers()["x-ratelimit-reset"];
-						service.client.lastModified = headers()["last-modified"];
-						service.client.isLoggedIn = (service.client.error)? false : true;// 
-						if (service.client.isLoggedIn){
-							userObj.$save({login:userObj.login},function (returnData) {});
-							service.client.$updateMe(function  (da) { 
-								service.client.isLoggedIn = (service.client.error)? false : true;// 
-							});
-						}
-					});
-				});
-			});
-		};
+		// service.getFollowersAndRepos = (userObj) => {
+		// 	userObj.reposArray =OctoApi.gitRepos({userParam:userObj.login},function (data) {
+		// 		userObj.followersArray = OctoApi.gitFollowers({userParam:userObj.login},function (data) {
+		// 			userObj.followingArray = OctoApi.gitFollowing({userParam:userObj.login},function (data,headers) {
+		// 				service.client.xRatelimitLimit = headers()["x-ratelimit-limit"];
+		// 				service.client.xRatelimitRemaining = headers()["x-ratelimit-remaining"];
+		// 				service.client.xRatelimitReset = headers()["x-ratelimit-reset"];
+		// 				service.client.lastModified = headers()["last-modified"];
+		// 				service.client.isLoggedIn = (service.client.error)? false : true;// 
+		// 				if (service.client.isLoggedIn){
+		// 					userObj.$save({login:userObj.login},function (returnData) {});
+		// 					service.client.$updateMe (function  (da) { 
+		// 						service.client.isLoggedIn = (service.client.error)? false : true;// 
+		// 					});
+		// 				}
+		// 			});
+		// 		});
+		// 	});
+		// };
 
 		// getOtherUsers is for retrieving another users that are not the client profile 
 		service.getOtherUsers = (userInput) => {
@@ -131,7 +128,7 @@ app.service('octoService', ['$window','$routeParams','$resource', '$mdMedia', '$
 			if (cacheAlias[ghUser]) {
 				if ((cacheAlias[ghUser].reposArray === null) || (cacheAlias[ghUser].followersArray === null) ){
 					// Temporary fix for mongo performance
-					service.getFollowersAndRepos(cacheAlias[ghUser]);
+					cacheAlias[ghUser].gitReposFollowers();
 				}
 				return; 
 			} 
@@ -139,10 +136,37 @@ app.service('octoService', ['$window','$routeParams','$resource', '$mdMedia', '$
 				if (data.length) { // If user Exist.
 					cacheAlias[ghUser] = data[0];
 				}else{
-					cacheAlias[ghUser] = OctoApi.gitUser({userParam:ghUser},function (data,responseHeaders) {
-							service.getFollowersAndRepos(cacheAlias[ghUser]);
+					cacheAlias[ghUser] = new OctoApi();
+					cacheAlias[ghUser].gitUser(ghUser)
+					.then(cacheAlias[ghUser].gitReposFollowers)
+					.then(function (data) {
+						_.extend(cacheAlias[ghUser],data);
 					});
 				}				
+			});
+		};		
+		OctoApi.prototype.gitUser = function (ghUser) {
+			var login = this.login || ghUser;
+			return $http.get("https://api.github.com/users/"+ ghUser)
+				.then( function (res) {
+					return res.data;
+				},function (err) {
+					alert("Sorry Couldn't get User" + err.statusText);
+				}
+			);
+		};
+		OctoApi.prototype.gitReposFollowers = function (user) {
+			return $q.all([
+				$http.get("https://api.github.com/users/"+user.login+"/repos"),
+				$http.get("https://api.github.com/users/"+user.login+"/following"),
+				$http.get("https://api.github.com/users/"+user.login+"/followers")
+			]).then(function(results) {
+				user.reposArray     = results[0].data;
+				user.followersArray = results[1].data;
+				user.followingArray = results[2].data;
+				return user;
+			},function (err) {
+				alert("Sorry " + err.data.message);
 			});
 		};
 		return service;
