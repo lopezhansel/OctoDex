@@ -5,13 +5,13 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 	// initializing
 	var svc = this;
 	svc.signInBtn = "Sign In"; // text of the sign in button
-	svc.getSignInBtn = function () {
-		return svc.signInBtn;
-	};
 	svc.showSaveBtn = false; // orange "Update Profile" Button
 	svc.cachedUsers = {}; // initializing other Users
 	svc.inlineElem = []; // array of inline elements that are dirty
 	svc.organizations = {};
+	svc.getSignInBtn = function () {
+		return svc.signInBtn;
+	};
 	svc.downloadVcard = function (filename, text) {
 		var elem = document.createElement('a');
 		elem.setAttribute('href', 'data:text/vcard;charset=utf-8,' + encodeURIComponent(text));
@@ -37,14 +37,33 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 		check: { method: 'GET', url: "api/users/:userParam", params: { userParam: "@login" }, isArray: true },
 		searchGit: { method: 'GET', url: "https://api.github.com/search/users", params: { userParam: "@login" } }
 	});
-
-	svc.getCard = function (user) {
+	OctoApi.prototype.gitUser = function (gLogin) {
+		var login = this.login || gLogin;
+		return $http.get("https://api.github.com/users/" + gLogin).then(function (res) {
+			return res.data;
+		}, function (err) {
+			alert("Sorry Couldn't get User" + err.statusText);
+		});
+	};
+	OctoApi.prototype.gitReposFollowers = function (user) {
+		return $q.all([$http.get("https://api.github.com/users/" + user.login + "/repos"), $http.get("https://api.github.com/users/" + user.login + "/following"), $http.get("https://api.github.com/users/" + user.login + "/followers")]).then(function (results) {
+			user.reposArray = results[0].data;
+			user.followersArray = results[1].data;
+			user.followingArray = results[2].data;
+			return user;
+		}, function (err) {
+			alert("Sorry " + err.data.message);
+		});
+	};
+	OctoApi.prototype.getCard = function (user) {
+		user = user || this;
 		$http.post('/getCard', user).then(function (response) {
 			svc.downloadVcard(user.login + ".vcf", response.data);
 		}, function (ifErr) {
 			alert("Sorry. Error Downloading Contact File \n " + ifErr.data);
 		});
 	};
+
 	// Get 20 Users Skip 1
 	OctoApi.search({ limit: 20, skip: 1 }, function (data) {
 		data.forEach(function (el) {
@@ -52,12 +71,11 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 		});
 	});
 
-	svc.getOrganizations = function (str) {
-		OctoApi.search({ organizations: str }, function (data) {
-			var org = str;
-			svc.organizations[org] = {};
+	svc.getOrganizations = function (orgStr) {
+		OctoApi.search({ organizations: orgStr }, function (data) {
+			svc.organizations[orgStr] = {};
 			data.forEach(function (el) {
-				svc.organizations[org][el.login] = el;
+				svc.organizations[orgStr][el.login] = el;
 			});
 		});
 	};
@@ -80,7 +98,7 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 		}
 	});
 
-	svc.getClient = function () {
+	svc.clientGetter = function () {
 		return svc.client;
 	};
 
@@ -104,28 +122,6 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 			}
 		});
 	};
-
-	// add repos and followers properties to the UserObj since the regular api doesn't give them by default
-	// BUG : Too much data is being Sent to server and saved. REPOS are heavy and duplicated info
-	// svc.getFollowersAndRepos = (userObj) => {
-	// 	userObj.reposArray =OctoApi.gitRepos({userParam:userObj.login},function (data) {
-	// 		userObj.followersArray = OctoApi.gitFollowers({userParam:userObj.login},function (data) {
-	// 			userObj.followingArray = OctoApi.gitFollowing({userParam:userObj.login},function (data,headers) {
-	// 				svc.client.xRatelimitLimit = headers()["x-ratelimit-limit"];
-	// 				svc.client.xRatelimitRemaining = headers()["x-ratelimit-remaining"];
-	// 				svc.client.xRatelimitReset = headers()["x-ratelimit-reset"];
-	// 				svc.client.lastModified = headers()["last-modified"];
-	// 				svc.client.isLoggedIn = (svc.client.error)? false : true;//
-	// 				if (svc.client.isLoggedIn){
-	// 					userObj.$save({login:userObj.login},function (returnData) {});
-	// 					svc.client.$updateClient(function  (da) {
-	// 						svc.client.isLoggedIn = (svc.client.error)? false : true;//
-	// 					});
-	// 				}
-	// 			});
-	// 		});
-	// 	});
-	// };
 
 	// getOtherUsers is for retrieving another users that are not the client profile
 	svc.getOtherUsers = function (userInput) {
@@ -151,24 +147,6 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 					console.log(cacheAlias[gLogin]);
 				});
 			}
-		});
-	};
-	OctoApi.prototype.gitUser = function (gLogin) {
-		var login = this.login || gLogin;
-		return $http.get("https://api.github.com/users/" + gLogin).then(function (res) {
-			return res.data;
-		}, function (err) {
-			alert("Sorry Couldn't get User" + err.statusText);
-		});
-	};
-	OctoApi.prototype.gitReposFollowers = function (user) {
-		return $q.all([$http.get("https://api.github.com/users/" + user.login + "/repos"), $http.get("https://api.github.com/users/" + user.login + "/following"), $http.get("https://api.github.com/users/" + user.login + "/followers")]).then(function (results) {
-			user.reposArray = results[0].data;
-			user.followersArray = results[1].data;
-			user.followingArray = results[2].data;
-			return user;
-		}, function (err) {
-			alert("Sorry " + err.data.message);
 		});
 	};
 	return svc;

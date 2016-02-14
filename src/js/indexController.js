@@ -3,7 +3,7 @@ app.controller('indexController', [  "$scope","$mdSidenav", "$window", '$routePa
 	
 	$scope.octoService = octoService;
 	$scope.od = octoService;
-	$scope.client = octoService.getClient()	;
+	$scope.client = octoService.clientGetter()	;
 	$scope.toggleLink = function () {
 		$scope.linkBool = ($scope.linkBool)? false: true;
 	};
