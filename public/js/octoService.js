@@ -3,16 +3,16 @@
 app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$resource', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout", function ($window, $q, $document, $routeParams, $resource, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout) {
 
 	// initializing
-	var service = this; // just an alias
-	service.signInBtn = "Sign In"; // text of the sign in button
-	service.getSignInBtn = function () {
-		return service.signInBtn;
+	var svc = this;
+	svc.signInBtn = "Sign In"; // text of the sign in button
+	svc.getSignInBtn = function () {
+		return svc.signInBtn;
 	};
-	service.showSaveBtn = false; // orange "Update Profile" Button
-	service.cachedUsers = {}; // initializing other Users
-	service.inlineElem = []; // array of inline elements that are dirty
-	service.organizations = {};
-	service.downloadVcard = function (filename, text) {
+	svc.showSaveBtn = false; // orange "Update Profile" Button
+	svc.cachedUsers = {}; // initializing other Users
+	svc.inlineElem = []; // array of inline elements that are dirty
+	svc.organizations = {};
+	svc.downloadVcard = function (filename, text) {
 		var elem = document.createElement('a');
 		elem.setAttribute('href', 'data:text/vcard;charset=utf-8,' + encodeURIComponent(text));
 		elem.setAttribute('download', filename);
@@ -22,7 +22,7 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 		document.body.removeChild(elem);
 	};
 	// function to update each element's css properties and values
-	service.foreachElement = function (array, value, prop) {
+	svc.foreachElement = function (array, value, prop) {
 		prop = prop || "color";
 		array.forEach(function (el) {
 			el.css(prop, value);
@@ -31,16 +31,16 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 
 	// $resource Creates is a class with ajax methods
 	var OctoApi = $resource('/api/users/:login', { login: '@login' }, {
-		getMe: { method: 'GET', url: "api/me" },
-		updateMe: { method: 'POST', url: "api/me" },
+		getClient: { method: 'GET', url: "api/me" },
+		updateClient: { method: 'POST', url: "api/me" },
 		search: { method: 'GET', url: "api/users", isArray: true },
 		check: { method: 'GET', url: "api/users/:userParam", params: { userParam: "@login" }, isArray: true },
 		searchGit: { method: 'GET', url: "https://api.github.com/search/users", params: { userParam: "@login" } }
 	});
 
-	service.getCard = function (user) {
+	svc.getCard = function (user) {
 		$http.post('/getCard', user).then(function (response) {
-			service.downloadVcard(user.login + ".vcf", response.data);
+			svc.downloadVcard(user.login + ".vcf", response.data);
 		}, function (ifErr) {
 			alert("Sorry. Error Downloading Contact File \n " + ifErr.data);
 		});
@@ -48,78 +48,78 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 	// Get 20 Users Skip 1
 	OctoApi.search({ limit: 20, skip: 1 }, function (data) {
 		data.forEach(function (el) {
-			service.cachedUsers[el.login] = el;
+			svc.cachedUsers[el.login] = el;
 		});
 	});
 
-	service.getOrganizations = function (str) {
+	svc.getOrganizations = function (str) {
 		OctoApi.search({ organizations: str }, function (data) {
 			var org = str;
-			service.organizations[org] = {};
+			svc.organizations[org] = {};
 			data.forEach(function (el) {
-				service.organizations[org][el.login] = el;
+				svc.organizations[org][el.login] = el;
 			});
 		});
 	};
-	service.getOrganizations("RefactorU");
+	svc.getOrganizations("RefactorU");
 
-	// Check if Client is Logged in using GET . service.client is an instance of OctoApi
-	service.client = OctoApi.getMe(function () {
-		// service.client.error = "not logged in" || service.client.login
-		service.client.isLoggedIn = service.client.error ? false : true; // If not loggedIn then service.client.error = "not logged in"
-		service.signInBtn = service.client.isLoggedIn ? "Sign out" : "Sign In";
+	// Check if Client is Logged in using GET . svc.client is an instance of OctoApi
+	svc.client = OctoApi.getClient(function () {
+		// svc.client.error = "not logged in" || svc.client.login
+		svc.client.isLoggedIn = svc.client.error ? false : true; // If not loggedIn then svc.client.error = "not logged in"
+		svc.signInBtn = svc.client.isLoggedIn ? "Sign out" : "Sign In";
 		// If client is logged and doesn't have repos||followers then fetch github
 		// BUG : followers and repos wont get updated ever
-		if (service.client.error) {
+		if (svc.client.error) {
 			return;
 		}
-		service.client.repoUpdate = service.client.reposArray.length !== service.client.public_repos;
-		service.client.followerUpdate = service.client.followersArray.length !== service.client.followers;
-		if (service.client.followerUpdate || service.client.repoUpdate) {
-			service.client.gitReposFollowers();
+		svc.client.repoUpdate = svc.client.reposArray.length !== svc.client.public_repos;
+		svc.client.followerUpdate = svc.client.followersArray.length !== svc.client.followers;
+		if (svc.client.followerUpdate || svc.client.repoUpdate) {
+			svc.client.gitReposFollowers();
 		}
 	});
 
-	service.getClient = function () {
-		return service.client;
+	svc.getClient = function () {
+		return svc.client;
 	};
 
-	// POST method.  Reminder: service.client is an instance of OctoApi
-	service.updateClient = function (form) {
-		service.foreachElement(service.inlineElem, "#79E1FF"); // change to blue while POSTing
+	// POST method.  Reminder: svc.client is an instance of OctoApi
+	svc.updateClient = function (form) {
+		svc.foreachElement(svc.inlineElem, "#79E1FF"); // change to blue while POSTing
 		if ($location.path() !== "/" && $location.path() !== "/account") {
 			return;
 		} // only update if at home or account page uri
-		service.client.$updateMe(function (response) {
-			// Post Method . Sends service.client
-			service.client.isLoggedIn = service.client.error ? false : true; //
+		svc.client.$updateClient(function (response) {
+			// Post Method . Sends svc.client
+			svc.client.isLoggedIn = svc.client.error ? false : true; //
 			if (response.error) {
 				// incase of failure. Like if there a duplicate
-				service.foreachElement(service.inlineElem, "#FF3838"); // change color to red if erro
+				svc.foreachElement(svc.inlineElem, "#FF3838"); // change color to red if erro
 				alert("Sorry Something went wrong. Please Try again in a few minutes.");
 			} else {
-				form.$setPristine();
-				service.showSaveBtn = false; // orange "Update Profile" Button
-				service.foreachElement(service.inlineElem, "#333333"); // change back to black if success
+				svc.showSaveBtn = false; // orange "Update Profile" Button
+				svc.foreachElement(svc.inlineElem, "#333333"); // change back to black if success
+				// form.$setPristine();
 			}
 		});
 	};
 
 	// add repos and followers properties to the UserObj since the regular api doesn't give them by default
 	// BUG : Too much data is being Sent to server and saved. REPOS are heavy and duplicated info
-	// service.getFollowersAndRepos = (userObj) => {
+	// svc.getFollowersAndRepos = (userObj) => {
 	// 	userObj.reposArray =OctoApi.gitRepos({userParam:userObj.login},function (data) {
 	// 		userObj.followersArray = OctoApi.gitFollowers({userParam:userObj.login},function (data) {
 	// 			userObj.followingArray = OctoApi.gitFollowing({userParam:userObj.login},function (data,headers) {
-	// 				service.client.xRatelimitLimit = headers()["x-ratelimit-limit"];
-	// 				service.client.xRatelimitRemaining = headers()["x-ratelimit-remaining"];
-	// 				service.client.xRatelimitReset = headers()["x-ratelimit-reset"];
-	// 				service.client.lastModified = headers()["last-modified"];
-	// 				service.client.isLoggedIn = (service.client.error)? false : true;//
-	// 				if (service.client.isLoggedIn){
+	// 				svc.client.xRatelimitLimit = headers()["x-ratelimit-limit"];
+	// 				svc.client.xRatelimitRemaining = headers()["x-ratelimit-remaining"];
+	// 				svc.client.xRatelimitReset = headers()["x-ratelimit-reset"];
+	// 				svc.client.lastModified = headers()["last-modified"];
+	// 				svc.client.isLoggedIn = (svc.client.error)? false : true;//
+	// 				if (svc.client.isLoggedIn){
 	// 					userObj.$save({login:userObj.login},function (returnData) {});
-	// 					service.client.$updateMe (function  (da) {
-	// 						service.client.isLoggedIn = (service.client.error)? false : true;//
+	// 					svc.client.$updateClient(function  (da) {
+	// 						svc.client.isLoggedIn = (svc.client.error)? false : true;//
 	// 					});
 	// 				}
 	// 			});
@@ -128,32 +128,34 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 	// };
 
 	// getOtherUsers is for retrieving another users that are not the client profile
-	service.getOtherUsers = function (userInput) {
-		var ghUser = userInput || $routeParams.user; // ghUser is the gitHub login name
-		var cacheAlias = service.cachedUsers; // give cachedUsers an alias
+	svc.getOtherUsers = function (userInput) {
+		var gLogin = userInput || $routeParams.user; // gLogin is the gitHub login name
+		var cacheAlias = svc.cachedUsers; // give cachedUsers an alias
 		// if user is already cached then exit
-		if (cacheAlias[ghUser]) {
-			if (cacheAlias[ghUser].reposArray === null || cacheAlias[ghUser].followersArray === null) {
+		if (cacheAlias[gLogin]) {
+			if (cacheAlias[gLogin].reposArray === null || cacheAlias[gLogin].followersArray === null) {
 				// Temporary fix for mongo performance
-				cacheAlias[ghUser].gitReposFollowers();
+				cacheAlias[gLogin].gitReposFollowers();
+				// svc.getFollowersAndRepos(cacheAlias[gLogin]);
 			}
 			return;
 		}
-		OctoApi.check({ userParam: ghUser }, function (data, responseHeaders) {
+		OctoApi.check({ userParam: gLogin }, function (data, responseHeaders) {
 			if (data.length) {
 				// If user Exist.
-				cacheAlias[ghUser] = data[0];
+				cacheAlias[gLogin] = data[0];
 			} else {
-				cacheAlias[ghUser] = new OctoApi();
-				cacheAlias[ghUser].gitUser(ghUser).then(cacheAlias[ghUser].gitReposFollowers).then(function (data) {
-					_.extend(cacheAlias[ghUser], data);
+				cacheAlias[gLogin] = new OctoApi();
+				cacheAlias[gLogin].gitUser(gLogin).then(cacheAlias[gLogin].gitReposFollowers).then(function (data) {
+					_.extend(cacheAlias[gLogin], data);
+					console.log(cacheAlias[gLogin]);
 				});
 			}
 		});
 	};
-	OctoApi.prototype.gitUser = function (ghUser) {
-		var login = this.login || ghUser;
-		return $http.get("https://api.github.com/users/" + ghUser).then(function (res) {
+	OctoApi.prototype.gitUser = function (gLogin) {
+		var login = this.login || gLogin;
+		return $http.get("https://api.github.com/users/" + gLogin).then(function (res) {
 			return res.data;
 		}, function (err) {
 			alert("Sorry Couldn't get User" + err.statusText);
@@ -169,5 +171,5 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 			alert("Sorry " + err.data.message);
 		});
 	};
-	return service;
+	return svc;
 }]);
