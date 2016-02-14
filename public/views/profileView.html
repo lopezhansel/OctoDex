@@ -5,7 +5,7 @@
 
 <md-tabs md-dynamic-height md-border-bottom ng-if="od.client.isLoggedIn  ||  isAtHome()">
 
-  <md-tab label="{{::user.login}}">
+  <md-tab label="{{::user.login || ghUser}}">
     <md-content od-card
         ng-if="od.client.isLoggedIn  ||  isAtHome()"
         class="md-padding card-background main-md-content" layout="column"  layout-align="center center">

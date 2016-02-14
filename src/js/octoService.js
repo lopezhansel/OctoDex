@@ -108,9 +108,10 @@ app.service('octoService', ['$window','$q','$document','$routeParams','$resource
 		};
 
 		// POST method.  Reminder: svc.client is an instance of OctoApi
-		svc.updateClient = function (form) {
+		svc.updateClient = function () {
 			svc.foreachElement(svc.inlineElem, "#79E1FF"); // change to blue while POSTing
 			if (($location.path() !== "/") && ($location.path() !== "/account")){ return; } // only update if at home or account page uri
+
 			svc.client.$updateClient(function (response) { // Post Method . Sends svc.client
 				svc.client.isLoggedIn = (svc.client.error)? false : true;// 
 				if (response.error){ // incase of failure. Like if there a duplicate 
@@ -119,8 +120,8 @@ app.service('octoService', ['$window','$q','$document','$routeParams','$resource
 				} else{
 					svc.showSaveBtn = false; // orange "Update Profile" Button
 					svc.foreachElement(svc.inlineElem, "#333333"); // change back to black if success
-					// form.$setPristine();
 				}
+
 			});
 		};
 
@@ -134,7 +135,6 @@ app.service('octoService', ['$window','$q','$document','$routeParams','$resource
 				if ((cacheAlias[gLogin].reposArray === null) || (cacheAlias[gLogin].followersArray === null) ){
 					// Temporary fix for mongo performance. Retrieving RefactorU Student data used to be really heavy.
 					cacheAlias[gLogin].gitReposFollowers();
-					// svc.getFollowersAndRepos(cacheAlias[gLogin]);
 				}
 				return; 
 			} 
@@ -146,7 +146,7 @@ app.service('octoService', ['$window','$q','$document','$routeParams','$resource
 					cacheAlias[gLogin].gitUser(gLogin)
 					.then(cacheAlias[gLogin].gitReposFollowers)
 					.then(function (data) {
-						_.extend(cacheAlias[gLogin],data);
+						_.assignIn(cacheAlias[gLogin],data);
 						console.log(cacheAlias[gLogin]);
 					});
 				}				
