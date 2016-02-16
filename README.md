@@ -20,7 +20,6 @@ Easily create and share vCards using your Github information.
 
 ## To-Do List
 - [ ] add css to od-readme directive 
-- [ ] Let user know if profile is an octodex user or not 
 - [ ] Add Repo Project View
 - [ ] Upload Image to Node server
 - [ ] Add Organization/Group  View
@@ -30,7 +29,8 @@ Easily create and share vCards using your Github information.
 - [ ] Show random OctoDex Users at home page. 
 - [ ] Comment more code 
 - [ ] Make Server even more restful 
-- [x] Fixed service.client.isLoggedIn getting overwritten [](https://github.com/lopezhansel/OctoDex/commit/)
+- [x] Let user know if profile is an octodex user or not [](https://github.com/lopezhansel/OctoDex/commit/)
+- [x] Fixed service.client.isLoggedIn getting overwritten [f2a3bde](https://github.com/lopezhansel/OctoDex/commit/f2a3bde)
 - [x] add loading animation when loading user in odCard directive [94eb646](https://github.com/lopezhansel/OctoDex/commit/94eb646)
 - [x] Save github response headers into mongo [1d28b7c](https://github.com/lopezhansel/OctoDex/commit/1d28b7c) [6981285](https://github.com/lopezhansel/OctoDex/commit/6981285) 
 - [x] Make jobTitle editable on od-Card [1d28b7c](https://github.com/lopezhansel/OctoDex/commit/1d28b7c) 

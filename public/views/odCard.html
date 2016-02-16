@@ -11,7 +11,8 @@
 			<div layout="column" layout-padding layout-align="start start" flex="50">
 				<div>
 					<span flex inline value="user.name" key="name" class="md-display-2 display-name inline"></span>
-					<span flex class="md-display-1 display-name inline">({{user.login}})</span>
+					<span flex class="md-display-1 display-name inline">({{user.login}})</span> 
+					<span ng-if="::user._id"><i class="material-icons teal">verified_user</i></span>
 				</div>
 				<span inline value="user.jobTitle" key="jobTitle" class="md-display-1 display-name">{{user.jobTitle || "Web Master"}} </span>
 				<div class="md-title" layout layout-wrap> 
