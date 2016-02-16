@@ -1,15 +1,24 @@
 var User = require("../models/userModel");
+var multipart = require('connect-multiparty');
 var retrnNDel =  (obj,str) => {
 	var output = obj[str];
 	delete obj[str];
 	return output;
 };
 module.exports = (app, passport) => {
+	app.use(multipart({
+	    uploadDir: "./uploads"
+	}));
+
 
 	app.get('/', (req, res) => {
 		res.sendFile('index.html', {root: './public/views'});
 	});
 
+	app.post('/upload/', function (req, res, next) {
+		res.send({message:"ok"});
+	});
+	
 	app.get('/api/me', ensureAuthenticatedAjax,  (req,res) => {
 		User.findById(req.user._id, (err, user) => {
 			if(err) { res.send({ error: 'Sorry something went wrong' });}
