@@ -4,6 +4,7 @@ app.controller('groupController',
 	
 	var group = $routeParams.group; // just an alias
 	octoService.getOrganizations(group); // Fetch profile
+	$scope.selectGroup = group;
 
 }])
 .controller('accountController', 

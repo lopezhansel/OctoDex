@@ -21,9 +21,9 @@ Easily create and share vCards using your Github information.
 ## To-Do List
 - [ ] add css to od-readme directive 
 - [ ] Add Repo Project View
-- [ ] Upload Image to Node server
-- [ ] Add Organization/Group  View
-- [ ] Use Ng-file Upload
+- [x] Upload Image to Node server
+- [x] Add Organization/Group  View
+- [x] Use Ng-file Upload
 - [ ] BUG: If POST timeout css color wont change 
 - [ ] Fix: "UPDATE PROFILE" button showing up everywhere 
 - [ ] Show random OctoDex Users at home page. 
