@@ -81,9 +81,20 @@ app.service('octoService', ['$window','$q','$document','$routeParams','$resource
 
 		svc.getOrganizations = function (orgStr) {
 			OctoApi.search({organizations: orgStr},function (data) {
+				if (!data.length){
+					OctoApi.prototype.gitOrg(orgStr);
+				}
 				svc.organizations[orgStr] = {};
 				data.forEach(function (el) {
 					svc.organizations[orgStr][el.login] = el;
+				});
+			});
+		};
+		OctoApi.prototype.gitOrg = function (str) {
+			$http.get("https://api.github.com/orgs/" +str+ "/members").then(function (data) {
+				svc.organizations[str] = {};
+				data.forEach(function (el) {
+					svc.organizations[str][el.login] = el;
 				});
 			});
 		};
