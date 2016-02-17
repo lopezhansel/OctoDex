@@ -15,8 +15,8 @@ module.exports = (app, passport) => {
 		res.sendFile('index.html', {root: './public/views'});
 	});
 
-	app.post('/upload/', function (req, res, next) {
-		res.send({message:"ok"});
+	app.post('/upload/', ensureAuthenticated , (req, res, next) => {
+		res.send({message:"file received"});
 	});
 	
 	app.get('/api/me', ensureAuthenticatedAjax,  (req,res) => {

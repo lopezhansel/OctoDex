@@ -75,9 +75,11 @@
 		</div>
 	</md-content>
 </div>
-<md-button class="md-raised md-primary" ngf-select="upload($files)" ngf-multiple="true" flex-gt-sm>
+
+<md-button ng-if="od.client.isLoggedIn" class="md-raised md-primary" ngf-select="upload($files)" ngf-multiple="true" flex-gt-sm>
 	Upload a picture
 </md-button>
+
 <div layout-padding>
 	<md-button ng-show="userForm.$dirty" 
 		type="submit"
