@@ -94,11 +94,6 @@ var dependencies = [
   'underscore'
 ];
 
-/*
- |--------------------------------------------------------------------------
- | Combine all JS libraries into a single file for fewer HTTP requests.
- |--------------------------------------------------------------------------
- */
 gulp.task('vendor', function() {
   return gulp.src([
     'bower_components/jquery/dist/jquery.js',
@@ -107,14 +102,9 @@ gulp.task('vendor', function() {
     'bower_components/toastr/toastr.js'
   ]).pipe(concat('vendor.js'))
     .pipe(gulpif(production, uglify({ mangle: false })))
-    .pipe(gulp.dest('public/js/react'));
+    .pipe(gulp.dest('public/react/js'));
 });
 
-/*
- |--------------------------------------------------------------------------
- | Compile third-party dependencies separately for faster performance.
- |--------------------------------------------------------------------------
- */
 gulp.task('browserify-vendor', function() {
   return browserify()
     .require(dependencies)
@@ -122,16 +112,11 @@ gulp.task('browserify-vendor', function() {
     .pipe(source('vendor.bundle.js'))
     .pipe(buffer())
     .pipe(gulpif(production, uglify({ mangle: false })))
-    .pipe(gulp.dest('public/js/react'));
+    .pipe(gulp.dest('public/react/js'));
 });
 
-/*
- |--------------------------------------------------------------------------
- | Compile only project files, excluding all third-party dependencies.
- |--------------------------------------------------------------------------
- */
 gulp.task('browserify', ['browserify-vendor'], function() {
-  return browserify({ entries: 'src/app/main.js', debug: true })
+  return browserify({ entries: 'src/react/js/app/main.js', debug: true })
     .external(dependencies)
     .transform(babelify, { presets: ['es2015', 'react'] })
     .bundle()
@@ -140,16 +125,11 @@ gulp.task('browserify', ['browserify-vendor'], function() {
     .pipe(sourcemaps.init({ loadMaps: true }))
     .pipe(gulpif(production, uglify({ mangle: false })))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('public/js/react'));
+    .pipe(gulp.dest('public/react/js'));
 });
 
-/*
- |--------------------------------------------------------------------------
- | Same as browserify task, but will also watch for changes and re-compile.
- |--------------------------------------------------------------------------
- */
 gulp.task('browserify-watch', ['browserify-vendor'], function() {
-  var bundler = watchify(browserify({ entries: 'src/app/main.js', debug: true }, watchify.args));
+  var bundler = watchify(browserify({ entries: 'src/react/js/app/main.js', debug: true }, watchify.args));
   bundler.external(dependencies);
   bundler.transform(babelify, { presets: ['es2015', 'react'] });
   bundler.on('update', rebundle);
@@ -168,7 +148,7 @@ gulp.task('browserify-watch', ['browserify-vendor'], function() {
       .pipe(buffer())
       .pipe(sourcemaps.init({ loadMaps: true }))
       .pipe(sourcemaps.write('.'))
-      .pipe(gulp.dest('public/js/react/'));
+      .pipe(gulp.dest('public/react/js/'));
   }
 });
 
