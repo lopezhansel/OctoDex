@@ -27,6 +27,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require('./controllers/routeCtrl.js')(app, passport);
+require('./controllers/reactCtrl.js')(app, passport);
 
 
 
