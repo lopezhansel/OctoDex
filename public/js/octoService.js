@@ -29,19 +29,17 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 		});
 	};
 
-	var q = "?client_id=f12b9415cd74e699c728&client_secret=b3bebec95ab267dde9d79fb0debd72d7e3b8dc52";
-
 	// $resource Creates is a class with ajax methods
 	var OctoApi = $resource('/api/users/:login', { login: '@login' }, {
 		getClient: { method: 'GET', url: "api/me" },
 		updateClient: { method: 'POST', url: "api/me" },
 		search: { method: 'GET', url: "api/users", isArray: true },
 		check: { method: 'GET', url: "api/users/:userParam", params: { userParam: "@login" }, isArray: true },
-		searchGit: { method: 'GET', url: "https://api.github.com/search/users" + q, params: { userParam: "@login" } }
+		searchGit: { method: 'GET', url: "https://api.github.com/search/users", params: { userParam: "@login" } }
 	});
 	OctoApi.prototype.gitUser = function (gLogin) {
 		var login = this.login || gLogin;
-		return $http.get("https://api.github.com/users/" + gLogin + q).then(function (res) {
+		return $http.get("https://api.github.com/users/" + gLogin).then(function (res) {
 			return res.data;
 		}, function (err) {
 			alert("Sorry Couldn't get User" + err.statusText);
@@ -50,7 +48,7 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 	OctoApi.prototype.gitReposFollowers = function (user) {
 		var that = user || this;
 		// Check Etag before going to github
-		return $q.all([$http.get("https://api.github.com/users/" + that.login + "/repos" + q), $http.get("https://api.github.com/users/" + that.login + "/following" + q), $http.get("https://api.github.com/users/" + that.login + "/followers" + q)]).then(function (results) {
+		return $q.all([$http.get("https://api.github.com/users/" + that.login + "/repos"), $http.get("https://api.github.com/users/" + that.login + "/following"), $http.get("https://api.github.com/users/" + that.login + "/followers")]).then(function (results) {
 			that.reposArray = results[0].data;
 			that.followingArray = results[1].data;
 			that.followersArray = results[2].data;
@@ -77,9 +75,21 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 
 	svc.getOrganizations = function (orgStr) {
 		OctoApi.search({ organizations: orgStr }, function (data) {
+			if (!data.length) {
+				OctoApi.prototype.gitOrg(orgStr);
+			}
 			svc.organizations[orgStr] = {};
 			data.forEach(function (el) {
 				svc.organizations[orgStr][el.login] = el;
+			});
+		});
+	};
+	OctoApi.prototype.gitOrg = function (str) {
+		$http.get("https://api.github.com/orgs/" + str + "/members").then(function (res) {
+			svc.organizations[str] = {};
+			res.data.forEach(function (el) {
+				console.log(el.login);
+				svc.organizations[str][el.login] = el;
 			});
 		});
 	};

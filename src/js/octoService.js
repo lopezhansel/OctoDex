@@ -91,9 +91,9 @@ app.service('octoService', ['$window','$q','$document','$routeParams','$resource
 			});
 		};
 		OctoApi.prototype.gitOrg = function (str) {
-			$http.get("https://api.github.com/orgs/" +str+ "/members").then(function (data) {
+			$http.get("https://api.github.com/orgs/" +str+ "/members").then(function (res) {
 				svc.organizations[str] = {};
-				data.forEach(function (el) {
+				res.data.forEach(function (el) {
 					svc.organizations[str][el.login] = el;
 				});
 			});
