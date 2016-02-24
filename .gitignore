@@ -3,3 +3,4 @@
 *.sublime-project
 config/secrets.js
 **/uploads
+**/bower_components

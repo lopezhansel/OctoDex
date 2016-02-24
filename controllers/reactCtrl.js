@@ -14,6 +14,9 @@ var React = require('react');
 var ReactDOM = require('react-dom/server');
 var Router = require('react-router');
 
+var User = require("../models/userModel");
+
+
 module.exports = (app, passport) => {
 
 	app.get('/react', (req, res) => {
