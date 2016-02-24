@@ -1,7 +1,7 @@
 'use strict';
 const gulp = require('gulp');
 const babel = require('gulp-babel');
-// const concat = require('gulp-concat');
+const concat = require('gulp-concat');
 const plumber = require('gulp-plumber');
 const browserSync = require('browser-sync');
 const nodemon = require('gulp-nodemon');
@@ -15,8 +15,6 @@ const paths = {
   mdView  : './public/views/odReadme.html'
 };
 
-
-gulp.task('default',['browser-sync','javascript','watch']);
 
 gulp.task('browser-sync', ['nodemon'], () => {
 	browserSync.init(null, {
@@ -75,8 +73,6 @@ gulp.task('watch', () => {
 
 var gutil = require('gulp-util');
 var gulpif = require('gulp-if');
-var concat = require('gulp-concat');
-var plumber = require('gulp-plumber');
 var buffer = require('vinyl-buffer');
 var source = require('vinyl-source-stream');
 var babelify = require('babelify');
@@ -154,5 +150,5 @@ gulp.task('browserify-watch', ['browserify-vendor'], function() {
 
 
 
-gulp.task('default', [ 'vendor', 'browserify-watch']);
+gulp.task('default', [ 'vendor', 'browserify-watch','browser-sync','javascript','watch']);
 gulp.task('build', [ 'vendor', 'browserify']);

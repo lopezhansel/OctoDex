@@ -20,7 +20,7 @@ var User = require("../models/userModel");
 module.exports = (app, passport) => {
 
 	app.get('/react', (req, res) => {
-		res.sendFile('index.html', {root: './public/views'});
+		res.sendFile('index.html', {root: './public/react/views'});
 	});
 	
 };

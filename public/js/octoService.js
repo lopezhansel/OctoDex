@@ -88,7 +88,6 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 		$http.get("https://api.github.com/orgs/" + str + "/members").then(function (res) {
 			svc.organizations[str] = {};
 			res.data.forEach(function (el) {
-				console.log(el.login);
 				svc.organizations[str][el.login] = el;
 			});
 		});
