@@ -12,7 +12,7 @@ const paths = {
   jsSrc   : './src/js/**/*.js',
   jsBuild : './public//js',
   readme  : 'README.md',
-  mdView  : './public/views/readme.html'
+  mdView  : './public/views/odReadme.html'
 };
 
 
