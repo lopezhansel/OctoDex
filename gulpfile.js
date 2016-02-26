@@ -8,6 +8,25 @@ const nodemon = require('gulp-nodemon');
 const markdown = require('./config/markdownGulp');
 const uglify = require('gulp-uglify');
 
+var gutil = require('gulp-util');
+var gulpif = require('gulp-if');
+var buffer = require('vinyl-buffer');
+var source = require('vinyl-source-stream');
+var babelify = require('babelify');
+var browserify = require('browserify');
+var watchify = require('watchify');
+var sourcemaps = require('gulp-sourcemaps');
+
+var production = process.env.NODE_ENV === 'production';
+
+var dependencies = [
+  'alt',
+  'react',
+  'react-dom',
+  'react-router',
+  'underscore'
+];
+
 const paths = {
   jsSrc   : './src/js/**/*.js',
   jsBuild : './public//js',
@@ -17,9 +36,9 @@ const paths = {
 
 
 gulp.task('browser-sync', ['nodemon'], () => {
-	browserSync.init(null, {
+  browserSync.init(null, {
         injectChanges: true,
-		proxy: {
+    proxy: {
             target: "localhost:2000",
             ws: true
         },
@@ -27,22 +46,22 @@ gulp.task('browser-sync', ['nodemon'], () => {
         browser: "google chrome",
         port: 2001,
         reloadDelay: 500
-	});
+  });
 });
 
 gulp.task('nodemon', (cb) => {
-	var started = false;
-	return nodemon({
-		script: 'server.js',
+  var started = false;
+  return nodemon({
+    script: 'server.js',
         ignore: ["public/**/*.*", '/gulpfile.js', "src/**/*.*"]
-	}).on('start',  () =>{
-		// to avoid nodemon being started multiple times
-		if (!started) {
-			cb();
-			started = true; 
-		} 
-	});
-});	
+  }).on('start',  () =>{
+    // to avoid nodemon being started multiple times
+    if (!started) {
+      cb();
+      started = true; 
+    } 
+  });
+}); 
 
 gulp.task('javascript',()=>{
     console.log("javascript")
@@ -69,26 +88,6 @@ gulp.task('watch', () => {
   gulp.watch(paths.readme, ['markdown']);
 });
 
-
-
-var gutil = require('gulp-util');
-var gulpif = require('gulp-if');
-var buffer = require('vinyl-buffer');
-var source = require('vinyl-source-stream');
-var babelify = require('babelify');
-var browserify = require('browserify');
-var watchify = require('watchify');
-var sourcemaps = require('gulp-sourcemaps');
-
-var production = process.env.NODE_ENV === 'production';
-
-var dependencies = [
-  'alt',
-  'react',
-  'react-dom',
-  'react-router',
-  'underscore'
-];
 
 gulp.task('vendor', function() {
   return gulp.src([
@@ -147,8 +146,6 @@ gulp.task('browserify-watch', ['browserify-vendor'], function() {
       .pipe(gulp.dest('public/react/js/'));
   }
 });
-
-
 
 gulp.task('default', [ 'vendor', 'browserify-watch','browser-sync','javascript','watch']);
 gulp.task('build', [ 'vendor', 'browserify']);
