@@ -1,7 +1,6 @@
-app.service('octoService', ['$window','$q','$document','$routeParams','$resource', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout",
-	function($window,$q,$document,$routeParams,$resource, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout) {
-		
-        var signInBtnTxt = "Sign In", showSaveBtn = false, cachedUsers = {}, dirtyInlineElem = [], organizations = {};
+app.service('octoService', ['$window','$q','$document','$routeParams','$resource', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout", function ($window,$q,$document,$routeParams,$resource, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout)  {
+	
+	    var signInBtnTxt = "Sign In", showSaveBtn = false, cachedUsers = {}, dirtyInlineElem = [], organizations = {};
 
 		// $resource Creates is a class with ajax methods
 		var OctoApi = $resource('/api/users/:login', {login: '@login'}, {
@@ -12,36 +11,33 @@ app.service('octoService', ['$window','$q','$document','$routeParams','$resource
 			searchGit:    {method:'GET', url:"https://api.github.com/search/users",params:{userParam:"@login"}}
 		}); 	
 		OctoApi.prototype.gitUser = function  ()  {
+			// the context of this is carried over by =>
 			return $http.get("https://api.github.com/users/"+ this.login)
 				.then( res => _.assignIn(this,res.data) , ifErrFn);
 		};
 
-		OctoApi.prototype.gitReposFollowers =  (userObj) => {
-			var user = userObj || this;
+		OctoApi.prototype.gitReposFollowers =  function (userObj) {
 			// Check Etag before going to github
 			return $q.all([
-				$http.get(`https://api.github.com/users/${user.login}/repos`),
-				$http.get(`https://api.github.com/users/${user.login}/following`),
-				$http.get(`https://api.github.com/users/${user.login}/followers`)
+				$http.get(`https://api.github.com/users/${this.login}/repos`),
+				$http.get(`https://api.github.com/users/${this.login}/following`),
+				$http.get(`https://api.github.com/users/${this.login}/followers`)
 			]).then( results => {
-				user.reposArray     = results[0].data;
-				user.followingArray = results[1].data;
-				user.followersArray = results[2].data;
-				return user;
+				this.reposArray     = results[0].data;
+				this.followingArray = results[1].data;
+				this.followersArray = results[2].data;
+				return this;
 			}, ifErrFn);
 		};
-		OctoApi.prototype.getCard =  () => {
-			$http.post('/getCard', this).then( response => {
-				downloadVcard(this.login+".vcf",response.data);
-			},ifErrFn);
+		OctoApi.prototype.getCard = function() {
+			$http.post('/getCard', this)// The context of 'this' is carried over with the fat arrow
+				.then(response => downloadVcard(this.login + ".vcf", response.data), ifErrFn);
 		};
 
 		// Get 20 Users Skip 1
-		OctoApi.search({limit: 20, skip: 1 }, data => {
-			data.forEach(el => cachedUsers[el.login] = el);
-		});
+		OctoApi.search({limit: 20, skip: 1 }, arr => arr.forEach(user => cachedUsers[user.login] = user) );
 
-		var getOrganizations = function(orgStr) {
+		var getOrganizations = function (orgStr) {
 			OctoApi.search({organizations: orgStr }, function(data) {
 				if (!data.length) {OctoApi.prototype.gitOrg(orgStr); }
 				organizations[orgStr] = {};
@@ -54,12 +50,10 @@ app.service('octoService', ['$window','$q','$document','$routeParams','$resource
 
 		OctoApi.prototype.gitOrg = function(orgStr) {
 			$http.get(`https://api.github.com/orgs/${orgStr}/members`)
-				.then((res) => {
+				.then( ({data}) => {
 					organizations[orgStr] = {};
-					res.data.forEach((el) => {
-						organizations[orgStr][el.login] = el;
-					});
-				});
+					data.forEach((user) => organizations[orgStr][user.login] = user);
+				},ifErrFn);
 		};
 
 		// Check if Client is Logged in using GET . client is an instance of OctoApi
@@ -101,7 +95,7 @@ app.service('octoService', ['$window','$q','$document','$routeParams','$resource
 
 
 		// getOtherUsers is for retrieving another users that are not the client profile 
-		var getOtherUsers = (userObj) => {
+		var getOtherUsers = function (userObj)  {
 			var login = userObj || $routeParams.user; // login is the gitHub login name
 			// if user is already cached then exit 
 			if (cachedUsers[login]) {
@@ -117,7 +111,8 @@ app.service('octoService', ['$window','$q','$document','$routeParams','$resource
 				}else{
 					cachedUsers[login] = new OctoApi({login});
 					cachedUsers[login].gitUser()
-					.then(cachedUsers[login].gitReposFollowers);				}				
+					.then(user => user.gitReposFollowers());
+				}				
 			});
 		};
 
@@ -128,7 +123,7 @@ app.service('octoService', ['$window','$q','$document','$routeParams','$resource
 		function ifErrFn (errObj){
 			var statusText = (errObj.statusText)? errObj.statusText : " Error";
 			alert(`Sorry something went wrong: ${statusText}`);
-			console.log(data);
+			console.log("Sorry something went wrong:",errObj.data);
 		}
 		function getProp(prop, obj) {
 			return (obj) ? obj[prop] : this[prop];

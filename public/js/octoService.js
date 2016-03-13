@@ -1,7 +1,6 @@
 'use strict';
 
 app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$resource', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout", function ($window, $q, $document, $routeParams, $resource, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout) {
-	var _this2 = this;
 
 	var signInBtnTxt = "Sign In",
 	    showSaveBtn = false,
@@ -20,31 +19,36 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 	OctoApi.prototype.gitUser = function () {
 		var _this = this;
 
+		// the context of this is carried over by =>
 		return $http.get("https://api.github.com/users/" + this.login).then(function (res) {
 			return _.assignIn(_this, res.data);
 		}, ifErrFn);
 	};
 
 	OctoApi.prototype.gitReposFollowers = function (userObj) {
-		var user = userObj || _this2;
+		var _this2 = this;
+
 		// Check Etag before going to github
-		return $q.all([$http.get('https://api.github.com/users/' + user.login + '/repos'), $http.get('https://api.github.com/users/' + user.login + '/following'), $http.get('https://api.github.com/users/' + user.login + '/followers')]).then(function (results) {
-			user.reposArray = results[0].data;
-			user.followingArray = results[1].data;
-			user.followersArray = results[2].data;
-			return user;
+		return $q.all([$http.get('https://api.github.com/users/' + this.login + '/repos'), $http.get('https://api.github.com/users/' + this.login + '/following'), $http.get('https://api.github.com/users/' + this.login + '/followers')]).then(function (results) {
+			_this2.reposArray = results[0].data;
+			_this2.followingArray = results[1].data;
+			_this2.followersArray = results[2].data;
+			return _this2;
 		}, ifErrFn);
 	};
 	OctoApi.prototype.getCard = function () {
-		$http.post('/getCard', _this2).then(function (response) {
-			downloadVcard(_this2.login + ".vcf", response.data);
+		var _this3 = this;
+
+		$http.post('/getCard', this) // The context of 'this' is carried over with the fat arrow
+		.then(function (response) {
+			return downloadVcard(_this3.login + ".vcf", response.data);
 		}, ifErrFn);
 	};
 
 	// Get 20 Users Skip 1
-	OctoApi.search({ limit: 20, skip: 1 }, function (data) {
-		data.forEach(function (el) {
-			return cachedUsers[el.login] = el;
+	OctoApi.search({ limit: 20, skip: 1 }, function (arr) {
+		return arr.forEach(function (user) {
+			return cachedUsers[user.login] = user;
 		});
 	});
 
@@ -62,12 +66,14 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 	getOrganizations("RefactorU");
 
 	OctoApi.prototype.gitOrg = function (orgStr) {
-		$http.get('https://api.github.com/orgs/' + orgStr + '/members').then(function (res) {
+		$http.get('https://api.github.com/orgs/' + orgStr + '/members').then(function (_ref) {
+			var data = _ref.data;
+
 			organizations[orgStr] = {};
-			res.data.forEach(function (el) {
-				organizations[orgStr][el.login] = el;
+			data.forEach(function (user) {
+				return organizations[orgStr][user.login] = user;
 			});
-		});
+		}, ifErrFn);
 	};
 
 	// Check if Client is Logged in using GET . client is an instance of OctoApi
@@ -128,7 +134,9 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 				cachedUsers[login] = userArr[0];
 			} else {
 				cachedUsers[login] = new OctoApi({ login: login });
-				cachedUsers[login].gitUser().then(cachedUsers[login].gitReposFollowers);
+				cachedUsers[login].gitUser().then(function (user) {
+					return user.gitReposFollowers();
+				});
 			}
 		});
 	};
@@ -140,7 +148,7 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 	function ifErrFn(errObj) {
 		var statusText = errObj.statusText ? errObj.statusText : " Error";
 		alert('Sorry something went wrong: ' + statusText);
-		console.log(data);
+		console.log("Sorry something went wrong:", errObj.data);
 	}
 	function getProp(prop, obj) {
 		return obj ? obj[prop] : this[prop];
