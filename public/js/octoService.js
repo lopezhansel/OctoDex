@@ -1,34 +1,17 @@
 'use strict';
 
 app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$resource', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout", function ($window, $q, $document, $routeParams, $resource, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout) {
+	var _this = this;
 
-	// initializing
 	var svc = this;
-	svc.signInBtn = "Sign In"; // text of the sign in button
+	svc.signInBtnTxt = "Sign In"; // text of the sign in button
 	svc.showSaveBtn = false; // orange "Update Profile" Button
 	svc.cachedUsers = {}; // initializing other Users
 	svc.inlineElem = []; // array of inline elements that are dirty
 	svc.organizations = {};
-	svc.getSignInBtn = function () {
-		return svc.signInBtn;
-	};
-	svc.downloadVcard = function (filename, text) {
-		var elem = document.createElement('a');
-		elem.setAttribute('href', 'data:text/vcard;charset=utf-8,' + encodeURIComponent(text));
-		elem.setAttribute('download', filename);
-		elem.style.display = 'none';
-		document.body.appendChild(elem);
-		elem.click();
-		document.body.removeChild(elem);
-	};
-	// function to update each element's css properties and values
-	svc.foreachElement = function (array, value, prop) {
-		prop = prop || "color";
-		array.forEach(function (el) {
-			el.css(prop, value);
-		});
-	};
-
+	svc.getProp = getProp;
+	svc.downloadVcard = downloadVcard;
+	svc.foreachElement = foreachElement;
 	// $resource Creates is a class with ajax methods
 	var OctoApi = $resource('/api/users/:login', { login: '@login' }, {
 		getClient: { method: 'GET', url: "api/me" },
@@ -38,7 +21,7 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 		searchGit: { method: 'GET', url: "https://api.github.com/search/users", params: { userParam: "@login" } }
 	});
 	OctoApi.prototype.gitUser = function (gLogin) {
-		var login = this.login || gLogin;
+		var login = _this.login || gLogin;
 		return $http.get("https://api.github.com/users/" + gLogin).then(function (res) {
 			return res.data;
 		}, function (err) {
@@ -69,7 +52,7 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 	// Get 20 Users Skip 1
 	OctoApi.search({ limit: 20, skip: 1 }, function (data) {
 		data.forEach(function (el) {
-			svc.cachedUsers[el.login] = el;
+			return svc.cachedUsers[el.login] = el;
 		});
 	});
 
@@ -84,21 +67,22 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 			});
 		});
 	};
-	OctoApi.prototype.gitOrg = function (str) {
-		$http.get("https://api.github.com/orgs/" + str + "/members").then(function (res) {
-			svc.organizations[str] = {};
+	svc.getOrganizations("RefactorU");
+	console.log(svc.chachedUsers);
+	OctoApi.prototype.gitOrg = function (orgStr) {
+		$http.get("https://api.github.com/orgs/" + orgStr + "/members").then(function (res) {
+			svc.organizations[orgStr] = {};
 			res.data.forEach(function (el) {
-				svc.organizations[str][el.login] = el;
+				svc.organizations[orgStr][el.login] = el;
 			});
 		});
 	};
-	svc.getOrganizations("RefactorU");
 
 	// Check if Client is Logged in using GET . svc.client is an instance of OctoApi
 	svc.client = OctoApi.getClient(function () {
 		// svc.client.error = "not logged in" || svc.client.login
 		svc.client.isLoggedIn = svc.client.error ? false : true; // If not loggedIn then svc.client.error = "not logged in"
-		svc.signInBtn = svc.client.isLoggedIn ? "Sign out" : "Sign In";
+		svc.signInBtnTxt = svc.client.isLoggedIn ? "Sign out" : "Sign In";
 		// If client is logged and doesn't have repos||followers then fetch github
 		// BUG : followers and repos wont get updated ever
 		if (svc.client.error) {
@@ -137,29 +121,48 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 	};
 
 	// getOtherUsers is for retrieving another users that are not the client profile
-	svc.getOtherUsers = function (userInput) {
-		var gLogin = userInput || $routeParams.user; // gLogin is the gitHub login name
-		var cacheAlias = svc.cachedUsers; // give cachedUsers an alias
+	svc.getOtherUsers = function (userObj) {
+		var login = userObj || $routeParams.user; // login is the gitHub login name
+		var cachedUsers = svc.cachedUsers; // give cachedUsers an alias
 		// if user is already cached then exit
-		if (cacheAlias[gLogin]) {
-			if (cacheAlias[gLogin].reposArray === null || cacheAlias[gLogin].followersArray === null) {
+		if (cachedUsers[login]) {
+			if (cachedUsers[login].reposArray === null || cachedUsers[login].followersArray === null) {
 				// Temporary fix for mongo performance. Retrieving RefactorU Student data used to be really heavy.
-				cacheAlias[gLogin].gitReposFollowers();
+				cachedUsers[login].gitReposFollowers();
 			}
 			return;
 		}
-		OctoApi.check({ userParam: gLogin }, function (data, responseHeaders) {
-			if (data.length) {
+		OctoApi.check({ userParam: login }, function (userArr, responseHeaders) {
+			if (userArr.length) {
 				// If user Exist.
-				cacheAlias[gLogin] = data[0];
+				cachedUsers[login] = userArr[0];
 			} else {
-				cacheAlias[gLogin] = new OctoApi();
-				cacheAlias[gLogin].gitUser(gLogin).then(cacheAlias[gLogin].gitReposFollowers).then(function (data) {
-					_.assignIn(cacheAlias[gLogin], data);
-					console.log(cacheAlias[gLogin]);
+				cachedUsers[login] = new OctoApi();
+				cachedUsers[login].gitUser(login).then(cachedUsers[login].gitReposFollowers).then(function (userArr) {
+					_.assignIn(cachedUsers[login], userArr);
 				});
 			}
 		});
 	};
+
 	return svc;
+	function getProp(prop, obj) {
+		return obj ? obj[prop] : this[prop];
+	}
+	function downloadVcard(filename, text) {
+		var elem = document.createElement('a');
+		elem.setAttribute('href', 'data:text/vcard;charset=utf-8,' + encodeURIComponent(text));
+		elem.setAttribute('download', filename);
+		elem.style.display = 'none';
+		document.body.appendChild(elem);
+		elem.click();
+		document.body.removeChild(elem);
+	}
+	// function to update each element's css properties and values
+	function foreachElement(array, value, prop) {
+		prop = prop || "color";
+		array.forEach(function (el) {
+			el.css(prop, value);
+		});
+	}
 }]);

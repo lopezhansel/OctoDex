@@ -30,7 +30,7 @@
 		</md-button>
 
 		<md-button ng-click="::toggleSidenav('right');logger()" flex="100"  ng-class="{'md-primary':!od.client.isLoggedIn,'md-raised': !od.client.isLoggedIn}">
-			{{od.getSignInBtn()}}
+			{{od.getProp('signInBtnTxt')}}
 			<md-divider></md-divider>
 		</md-button>
 		
