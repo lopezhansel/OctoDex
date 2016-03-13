@@ -1,7 +1,7 @@
 app.service('octoService', ['$window','$q','$document','$routeParams','$resource', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout",
 	function($window,$q,$document,$routeParams,$resource, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout) {
-
-		var signInBtnTxt = "Sign In", showSaveBtn = false, cachedUsers = {}, dirtyInlineElem = [], organizations = {};
+		
+        var signInBtnTxt = "Sign In", showSaveBtn = false, cachedUsers = {}, dirtyInlineElem = [], organizations = {};
 
 		// $resource Creates is a class with ajax methods
 		var OctoApi = $resource('/api/users/:login', {login: '@login'}, {
@@ -11,13 +11,12 @@ app.service('octoService', ['$window','$q','$document','$routeParams','$resource
 			check:        {method:'GET', url:"api/users/:userParam",params:{userParam:"@login"},isArray : true},
 			searchGit:    {method:'GET', url:"https://api.github.com/search/users",params:{userParam:"@login"}}
 		}); 	
-		OctoApi.prototype.gitUser =  (gLogin) => {
-			var login = this.login || gLogin;
-			return $http.get("https://api.github.com/users/"+ gLogin)
-				.then( res => res.data, ifErrFn);
+		OctoApi.prototype.gitUser = function  ()  {
+			return $http.get("https://api.github.com/users/"+ this.login)
+				.then( res => _.assignIn(this,res.data) , ifErrFn);
 		};
 
-		OctoApi.prototype.gitReposFollowers = function (userObj) {
+		OctoApi.prototype.gitReposFollowers =  (userObj) => {
 			var user = userObj || this;
 			// Check Etag before going to github
 			return $q.all([
@@ -116,19 +115,16 @@ app.service('octoService', ['$window','$q','$document','$routeParams','$resource
 				if (userArr.length) { // If user Exist.
 					cachedUsers[login] = userArr[0];
 				}else{
-					cachedUsers[login] = new OctoApi();
-					cachedUsers[login].gitUser(login)
-					.then(cachedUsers[login].gitReposFollowers)
-					.then(function (userArr) {
-						_.assignIn(cachedUsers[login],userArr);
-					});
-				}				
+					cachedUsers[login] = new OctoApi({login});
+					cachedUsers[login].gitUser()
+					.then(cachedUsers[login].gitReposFollowers);				}				
 			});
 		};
 
 		var service = this;
 		service = {signInBtnTxt,cachedUsers,dirtyInlineElem,organizations,getProp,downloadVcard,foreachElement,getOrganizations,client,clientGetter,updateClient,showSaveBtn,getOtherUsers};
 		return service; 
+
 		function ifErrFn (errObj){
 			var statusText = (errObj.statusText)? errObj.statusText : " Error";
 			alert(`Sorry something went wrong: ${statusText}`);

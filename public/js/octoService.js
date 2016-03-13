@@ -1,7 +1,7 @@
 'use strict';
 
 app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$resource', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout", function ($window, $q, $document, $routeParams, $resource, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout) {
-	var _this = this;
+	var _this2 = this;
 
 	var signInBtnTxt = "Sign In",
 	    showSaveBtn = false,
@@ -17,15 +17,16 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 		check: { method: 'GET', url: "api/users/:userParam", params: { userParam: "@login" }, isArray: true },
 		searchGit: { method: 'GET', url: "https://api.github.com/search/users", params: { userParam: "@login" } }
 	});
-	OctoApi.prototype.gitUser = function (gLogin) {
-		var login = _this.login || gLogin;
-		return $http.get("https://api.github.com/users/" + gLogin).then(function (res) {
-			return res.data;
+	OctoApi.prototype.gitUser = function () {
+		var _this = this;
+
+		return $http.get("https://api.github.com/users/" + this.login).then(function (res) {
+			return _.assignIn(_this, res.data);
 		}, ifErrFn);
 	};
 
 	OctoApi.prototype.gitReposFollowers = function (userObj) {
-		var user = userObj || this;
+		var user = userObj || _this2;
 		// Check Etag before going to github
 		return $q.all([$http.get('https://api.github.com/users/' + user.login + '/repos'), $http.get('https://api.github.com/users/' + user.login + '/following'), $http.get('https://api.github.com/users/' + user.login + '/followers')]).then(function (results) {
 			user.reposArray = results[0].data;
@@ -35,8 +36,8 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 		}, ifErrFn);
 	};
 	OctoApi.prototype.getCard = function () {
-		$http.post('/getCard', _this).then(function (response) {
-			downloadVcard(_this.login + ".vcf", response.data);
+		$http.post('/getCard', _this2).then(function (response) {
+			downloadVcard(_this2.login + ".vcf", response.data);
 		}, ifErrFn);
 	};
 
@@ -126,10 +127,8 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 				// If user Exist.
 				cachedUsers[login] = userArr[0];
 			} else {
-				cachedUsers[login] = new OctoApi();
-				cachedUsers[login].gitUser(login).then(cachedUsers[login].gitReposFollowers).then(function (userArr) {
-					_.assignIn(cachedUsers[login], userArr);
-				});
+				cachedUsers[login] = new OctoApi({ login: login });
+				cachedUsers[login].gitUser().then(cachedUsers[login].gitReposFollowers);
 			}
 		});
 	};
@@ -137,6 +136,7 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 	var service = this;
 	service = { signInBtnTxt: signInBtnTxt, cachedUsers: cachedUsers, dirtyInlineElem: dirtyInlineElem, organizations: organizations, getProp: getProp, downloadVcard: downloadVcard, foreachElement: foreachElement, getOrganizations: getOrganizations, client: client, clientGetter: clientGetter, updateClient: updateClient, showSaveBtn: showSaveBtn, getOtherUsers: getOtherUsers };
 	return service;
+
 	function ifErrFn(errObj) {
 		var statusText = errObj.statusText ? errObj.statusText : " Error";
 		alert('Sorry something went wrong: ' + statusText);
