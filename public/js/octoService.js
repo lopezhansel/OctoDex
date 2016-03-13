@@ -21,29 +21,23 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 		var login = _this.login || gLogin;
 		return $http.get("https://api.github.com/users/" + gLogin).then(function (res) {
 			return res.data;
-		}, function (err) {
-			alert("Sorry Couldn't get User" + err.statusText);
-		});
+		}, ifErrFn);
 	};
-	OctoApi.prototype.gitReposFollowers = function (user) {
-		var that = user || this;
+
+	OctoApi.prototype.gitReposFollowers = function (userObj) {
+		var user = userObj || this;
 		// Check Etag before going to github
-		return $q.all([$http.get('https://api.github.com/users/' + that.login + '/repos'), $http.get('https://api.github.com/users/' + that.login + '/following'), $http.get('https://api.github.com/users/' + that.login + '/followers')]).then(function (results) {
-			that.reposArray = results[0].data;
-			that.followingArray = results[1].data;
-			that.followersArray = results[2].data;
-			return that;
-		}, function (err) {
-			alert("Sorry " + err.data.message);
-		});
+		return $q.all([$http.get('https://api.github.com/users/' + user.login + '/repos'), $http.get('https://api.github.com/users/' + user.login + '/following'), $http.get('https://api.github.com/users/' + user.login + '/followers')]).then(function (results) {
+			user.reposArray = results[0].data;
+			user.followingArray = results[1].data;
+			user.followersArray = results[2].data;
+			return user;
+		}, ifErrFn);
 	};
-	OctoApi.prototype.getCard = function (user) {
-		user = user || this;
-		$http.post('/getCard', user).then(function (response) {
-			downloadVcard(user.login + ".vcf", response.data);
-		}, function (ifErr) {
-			alert("Sorry. Error Downloading Contact File \n " + ifErr.data);
-		});
+	OctoApi.prototype.getCard = function () {
+		$http.post('/getCard', _this).then(function (response) {
+			downloadVcard(_this.login + ".vcf", response.data);
+		}, ifErrFn);
 	};
 
 	// Get 20 Users Skip 1
@@ -143,10 +137,15 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 	var service = this;
 	service = { signInBtnTxt: signInBtnTxt, cachedUsers: cachedUsers, dirtyInlineElem: dirtyInlineElem, organizations: organizations, getProp: getProp, downloadVcard: downloadVcard, foreachElement: foreachElement, getOrganizations: getOrganizations, client: client, clientGetter: clientGetter, updateClient: updateClient, showSaveBtn: showSaveBtn, getOtherUsers: getOtherUsers };
 	return service;
-
+	function ifErrFn(errObj) {
+		var statusText = errObj.statusText ? errObj.statusText : " Error";
+		alert('Sorry something went wrong: ' + statusText);
+		console.log(data);
+	}
 	function getProp(prop, obj) {
 		return obj ? obj[prop] : this[prop];
 	}
+
 	function downloadVcard(filename, text) {
 		var elem = document.createElement('a');
 		elem.setAttribute('href', 'data:text/vcard;charset=utf-8,' + encodeURIComponent(text));

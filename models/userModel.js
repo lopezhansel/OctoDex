@@ -6,17 +6,17 @@ var userSchema = mongoose.Schema({
     name                : {type: String},
     email               : {type: String, required: true},
     gitToken            : {type: String, required: true},
-    githubId            : {type: String, required: true}, // Bug :  Number or String // id instead 
+    githubId            : {type: String, required: true}, 
     avatar_url          : {type: String},
     company             : {type: String},
-    phone               : {type: String}, // Created by octoDex
+    phone               : {type: String}, 
     blog                : {type: String},
     location            : {type: String},
     hireable            : {type: String},
     bio                 : {type: String},
     created_at          : {type: String},  
     updated_at          : {type: String}, 
-    profileUrl          : {type: String}, // html_url instead
+    profileUrl          : {type: String}, 
     followersArray      : {type: Array},
     followers           : {type: Number},
     reposArray          : {type: Array},
