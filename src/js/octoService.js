@@ -1,19 +1,15 @@
 app.service('octoService', ['$window','$q','$document','$routeParams','$resource', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout",
 	function($window,$q,$document,$routeParams,$resource, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout) {
 
-		var signInBtnTxt = "Sign In";// text of the sign in button 
-		var showSaveBtn = false; // orange "Update Profile" Button
-		var cachedUsers = {}; // initializing other Users
-		var inlineElem = []; // array of inline elements that are dirty
-		var organizations = {};
+		var signInBtnTxt = "Sign In", showSaveBtn = false, cachedUsers = {}, dirtyInlineElem = [], organizations = {};
 
 		// $resource Creates is a class with ajax methods
 		var OctoApi = $resource('/api/users/:login', {login: '@login'}, {
-			 getClient:    {method:'GET', url:"api/me"},
-			 updateClient: {method:'POST', url:"api/me"},
-			 search:       {method:'GET', url:"api/users",isArray : true},
-			 check:        {method:'GET', url:"api/users/:userParam",params:{userParam:"@login"},isArray : true},
-			 searchGit:    {method:'GET', url:"https://api.github.com/search/users",params:{userParam:"@login"}}
+			getClient:    {method:'GET', url:"api/me"},
+			updateClient: {method:'POST', url:"api/me"},
+			search:       {method:'GET', url:"api/users",isArray : true},
+			check:        {method:'GET', url:"api/users/:userParam",params:{userParam:"@login"},isArray : true},
+			searchGit:    {method:'GET', url:"https://api.github.com/search/users",params:{userParam:"@login"}}
 		}); 	
 		OctoApi.prototype.gitUser =  (gLogin) => {
 			var login = this.login || gLogin;
@@ -42,62 +38,65 @@ app.service('octoService', ['$window','$q','$document','$routeParams','$resource
 		};
 
 		// Get 20 Users Skip 1
-		OctoApi.search({limit:20,skip:1}, (data) => { data.forEach( el => cachedUsers[el.login] = el); });
+		OctoApi.search({limit: 20, skip: 1 }, (data) => {
+			data.forEach(el => cachedUsers[el.login] = el);
+		});
 
-		var getOrganizations = function (orgStr) {
-			OctoApi.search({organizations: orgStr},function (data) {
-				if (!data.length){
+		var getOrganizations = function(orgStr) {
+			OctoApi.search({organizations: orgStr }, function(data) {
+				if (!data.length) {
 					OctoApi.prototype.gitOrg(orgStr);
 				}
 				organizations[orgStr] = {};
-				data.forEach(function (el) {
+				data.forEach(function(el) {
 					organizations[orgStr][el.login] = el;
 				});
 			});
 		};
 		getOrganizations("RefactorU");
 
-		OctoApi.prototype.gitOrg = function (orgStr) {
+		OctoApi.prototype.gitOrg = function(orgStr) {
 			$http.get(`https://api.github.com/orgs/${orgStr}/members`)
-			.then( (res) => {
-				organizations[orgStr] = {};
-				res.data.forEach( (el) => {
-					organizations[orgStr][el.login] = el;
+				.then((res) => {
+					organizations[orgStr] = {};
+					res.data.forEach((el) => {
+						organizations[orgStr][el.login] = el;
+					});
 				});
-			});
 		};
 
 		// Check if Client is Logged in using GET . client is an instance of OctoApi
-		var client = OctoApi.getClient(function () { // client.error = "not logged in" || client.login
-			client.isLoggedIn = (client.error)? false : true; // If not loggedIn then client.error = "not logged in"
-			signInBtnTxt = (client.isLoggedIn)? "Sign out": "Sign In"; 
+		var client = OctoApi.getClient(function() { // client.error = "not logged in" || client.login
+			client.isLoggedIn = (client.error) ? false : true; // If not loggedIn then client.error = "not logged in"
+			signInBtnTxt = (client.isLoggedIn) ? "Sign out" : "Sign In";
 			// If client is logged and doesn't have repos||followers then fetch github
 			// BUG : followers and repos wont get updated ever
-			if (client.error){ return;}
-			client.repoUpdate =  (client.reposArray.length !== client.public_repos);
-			client.followerUpdate =  (client.followersArray.length !== client.followers);
+			if (client.error) {
+				return;
+			}
+			client.repoUpdate = (client.reposArray.length !== client.public_repos);
+			client.followerUpdate = (client.followersArray.length !== client.followers);
 			if (client.followerUpdate || client.repoUpdate) {
 				client.gitReposFollowers();
 			}
 		});
-
 		var clientGetter = function  () {
 			return client;
 		};
 
 		// POST method.  Reminder: client is an instance of OctoApi
 		var updateClient = function () {
-			foreachElement(inlineElem, "#79E1FF"); // change to blue while POSTing
+			foreachElement(dirtyInlineElem, "#79E1FF"); // change to blue while POSTing
 			if (($location.path() !== "/") && ($location.path() !== "/account")){ return; } // only update if at home or account page uri
 
 			client.$updateClient(function (response) { // Post Method . Sends client
 				client.isLoggedIn = (client.error)? false : true;// 
 				if (response.error){ // incase of failure. Like if there a duplicate 
-					foreachElement(inlineElem, "#FF3838"); // change color to red if erro
+					foreachElement(dirtyInlineElem, "#FF3838"); // change color to red if erro
 					alert("Sorry Something went wrong. Please Try again in a few minutes.");
 				} else{
 					showSaveBtn = false; // orange "Update Profile" Button
-					foreachElement(inlineElem, "#333333"); // change back to black if success
+					foreachElement(dirtyInlineElem, "#333333"); // change back to black if success
 				}
 
 			});
@@ -114,7 +113,7 @@ app.service('octoService', ['$window','$q','$document','$routeParams','$resource
 					cachedUsers[login].gitReposFollowers();
 				}
 				return; 
-			} 
+			}
 			OctoApi.check({userParam:login},function (userArr,responseHeaders) {
 				if (userArr.length) { // If user Exist.
 					cachedUsers[login] = userArr[0];
@@ -130,7 +129,7 @@ app.service('octoService', ['$window','$q','$document','$routeParams','$resource
 		};
 
 		var service = this;
-		service = {signInBtnTxt,cachedUsers,inlineElem,organizations,getProp,downloadVcard,foreachElement,getOrganizations,client,clientGetter,updateClient,showSaveBtn,getOtherUsers};
+		service = {signInBtnTxt,cachedUsers,dirtyInlineElem,organizations,getProp,downloadVcard,foreachElement,getOrganizations,client,clientGetter,updateClient,showSaveBtn,getOtherUsers};
 		return service; 
 
 		function getProp (prop,obj) {

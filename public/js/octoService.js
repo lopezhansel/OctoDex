@@ -3,11 +3,11 @@
 app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$resource', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout", function ($window, $q, $document, $routeParams, $resource, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout) {
 	var _this = this;
 
-	var signInBtnTxt = "Sign In"; // text of the sign in button
-	var showSaveBtn = false; // orange "Update Profile" Button
-	var cachedUsers = {}; // initializing other Users
-	var inlineElem = []; // array of inline elements that are dirty
-	var organizations = {};
+	var signInBtnTxt = "Sign In",
+	    showSaveBtn = false,
+	    cachedUsers = {},
+	    dirtyInlineElem = [],
+	    organizations = {};
 
 	// $resource Creates is a class with ajax methods
 	var OctoApi = $resource('/api/users/:login', { login: '@login' }, {
@@ -91,14 +91,13 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 			client.gitReposFollowers();
 		}
 	});
-
 	var clientGetter = function clientGetter() {
 		return client;
 	};
 
 	// POST method.  Reminder: client is an instance of OctoApi
 	var updateClient = function updateClient() {
-		foreachElement(inlineElem, "#79E1FF"); // change to blue while POSTing
+		foreachElement(dirtyInlineElem, "#79E1FF"); // change to blue while POSTing
 		if ($location.path() !== "/" && $location.path() !== "/account") {
 			return;
 		} // only update if at home or account page uri
@@ -108,11 +107,11 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 			client.isLoggedIn = client.error ? false : true; //
 			if (response.error) {
 				// incase of failure. Like if there a duplicate
-				foreachElement(inlineElem, "#FF3838"); // change color to red if erro
+				foreachElement(dirtyInlineElem, "#FF3838"); // change color to red if erro
 				alert("Sorry Something went wrong. Please Try again in a few minutes.");
 			} else {
 				showSaveBtn = false; // orange "Update Profile" Button
-				foreachElement(inlineElem, "#333333"); // change back to black if success
+				foreachElement(dirtyInlineElem, "#333333"); // change back to black if success
 			}
 		});
 	};
@@ -142,7 +141,7 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 	};
 
 	var service = this;
-	service = { signInBtnTxt: signInBtnTxt, cachedUsers: cachedUsers, inlineElem: inlineElem, organizations: organizations, getProp: getProp, downloadVcard: downloadVcard, foreachElement: foreachElement, getOrganizations: getOrganizations, client: client, clientGetter: clientGetter, updateClient: updateClient, showSaveBtn: showSaveBtn, getOtherUsers: getOtherUsers };
+	service = { signInBtnTxt: signInBtnTxt, cachedUsers: cachedUsers, dirtyInlineElem: dirtyInlineElem, organizations: organizations, getProp: getProp, downloadVcard: downloadVcard, foreachElement: foreachElement, getOrganizations: getOrganizations, client: client, clientGetter: clientGetter, updateClient: updateClient, showSaveBtn: showSaveBtn, getOtherUsers: getOtherUsers };
 	return service;
 
 	function getProp(prop, obj) {
