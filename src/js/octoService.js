@@ -1,15 +1,12 @@
 app.service('octoService', ['$window','$q','$document','$routeParams','$resource', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout",
 	function($window,$q,$document,$routeParams,$resource, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout) {
 
-		var svc = this;
-		svc.signInBtnTxt = "Sign In";// text of the sign in button 
-		svc.showSaveBtn = false; // orange "Update Profile" Button
-		svc.cachedUsers = {}; // initializing other Users
-		svc.inlineElem = []; // array of inline elements that are dirty
-		svc.organizations = {};
-		svc.getProp = getProp;
-		svc.downloadVcard = downloadVcard;
-		svc.foreachElement = foreachElement;
+		var signInBtnTxt = "Sign In";// text of the sign in button 
+		var showSaveBtn = false; // orange "Update Profile" Button
+		var cachedUsers = {}; // initializing other Users
+		var inlineElem = []; // array of inline elements that are dirty
+		var organizations = {};
+
 		// $resource Creates is a class with ajax methods
 		var OctoApi = $resource('/api/users/:login', {login: '@login'}, {
 			 getClient:    {method:'GET', url:"api/me"},
@@ -27,9 +24,9 @@ app.service('octoService', ['$window','$q','$document','$routeParams','$resource
 			var that = user || this;
 			// Check Etag before going to github
 			return $q.all([
-				$http.get("https://api.github.com/users/"+that.login+"/repos"),
-				$http.get("https://api.github.com/users/"+that.login+"/following"),
-				$http.get("https://api.github.com/users/"+that.login+"/followers")
+				$http.get(`https://api.github.com/users/${that.login}/repos`),
+				$http.get(`https://api.github.com/users/${that.login}/following`),
+				$http.get(`https://api.github.com/users/${that.login}/followers`)
 			]).then(function(results) {
 				that.reposArray     = results[0].data;
 				that.followingArray = results[1].data;
@@ -40,67 +37,67 @@ app.service('octoService', ['$window','$q','$document','$routeParams','$resource
 		OctoApi.prototype.getCard = function (user) {
 			user = user || this;
 			$http.post('/getCard', user).then( (response)=>{
-				svc.downloadVcard(user.login+".vcf",response.data);
+				downloadVcard(user.login+".vcf",response.data);
 			},(ifErr) => {alert("Sorry. Error Downloading Contact File \n "+ifErr.data); });
 		};
 
 		// Get 20 Users Skip 1
-		OctoApi.search({limit:20,skip:1}, (data) => { data.forEach( el => svc.cachedUsers[el.login] = el); });
+		OctoApi.search({limit:20,skip:1}, (data) => { data.forEach( el => cachedUsers[el.login] = el); });
 
-		svc.getOrganizations = function (orgStr) {
+		var getOrganizations = function (orgStr) {
 			OctoApi.search({organizations: orgStr},function (data) {
 				if (!data.length){
 					OctoApi.prototype.gitOrg(orgStr);
 				}
-				svc.organizations[orgStr] = {};
+				organizations[orgStr] = {};
 				data.forEach(function (el) {
-					svc.organizations[orgStr][el.login] = el;
+					organizations[orgStr][el.login] = el;
 				});
 			});
 		};
-		svc.getOrganizations("RefactorU");
-		console.log(svc.chachedUsers);
+		getOrganizations("RefactorU");
+
 		OctoApi.prototype.gitOrg = function (orgStr) {
-			$http.get("https://api.github.com/orgs/" +orgStr+ "/members")
+			$http.get(`https://api.github.com/orgs/${orgStr}/members`)
 			.then( (res) => {
-				svc.organizations[orgStr] = {};
+				organizations[orgStr] = {};
 				res.data.forEach( (el) => {
-					svc.organizations[orgStr][el.login] = el;
+					organizations[orgStr][el.login] = el;
 				});
 			});
 		};
 
-		// Check if Client is Logged in using GET . svc.client is an instance of OctoApi
-		svc.client = OctoApi.getClient(function () { // svc.client.error = "not logged in" || svc.client.login
-			svc.client.isLoggedIn = (svc.client.error)? false : true; // If not loggedIn then svc.client.error = "not logged in"
-			svc.signInBtnTxt = (svc.client.isLoggedIn)? "Sign out": "Sign In"; 
+		// Check if Client is Logged in using GET . client is an instance of OctoApi
+		var client = OctoApi.getClient(function () { // client.error = "not logged in" || client.login
+			client.isLoggedIn = (client.error)? false : true; // If not loggedIn then client.error = "not logged in"
+			signInBtnTxt = (client.isLoggedIn)? "Sign out": "Sign In"; 
 			// If client is logged and doesn't have repos||followers then fetch github
 			// BUG : followers and repos wont get updated ever
-			if (svc.client.error){ return;}
-			svc.client.repoUpdate =  (svc.client.reposArray.length !== svc.client.public_repos);
-			svc.client.followerUpdate =  (svc.client.followersArray.length !== svc.client.followers);
-			if (svc.client.followerUpdate || svc.client.repoUpdate) {
-				svc.client.gitReposFollowers();
+			if (client.error){ return;}
+			client.repoUpdate =  (client.reposArray.length !== client.public_repos);
+			client.followerUpdate =  (client.followersArray.length !== client.followers);
+			if (client.followerUpdate || client.repoUpdate) {
+				client.gitReposFollowers();
 			}
 		});
 
-		svc.clientGetter = function  () {
-			return svc.client;
+		var clientGetter = function  () {
+			return client;
 		};
 
-		// POST method.  Reminder: svc.client is an instance of OctoApi
-		svc.updateClient = function () {
-			svc.foreachElement(svc.inlineElem, "#79E1FF"); // change to blue while POSTing
+		// POST method.  Reminder: client is an instance of OctoApi
+		var updateClient = function () {
+			foreachElement(inlineElem, "#79E1FF"); // change to blue while POSTing
 			if (($location.path() !== "/") && ($location.path() !== "/account")){ return; } // only update if at home or account page uri
 
-			svc.client.$updateClient(function (response) { // Post Method . Sends svc.client
-				svc.client.isLoggedIn = (svc.client.error)? false : true;// 
+			client.$updateClient(function (response) { // Post Method . Sends client
+				client.isLoggedIn = (client.error)? false : true;// 
 				if (response.error){ // incase of failure. Like if there a duplicate 
-					svc.foreachElement(svc.inlineElem, "#FF3838"); // change color to red if erro
+					foreachElement(inlineElem, "#FF3838"); // change color to red if erro
 					alert("Sorry Something went wrong. Please Try again in a few minutes.");
 				} else{
-					svc.showSaveBtn = false; // orange "Update Profile" Button
-					svc.foreachElement(svc.inlineElem, "#333333"); // change back to black if success
+					showSaveBtn = false; // orange "Update Profile" Button
+					foreachElement(inlineElem, "#333333"); // change back to black if success
 				}
 
 			});
@@ -108,9 +105,8 @@ app.service('octoService', ['$window','$q','$document','$routeParams','$resource
 
 
 		// getOtherUsers is for retrieving another users that are not the client profile 
-		svc.getOtherUsers = (userObj) => {
+		var getOtherUsers = (userObj) => {
 			var login = userObj || $routeParams.user; // login is the gitHub login name
-			var cachedUsers = svc.cachedUsers; // give cachedUsers an alias
 			// if user is already cached then exit 
 			if (cachedUsers[login]) {
 				if ((cachedUsers[login].reposArray === null) || (cachedUsers[login].followersArray === null) ){
@@ -133,13 +129,16 @@ app.service('octoService', ['$window','$q','$document','$routeParams','$resource
 			});
 		};
 
-		return svc;
+		var service = this;
+		service = {signInBtnTxt,cachedUsers,inlineElem,organizations,getProp,downloadVcard,foreachElement,getOrganizations,client,clientGetter,updateClient,showSaveBtn,getOtherUsers};
+		return service; 
+
 		function getProp (prop,obj) {
 			return (obj)? obj[prop] : this[prop];
 		}
 		function downloadVcard (filename, text) {
 			var elem = document.createElement('a');
-			elem.setAttribute('href', 'data:text/vcard;charset=utf-8,' + encodeURIComponent(text));
+			elem.setAttribute('href', `data:text/vcard;charset=utf-8,${encodeURIComponent(text)}`);
 			elem.setAttribute('download', filename);
 			elem.style.display = 'none';
 			document.body.appendChild(elem);
@@ -153,6 +152,4 @@ app.service('octoService', ['$window','$q','$document','$routeParams','$resource
 				el.css(prop, value);
 			});
 		}
-
-
 }]);
