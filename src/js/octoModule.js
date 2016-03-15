@@ -27,3 +27,5 @@ app.config(function($mdThemingProvider) {
     .primaryPalette('teal')
     .accentPalette('light-blue');
 });
+
+module.exports = app;

@@ -16,6 +16,8 @@ var babelify = require('babelify');
 var browserify = require('browserify');
 var watchify = require('watchify');
 var sourcemaps = require('gulp-sourcemaps');
+var webpack = require('webpack-stream');  
+var Webpack = require('webpack');  
 
 var production = process.env.NODE_ENV === 'production';
 
@@ -63,6 +65,23 @@ gulp.task('nodemon', (cb) => {
   });
 }); 
 
+var config = {
+    entry: "./src/js/entry.js",
+    output: {
+        path: __dirname,
+        filename: "bundle.js"
+    },
+    devtool: 'source-map',
+    module: {
+        loaders: [
+            { test: /\.css$/, loader: "style!css" }
+        ]
+    },
+    plugin : [
+      new Webpack.optimize.UglifyJsPlugin({mangle: {except: ['$super', '$', 'exports', 'require'] } })
+    ]
+};
+
 gulp.task('javascript',()=>{
     console.log("javascript")
     markdown(paths.readme, paths.mdView)
@@ -72,8 +91,7 @@ gulp.task('javascript',()=>{
         .pipe(babel({
             presets: ['es2015']
         }))
-        // .pipe(uglify()) // temporarily disable 
-        // .pipe(concat('velociti.js'))
+        .pipe(webpack(config))
         .pipe(gulp.dest(paths.jsBuild));
 });
 

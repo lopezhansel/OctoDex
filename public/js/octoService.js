@@ -142,7 +142,7 @@ app.service('octoService', ['$window', '$q', '$document', '$routeParams', '$reso
 	};
 
 	var service = this;
-	service = { signInBtnTxt: signInBtnTxt, cachedUsers: cachedUsers, dirtyInlineElem: dirtyInlineElem, organizations: organizations, getProp: getProp, downloadVcard: downloadVcard, foreachElement: foreachElement, getOrganizations: getOrganizations, client: client, clientGetter: clientGetter, updateClient: updateClient, showSaveBtn: showSaveBtn, getOtherUsers: getOtherUsers };
+	service = { signInBtnTxt: signInBtnTxt, cachedUsers: cachedUsers, dirtyInlineElem: dirtyInlineElem, organizations: organizations, getProp: getProp, downloadVcard: downloadVcard, foreachElement: foreachElement, getOrganizations: getOrganizations, client: client, clientGetter: clientGetter, updateClient: updateClient, showSaveBtn: showSaveBtn, getOtherUsers: getOtherUsers, OctoApi: OctoApi };
 	return service;
 
 	function ifErrFn(errObj) {
