@@ -1,11 +1,11 @@
-var _ = require('lodash');
-var angular = require('angular');
-var angularanimate = require('angular-animate');
-var angulararia = require('angular-aria');
-var angularroute = require('angular-route');
-var angularresource = require('angular-resource');
-var angularmaterial = require('angular-material');
-var ngFileUpload = require('ng-file-upload');
+// var _ = require('lodash/lodash.min');
+// var angular = require('angular');
+// var angularanimate = require('angular-animate/angular-animate.min');
+// var angulararia = require('angular-aria/angular-aria.min');
+// var angularroute = require('angular-route/angular-route.min');
+// var angularresource = require('angular-resource/angular-resource.min');
+// var angularmaterial = require('angular-material/angular-material.min');
+// var ngFileUpload = require('ng-file-upload');
 
 var app = require('./octoModule');
 require('./octoService')(app);
