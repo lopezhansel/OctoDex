@@ -2,7 +2,7 @@
 var app = angular.module('octodex',["ngMaterial","ngAnimate","ngAria","ngRoute","ngResource","ngFileUpload"]); 
 
 
-app.config(function($routeProvider,$locationProvider){
+app.config(['$routeProvider','$locationProvider',function($routeProvider,$locationProvider){
 	$routeProvider.when('/',{
 		controller : "myProfileController",
 		templateUrl : "views/profileView.html"
@@ -20,12 +20,12 @@ app.config(function($routeProvider,$locationProvider){
 		templateUrl : "views/readmeView.html"
 	}).otherwise({ redirectTo: '/' });
 	// $locationProvider.html5Mode(true);
-});	
+}]);	
 
-app.config(function($mdThemingProvider) {
+app.config(['$mdThemingProvider',function($mdThemingProvider) {
   $mdThemingProvider.theme('default')
     .primaryPalette('teal')
     .accentPalette('light-blue');
-});
+}]);
 
 module.exports = app;
