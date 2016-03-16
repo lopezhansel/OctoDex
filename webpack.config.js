@@ -14,8 +14,9 @@ module.exports =  {
     devtool: 'source-map',
     module: {
         loaders: [
-            { test: /\.css$/, loader: "style!css" },
-            { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"}
+            { test: /\.css$/,  loader: "style!css" },
+            { test: /\.js$/,   loader: "babel-loader" , exclude: /node_modules/},
+            { test: /\.html$/, loader: "ng-cache?prefix=[dir]/[dir]"}
         ]
     },
     plugins : [

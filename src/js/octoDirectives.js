@@ -1,39 +1,38 @@
 module.exports = function (app) {
-		
 	app.directive('odSidenav', ["octoService","$routeParams",function (octoService,$routeParams) {
 		return {
 			restrict: 'EA',
-			templateUrl : "views/odSidenav.html",
+			template : require("../../public/views/odSidenav.html"),
 		};
 	}])
 	.directive('odRepos', ["octoService","$routeParams",function (octoService,$routeParams) {
 		return {
 			restrict: 'EA',
-			templateUrl : "views/odRepos.html",
+			template : require("../../public/views/odRepos.html"),
 		};
 	}])
 	.directive('odFollowers', ["octoService","$routeParams",function (octoService,$routeParams) {
 		return {
 			restrict: 'EA',
-			templateUrl : "views/odFollowers.html",
+			template : require("../../public/views/odFollowers.html"),
 		};
 	}])
 	.directive('odFollowing', ["octoService","$routeParams",function (octoService,$routeParams) {
 		return {
 			restrict: 'EA',
-			templateUrl : "views/odFollowing.html",
+			template : require("../../public/views/odFollowing.html"),
 		};
 	}])
 	.directive('odWelcome', ["octoService","$routeParams",function (octoService,$routeParams) {
 		return {
 			restrict: 'EA',
-			templateUrl : "views/odWelcome.html",
+			template : require("../../public/views/odWelcome.html"),
 		};
 	}])
 	.directive('odCard', ["octoService","$routeParams",function (octoService,$routeParams) {
 		return {
 			restrict: 'EA',
-			templateUrl : "views/odCard.html",
+			template : require("../../public/views/odCard.html"),
 		};
 	}])
 	.directive('odGroups', ["octoService","$routeParams",function (octoService,$routeParams) {
@@ -42,13 +41,13 @@ module.exports = function (app) {
 			scope: {
 			  groups: "="
 			},
-			templateUrl : "views/odGroups.html",
+			template : require("../../public/views/odGroups.html"),
 		};
 	}])
 	.directive('odReadme', ["octoService","$routeParams",function (octoService,$routeParams) {
 		return {
 			restrict: 'EA',
-			templateUrl : "views/odReadme.html",
+			template : require("../../public/views/odReadme.html"),
 		};
 	}]);
 };
