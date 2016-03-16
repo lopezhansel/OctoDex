@@ -7,11 +7,11 @@
 // var angularmaterial = require('angular-material/angular-material.min');
 // var ngFileUpload = require('ng-file-upload');
 
-var app = require('./octoModule');
-require('./octoService')(app);
-require('./inlineDirective')(app);
-require('./octoDirectives')(app);
-require('./groupController')(app);
-require('./indexController')(app);
-require('./myProfileController')(app);
-require('./otherProfileController')(app);
+var app = require('babel!././octoModule');
+require('babel!././octoService')(app);
+require('babel!././inlineDirective')(app);
+require('babel!././octoDirectives')(app);
+require('babel!././groupController')(app);
+require('babel!././indexController')(app);
+require('babel!././myProfileController')(app);
+require('babel!././otherProfileController')(app);
