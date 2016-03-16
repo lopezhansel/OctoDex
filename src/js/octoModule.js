@@ -5,19 +5,19 @@ var app = angular.module('octodex',["ngMaterial","ngAnimate","ngAria","ngRoute",
 app.config(['$routeProvider','$locationProvider',function($routeProvider,$locationProvider){
 	$routeProvider.when('/',{
 		controller : "myProfileController",
-		templateUrl : "views/profileView.html"
+		template : require("../../public/views/profileView.html")
 	}).when('/profile/:user',{
 		controller : "otherProfileController",
-		templateUrl : "views/profileView.html"
+		template : require("../../public/views/profileView.html")
 	}).when('/groups/:group',{
 		controller : "groupController",
-		templateUrl : "views/groupView.html"
+		template : require("../../public/views/groupView.html")
 	}).when('/account',{
 		controller : "myProfileController",
-		templateUrl : "views/accountView.html"
+		template : require("../../public/views/accountView.html")
 	}).when('/about',{
 		controller : "myProfileController",
-		templateUrl : "views/readmeView.html"
+		template : require("../../public/views/readmeView.html")
 	}).otherwise({ redirectTo: '/' });
 	// $locationProvider.html5Mode(true);
 }]);	

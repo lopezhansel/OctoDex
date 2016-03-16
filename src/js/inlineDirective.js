@@ -6,7 +6,7 @@ module.exports = function (app) {
 			  key: "@",
 			  value: "="
 			},
-			templateUrl : "views/inline.html",
+			template : require("../../public/views/inline.html"),
 			link : linkFUnc 
 		};
 		function linkFUnc (scope, element, attrs, controller){
