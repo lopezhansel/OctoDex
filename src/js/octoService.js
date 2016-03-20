@@ -68,8 +68,8 @@ module.exports = function (app) {
 			foreachElement(dirtyInlineElem, "#79E1FF"); // change to blue while POSTing
 			if (($location.path() !== "/") && ($location.path() !== "/account")){ return; } // only update if at home or account page uri
 
-			client.$updateClient(function (response) { // Post Method . Sends client
-				client.isLoggedIn = (client.error)? false : true;// 
+			od.client.$updateClient(function (response) { // Post Method . Sends client
+				od.client.isLoggedIn = (od.client.error)? false : true;// 
 				if (response.error){ // incase of failure. Like if there a duplicate 
 					foreachElement(dirtyInlineElem, "#FF3838"); // change color to red if erro
 					alert("Sorry Something went wrong. Please Try again in a few minutes.");
@@ -104,9 +104,9 @@ module.exports = function (app) {
 			});
 		};
 
-		var service = this;
-		service = {signInBtnTxt,cachedUsers,dirtyInlineElem,organizations,getProp,downloadVcard,foreachElement,getOrganizations,getClient,updateClient,showSaveBtn,getOtherUsers,OctoApi};
-		return service; 
+		var od = this;
+		od = {signInBtnTxt,cachedUsers,dirtyInlineElem,organizations,getProp,downloadVcard,foreachElement,getOrganizations,getClient,updateClient,showSaveBtn,getOtherUsers,OctoApi};
+		return od; 
 
 		function ifErrFn (errObj){
 			var statusText = (errObj.statusText)? errObj.statusText : " Error";

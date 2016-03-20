@@ -1,5 +1,5 @@
 module.exports = function (app) {
-	app.directive('inline', ["octoService","$routeParams",function (octoService,$routeParams) {
+	app.directive('inline', ["octoService","$routeParams",function (od,$routeParams) {
 		return {
 			restrict: 'EA',
 			scope: {
@@ -10,7 +10,7 @@ module.exports = function (app) {
 			link : linkFUnc 
 		};
 		function linkFUnc (scope, element, attrs, controller){
-			scope.octoService = octoService;
+			scope.od = od;
 			//Sets icon for element if key was provided
 			scope.icon = iconChooser(attrs.key);
 			// If not at home disable editing
@@ -27,13 +27,13 @@ module.exports = function (app) {
 					scope.pencilIcon = (scope.pencilIcon)? false : true;
 				};
 			}
-			// octoService.showSaveBtn  is the orange "UPDATE PROFILE" button
+			// od.showSaveBtn  is the orange "UPDATE PROFILE" button
 			scope.dirtyElem = (bool) => {
 				if(bool){
-					octoService.showSaveBtn = true;  // trigger "UPDATE PROFILE" button
+					od.showSaveBtn = true;  // trigger "UPDATE PROFILE" button
 					element.css('color', "#FF5722"); // change dirty element to orange
-					// pushed dirty elements into inlineElem 
-					octoService.inlineElem.push(element);
+					// pushed dirty elements into dirtyInlineElem 
+					od.dirtyInlineElem.push(element);
 				}
 			};
 			// chooses icons provided by 'material icons'

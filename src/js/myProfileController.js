@@ -1,12 +1,12 @@
 module.exports = function (app) {
 	app.controller('myProfileController', 
 		[  "$scope",'Upload', '$routeParams', '$mdMedia', '$mdDialog', '$mdToast', "$http", "$interval", "$location", "$timeout", "octoService",
-		function ($scope,Upload, $routeParams, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout, octoService) {
+		function ($scope,Upload, $routeParams, $mdMedia, $mdDialog, $mdToast, $http, $interval, $location, $timeout, od) {
 
 		
 		// interval to check if update ajax request came back
 		var updateUserInterval = $interval( () => {
-			var me = octoService.client;
+			var me = od.client;
 			// if me exist with a .githubId or .error  properties
 			if (me && (me.githubId  ||  me.error)) {
 				// then set $scope.user;
@@ -14,6 +14,8 @@ module.exports = function (app) {
 				$interval.cancel(updateUserInterval);
 			}
 		}, 20);
+
+
 		$scope.submit = function() {
 		     if ($scope.form.file.$valid && $scope.file) {
 		       $scope.upload($scope.file);

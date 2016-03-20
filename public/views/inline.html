@@ -14,7 +14,7 @@
 	<form ng-show="inputShow"  ng-if="isClient" name="inlineForm" 
 		  ng-mouseleave="toggleInput(false)"  novalidate class="contact-info inline">
 		<input name="{{key}}" class="inline"
-			   type="text" ng-model="octoService.client[key]"
+			   type="text" ng-model="od.client[key]"
 			   ng-mouseleave="dirtyElem(inlineForm[key].$dirty)">
 	</form>
 </span>
