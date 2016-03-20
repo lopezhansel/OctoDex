@@ -57,23 +57,10 @@ module.exports = function (app) {
 				},ifErrFn);
 		};
 
-		// Check if Client is Logged in using GET . client is an instance of OctoApi
-		var client = OctoApi.getClient(function() { // client.error = "not logged in" || client.login
-			client.isLoggedIn = (client.error) ? false : true; // If not loggedIn then client.error = "not logged in"
-			signInBtnTxt = (client.isLoggedIn) ? "Sign out" : "Sign In";
-			// If client is logged and doesn't have repos||followers then fetch github
-			// BUG : followers and repos wont get updated ever
-			if (client.error) {
-				return;
-			}
-			client.repoUpdate = (client.reposArray.length !== client.public_repos);
-			client.followerUpdate = (client.followersArray.length !== client.followers);
-			if (client.followerUpdate || client.repoUpdate) {
-				client.gitReposFollowers();
-			}
-		});
-		var clientGetter = function  () {
-			return client;
+
+		var getClient = function  () {
+			console.log(this.client);
+			return this.client;
 		};
 
 		// POST method.  Reminder: client is an instance of OctoApi
@@ -118,7 +105,7 @@ module.exports = function (app) {
 		};
 
 		var service = this;
-		service = {signInBtnTxt,cachedUsers,dirtyInlineElem,organizations,getProp,downloadVcard,foreachElement,getOrganizations,client,clientGetter,updateClient,showSaveBtn,getOtherUsers,OctoApi};
+		service = {signInBtnTxt,cachedUsers,dirtyInlineElem,organizations,getProp,downloadVcard,foreachElement,getOrganizations,getClient,updateClient,showSaveBtn,getOtherUsers,OctoApi};
 		return service; 
 
 		function ifErrFn (errObj){
