@@ -36,7 +36,7 @@ module.exports = function (app) {
 		};
 
 		// Get 20 Users Skip 1
-		OctoApi.search({limit: 20, skip: 1 }, arr => arr.forEach(user => cachedUsers[user.login] = user) );
+		// OctoApi.search({limit: 20, skip: 1 }, arr => arr.forEach(user => cachedUsers[user.login] = user) );
 
 		var getOrganizations = function (orgStr) {
 			OctoApi.search({organizations: orgStr }, function(data) {
@@ -47,7 +47,7 @@ module.exports = function (app) {
 				});
 			});
 		};
-		getOrganizations("RefactorU");
+		// getOrganizations("RefactorU");
 
 		OctoApi.prototype.gitOrg = function(orgStr) {
 			$http.get(`https://api.github.com/orgs/${orgStr}/members`)

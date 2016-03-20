@@ -4,7 +4,7 @@ module.exports = function (app) {
 		
 		$scope.od = od;
 		// $scope.client = od.getClient()	;
-		
+		var temp =  {};
 		// Check if Client is Logged in using GET . client is an instance of OctoApi
 		od.OctoApi.getClient(function(data) { // client.error = "not logged in" || client.login
 			od.client = data;
@@ -12,14 +12,28 @@ module.exports = function (app) {
 			od.signInBtnTxt = (od.client.isLoggedIn) ? "Sign out" : "Sign In";
 			// If od.client is logged and doesn't have repos||followers then fetch github
 			// BUG : followers and repos wont get updated ever
-			if (od.client.error) {
-				return;
-			}
-			od.client.repoUpdate = (od.client.reposArray.length !== od.client.public_repos);
-			od.client.followerUpdate = (od.client.followersArray.length !== od.client.followers);
-			if (od.client.followerUpdate || od.client.repoUpdate) {
-				od.client.gitReposFollowers();
-			}
+			if (od.client.error) {return; }
+
+			temp.followersArray = data.followersArray.map(el=>el);
+			temp.followingArray = data.followingArray.map(el=>el);
+			temp.reposArray = data.reposArray.map(el=>el);
+
+			delete data.followersArray;
+			delete data.followingArray;
+			delete data.reposArray;
+		}).$promise.then(function (data) {
+			$timeout(function () {
+				data.followersArray  = temp.followersArray;
+				data.followingArray  = temp.followingArray;
+				data.reposArray  = temp.reposArray;
+			},500);
+			return data;
+		}).then(function (data) {
+			// od.client.repoUpdate = (od.client.reposArray.length !== od.client.public_repos);
+			// od.client.followerUpdate = (od.client.followersArray.length !== od.client.followers);
+			// if (od.client.followerUpdate || od.client.repoUpdate) {
+			// 	od.client.gitReposFollowers();
+			// }
 		});
 
 		$scope.toggleLink = function () {
